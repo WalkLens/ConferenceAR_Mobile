@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/UI%20Toolkit/Background.png?fileID=2800000&amp;guid=52c0097855a73734a953f8b931869c47&amp;type=3#Background&apos;); -unity-background-scale-mode: scale-and-crop; justify-content: center; align-items: center;">
+        <ui:IMGUIContainer style="width: 240px; height: 240px; background-image: url(&apos;project://database/Assets/Vectors/logo.svg?fileID=7388822144124034973&amp;guid=6f63415ea56d88643938ec16315fbce2&amp;type=3#logo&apos;); -unity-background-scale-mode: scale-to-fit; margin-bottom: 30%;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,113 @@
+.unity-button {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    border-width: 0;
+    background-color: transparent;
+    overflow: visible;
+}
+
+.unity-button:disabled {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.unity-button:hover {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.unity-button:active {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.unity-button:focus {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.unity-label {
+    padding: 0;
+    margin: 0;
+    color: white;
+}
+
+.unity-disabled {
+    opacity: 1;
+}
+
+.unity-text-field {
+    margin: 0;
+}
+
+.unity-text-field #unity-text-input {
+    border-radius: 0;
+    border-width: 0;
+    padding: 0;
+}
+
+.unity-base-popup-field__text {
+    color: rgb(255, 255, 255);
+}
+
+.unity-base-dropdown__container-outer {
+    margin-top: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+}
+
+.unity-base-dropdown__container-inner {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: rgba(195, 220, 255, 0.05);
+}
+
+.unity-base-dropdown__item {
+    height: 40px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    margin: 8px;
+}
+
+.unity-base-dropdown__item:hover {
+    background-color: rgba(195, 220, 255, 0.05);
+}
+
+.unity-base-dropdown__item:checked {
+    background-color: rgba(195, 220, 255, 0.05);
+}
+
+.unity-base-dropdown__label {
+    color: rgba(255, 255, 255, 1);
+    font-size: 16px;
+}
+
+.unity-base-dropdown__checkmark {
+    opacity: 0;
+}
+
+.unity-scroller__low-button {
+    display: none;
+}
+
+.unity-scroller__high-button {
+    display: none;
+}
+
+.unity-base-slider--vertical .unity-base-slider__dragger{
+    width: 4px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.unity-base-slider__tracker {
+    display: none;
+}

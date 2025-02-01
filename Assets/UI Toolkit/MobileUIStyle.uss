@@ -1,0 +1,322 @@
+.unity-label {
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
+}
+
+.unity-base-field__input {
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
+    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.unity-toggle__checkmark {
+    display: none;
+}
+
+.unity-text-field__label {
+    display: none;
+}
+
+.unity-base-text-field {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
+    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition-duration: 0.1s;
+    font-size: 16px;
+    padding-left: 5px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-right: 5px;
+    background-color: rgba(195, 220, 255, 0.04);
+}
+
+.unity-base-text-field:focus {
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+}
+
+.unity-popup-field__label {
+    display: none;
+}
+
+.unity-base-popup-field {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    background-color: rgba(195, 220, 255, 0.04);
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
+    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    color: rgba(255, 255, 255, 0.5);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition-duration: 0.1s;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.unity-base-popup-field:focus {
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+}
+
+.unity-popup-field__popup {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 10px;
+    border: 1px solid rgb(68, 68, 68);
+}
+
+.unity-popup-field__item {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 14px;
+    color: white;
+    padding: 5px 10px;
+}
+
+.unity-popup-field__item--hover {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: rgb(85, 85, 85);
+    color: white;
+}
+
+.header {
+    font-size: 28px;
+    -unity-font-style: normal;
+    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&guid=7d44473115e622a4ea5717417f60c41d&type=3#Mobile_Pretendard-SemiBold');
+    color: rgb(255, 255, 255);
+    -unity-text-align: upper-center;
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
+    margin-top: 100px;
+    margin-bottom: 30px;
+    -unity-paragraph-spacing: 10px;
+}
+
+.button {
+    transition-duration: 0.1s;
+    background-color: rgb(57, 118, 242);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    height: 60px;
+    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&guid=7d44473115e622a4ea5717417f60c41d&type=3#Mobile_Pretendard-SemiBold');
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
+    transition-timing-function: ease-in;
+    width: 100%;
+    align-items: center;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    -unity-text-align: middle-center;
+}
+
+.button:hover {
+    background-color: rgb(88, 143, 255);
+}
+
+.button:active {
+    scale: 0.98 0.98;
+    background-color: rgb(42, 88, 180);
+}
+
+.button:disabled {
+    background-color: rgb(79, 87, 103);
+    color: rgb(141, 141, 141);
+}
+
+.togglebutton {
+    font-size: 0;
+    background-color: rgb(185, 103, 103);
+    border-top-left-radius: 67px;
+    border-bottom-left-radius: 67px;
+    border-top-right-radius: 67px;
+    border-bottom-right-radius: 67px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    margin-left: 26px;
+    margin-right: 26px;
+    margin-top: 26px;
+    margin-bottom: 26px;
+    transition-duration: 0.25s;
+}
+
+.togglebutton:hover {
+    background-color: rgb(4, 0, 255);
+}
+
+.togglebutton:checked {
+    background-color: rgb(0, 0, 0);
+}
+
+.app-main {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+
+.visiblecontainer {
+    background-color: rgba(195, 220, 255, 0.05);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 90%;
+}
+
+.divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.tab-button {
+    font-size: 18px;
+    padding: 10px 20px;
+    color: rgb(141, 151, 173);
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    width: 80px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    -unity-text-align: middle-center;
+    height: 40px;
+}
+
+.tab-button-selected {
+    padding: 10px 20px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&guid=7d44473115e622a4ea5717417f60c41d&type=3#Mobile_Pretendard-SemiBold');
+}
+
+.chip {
+    background-color: rgba(255, 255, 255, 0.04);
+    font-size: 16px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition-duration: 0.1s;
+    transition-property: all;
+    margin-top: 5px;
+    height: 35px;
+    -unity-text-align: middle-center;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    -unity-font-definition: initial;
+}
+
+.chip-active {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+}
+
+.tab-bar {
+    width: 60px;
+    height: 2px;
+    background-color: rgb(255, 255, 255);
+}
+
+.pin-text-field {
+    -unity-font-definition: initial;
+    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Bold.otf?fileID=12800000&guid=ae90eba771d38664e98cbc517b66fe3a&type=3#Mobile_Pretendard-Bold');
+    font-size: 32px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    -unity-text-align: middle-center;
+}
