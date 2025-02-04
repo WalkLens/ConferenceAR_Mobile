@@ -1,0 +1,24 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
+    <engine:VisualElement name="Card" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.46); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; padding-top: 20px; padding-right: 20px; padding-bottom: 20px; padding-left: 20px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgba(255, 255, 255, 0.54); border-right-color: rgba(255, 255, 255, 0.54); border-top-color: rgba(255, 255, 255, 0.54); border-bottom-color: rgba(255, 255, 255, 0.54); width: 100%; height: 100%;">
+        <engine:VisualElement name="Header" style="flex-grow: 1; flex-direction: row;">
+            <engine:VisualElement name="Photo" style="flex-grow: 0; width: 40px; height: 40px; background-color: rgb(0, 0, 0); flex-shrink: 0;" />
+            <engine:VisualElement name="Description" style="flex-grow: 1;">
+                <engine:Label text="권가경" name="Name" />
+                <engine:Label text="기관명 도식" name="Job" />
+            </engine:VisualElement>
+            <engine:Button icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=4154780841294389669&amp;guid=805ad3b74a80a7841a3c6703ba20b965&amp;type=3#arrow-down" style="position: absolute; right: 0; top: 0;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="Chips" style="flex-grow: 1; flex-direction: row;">
+            <engine:Button text="Button" class="chip chip-active" />
+            <engine:Button text="Button" class="chip" />
+            <engine:Button text="Button" class="chip" />
+        </engine:VisualElement>
+        <engine:VisualElement name="Chips" style="flex-grow: 1; flex-direction: row;">
+            <engine:Button text="Button" class="chip chip-active" />
+            <engine:Button text="Button" class="chip" />
+            <engine:Button text="Button" class="chip" />
+        </engine:VisualElement>
+        <engine:Button text="만나러 가기" name="Meet" class="button" style="margin-top: 17px;" />
+    </engine:VisualElement>
+</engine:UXML>

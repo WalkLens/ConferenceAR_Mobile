@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
+    <ui:VisualElement name="Content" style="width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Background.png?fileID=2800000&amp;guid=d9183688c3cc8dc4a933373d8614e8be&amp;type=3#Background&quot;); -unity-background-scale-mode: scale-and-crop; position: absolute; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&amp;guid=a89cdade1f1a94c4d95268c2759459a5&amp;type=3#Mobile_Pretendard-Regular&apos;); -unity-font-definition: initial; align-items: center;">
+        <ui:VisualElement name="Header" style="height: 60px; flex-shrink: 0; width: 100%; flex-direction: row; justify-content: center; align-items: center;">
+            <ui:IMGUIContainer name="Prev" style="width: 30px; height: 30px; position: absolute; left: 30px; background-color: rgba(0, 0, 0, 0.94);" />
+            <ui:Label text="완료된 만남" display-tooltip-when-elided="true" name="Header" style="font-size: 18px; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;);" />
+        </ui:VisualElement>
+        <ui:TabView name="Individual" style="height: 70%;">
+            <ui:Tab label="전체" />
+            <ui:Tab label="그룹" />
+            <ui:Tab label="개인" />
+        </ui:TabView>
+    </ui:VisualElement>
+</ui:UXML>
