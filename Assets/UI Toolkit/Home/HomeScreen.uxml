@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=7603fa8d7f15c4b419b63a0e7ebb78f4&amp;type=3#MobileUIStyle" />
-    <ui:VisualElement name="Content" style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/UI%20Toolkit/Background.png?fileID=2800000&amp;guid=52c0097855a73734a953f8b931869c47&amp;type=3#Background&apos;); -unity-background-scale-mode: scale-and-crop; position: absolute; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&amp;guid=a89cdade1f1a94c4d95268c2759459a5&amp;type=3#Mobile_Pretendard-Regular&apos;); -unity-font-definition: initial; align-items: center;">
+    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
+    <ui:VisualElement name="Content" style="width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Background.png?fileID=2800000&amp;guid=d9183688c3cc8dc4a933373d8614e8be&amp;type=3#Background&quot;); -unity-background-scale-mode: scale-and-crop; position: absolute; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&amp;guid=a89cdade1f1a94c4d95268c2759459a5&amp;type=3#Mobile_Pretendard-Regular&apos;); -unity-font-definition: initial; align-items: center;">
         <ui:VisualElement name="SearchBar" class="visiblecontainer" style="height: 60px; flex-shrink: 0;" />
         <ui:VisualElement name="ProfileContainer" class="visiblecontainer" style="flex-shrink: 0;">
             <ui:VisualElement name="PhotoName" style="align-items: center;">
@@ -21,13 +21,14 @@
         </ui:VisualElement>
         <ui:VisualElement name="ButtonContainer" style="flex-direction: row; width: 90%; height: 100%;">
             <ui:VisualElement name="History" class="visiblecontainer" style="align-items: center; justify-content: center;">
-                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Vectors/location.svg?fileID=7388822144124034973&amp;guid=61d8d566ab7670944834caa8d8bdb8ef&amp;type=3#location&apos;); min-height: 100px; min-width: 100px; -unity-background-scale-mode: scale-to-fit;" />
+                <ui:IMGUIContainer style="background-image: url(&quot;project://database/Assets/Vectors/location.svg?fileID=7388822144124034973&amp;guid=0a939d340e030da43856bbe83abec17a&amp;type=3#location&quot;); min-height: 100px; min-width: 100px; -unity-background-scale-mode: scale-to-fit;" />
                 <ui:Label text="만남 기록" display-tooltip-when-elided="true" />
             </ui:VisualElement>
             <ui:VisualElement name="Likes" class="visiblecontainer" style="align-items: center; justify-content: center;">
-                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Vectors/location.svg?fileID=7388822144124034973&amp;guid=61d8d566ab7670944834caa8d8bdb8ef&amp;type=3#location&apos;); min-height: 100px; min-width: 100px; -unity-background-scale-mode: scale-to-fit;" />
+                <ui:IMGUIContainer style="background-image: url(&quot;project://database/Assets/Vectors/location.svg?fileID=7388822144124034973&amp;guid=0a939d340e030da43856bbe83abec17a&amp;type=3#location&quot;); min-height: 100px; min-width: 100px; -unity-background-scale-mode: scale-to-fit;" />
                 <ui:Label text="찜 목록" display-tooltip-when-elided="true" />
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:Label text="&lt;color=white&gt;&lt;gradient=&quot;Homescreen&quot;&gt;Expand Your Horizons!&lt;/gradient&gt;&lt;/color&gt;" style="font-size: 18px; -unity-text-align: upper-center;" />
     </ui:VisualElement>
 </ui:UXML>

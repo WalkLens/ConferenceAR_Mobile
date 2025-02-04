@@ -2,6 +2,6 @@
     <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
     <ui:VisualElement name="Container" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); background-image: none; align-items: center; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;); -unity-font-definition: initial; color: rgb(255, 255, 255); justify-content: center;">
         <ui:IMGUIContainer name="RegisterComplete" style="background-image: url(&quot;project://database/Assets/Vectors/communication.svg?fileID=7388822144124034973&amp;guid=32559dbbc20dc1b4ab2acb3cf1eb0065&amp;type=3#communication&quot;); width: 240px; height: 240px;" />
-        <ui:Label text="OOO님의 프로필이&#10;완성되었어요!" display-tooltip-when-elided="true" name="Header1" class="header" />
+        <ui:Label text="OOO님의 프로필이&#10;완성되었어요!" display-tooltip-when-elided="true" name="Header1" class="header" style="margin-top: 50px;" />
     </ui:VisualElement>
 </ui:UXML>

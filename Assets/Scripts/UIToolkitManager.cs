@@ -83,6 +83,7 @@ public class UIToolkitManager : MonoBehaviour
 
         // 크기 변경 이벤트 등록
         root.RegisterCallback<GeometryChangedEvent>(evt => UpdateScreenWidth());
+        root.RegisterCallback<GeometryChangedEvent>(evt => LoadChips());
 
 
         // 0. Common
@@ -125,6 +126,83 @@ public class UIToolkitManager : MonoBehaviour
         keywordDesignContainer = root.Q<VisualElement>("KeywordDesignChips");
         keywordDevContainer = root.Q<VisualElement>("KeywordDevChips");
 
+        // 3. InterestScreen
+        _interestTabButtons[0] = root.Q<Button>("InterestResearch");
+        _interestTabButtons[1] = root.Q<Button>("InterestDesign");
+        _interestTabButtons[2] = root.Q<Button>("InterestDev");
+
+        _interestTabButtons[0].RegisterCallback<ClickEvent>(evt => ToggleInterestTabButton(0));
+        _interestTabButtons[1].RegisterCallback<ClickEvent>(evt => ToggleInterestTabButton(1));
+        _interestTabButtons[2].RegisterCallback<ClickEvent>(evt => ToggleInterestTabButton(2));
+
+        _interestBar = root.Q<VisualElement>("InterestBar");
+
+        _interestChipContainer = root.Q<VisualElement>("InterestChipContainer");
+        
+        interestResearchContainer = root.Q<VisualElement>("InterestResearchChips");
+        interestDesignContainer = root.Q<VisualElement>("InterestDesignChips");
+        interestDevContainer = root.Q<VisualElement>("InterestDevChips");
+
+        // 4. IntroduceScreen
+        userIntroduction = root.Q<TextField>("UserIntroduction");
+        userURL = root.Q<TextField>("UserURL");
+
+        // 6. SetPINScreen
+        pinFields[0] = root.Q<TextField>("PIN1");
+        pinFields[1] = root.Q<TextField>("PIN2");
+        pinFields[2] = root.Q<TextField>("PIN3");
+        pinFields[3] = root.Q<TextField>("PIN4");
+        pinFields[4] = root.Q<TextField>("PIN5");
+
+        duplicateExplanation = root.Q<Label>("DuplicateExplanation");
+        
+        for(int i=0; i<5; i++)
+        {
+            int index = i; // 람다 캡처 문제 방지
+            //pinFields[i].maxLength = 1; // 한 글자만 입력 가능하도록 설정
+            pinFields[i].RegisterValueChangedCallback(evt => PINInput(evt.newValue, index));
+        }
+    }
+
+    private void LoadChips() // OnEnable에는 폰트 데이터가 없기 때문에 GeometryChangedEvent로 구현
+    {
+        foreach(var chipString in researchChipString)
+        {
+            var chip = new Button
+            {
+                text = chipString
+            };
+
+
+            chip.RegisterCallback<ClickEvent>(evt => ToggleInterestChip(chip, 0));
+            chip.AddToClassList("chip");
+            interestResearchContainer.Add(chip);
+        }
+
+        foreach(var chipString in designChipString)
+        {
+            var chip = new Button
+            {
+                text = chipString
+            };
+            
+            chip.RegisterCallback<ClickEvent>(evt => ToggleInterestChip(chip, 1));
+            chip.AddToClassList("chip");
+            interestDesignContainer.Add(chip);
+        }
+
+        foreach(var chipString in devChipString)
+        {
+            var chip = new Button
+            {
+                text = chipString
+            };
+            
+            chip.RegisterCallback<ClickEvent>(evt => ToggleInterestChip(chip, 2));
+            chip.AddToClassList("chip");
+            interestDevContainer.Add(chip);
+        }
+
         foreach(var chipString in researchChipString)
         {
             var chip = new Button
@@ -159,79 +237,6 @@ public class UIToolkitManager : MonoBehaviour
             chip.RegisterCallback<ClickEvent>(evt => ToggleKeywordChip(chip, 2));
             chip.AddToClassList("chip");
             keywordDevContainer.Add(chip);
-        }
-
-        // 3. InterestScreen
-        _interestTabButtons[0] = root.Q<Button>("InterestResearch");
-        _interestTabButtons[1] = root.Q<Button>("InterestDesign");
-        _interestTabButtons[2] = root.Q<Button>("InterestDev");
-
-        _interestTabButtons[0].RegisterCallback<ClickEvent>(evt => ToggleInterestTabButton(0));
-        _interestTabButtons[1].RegisterCallback<ClickEvent>(evt => ToggleInterestTabButton(1));
-        _interestTabButtons[2].RegisterCallback<ClickEvent>(evt => ToggleInterestTabButton(2));
-
-        _interestBar = root.Q<VisualElement>("InterestBar");
-
-        _interestChipContainer = root.Q<VisualElement>("InterestChipContainer");
-        
-        interestResearchContainer = root.Q<VisualElement>("InterestResearchChips");
-        interestDesignContainer = root.Q<VisualElement>("InterestDesignChips");
-        interestDevContainer = root.Q<VisualElement>("InterestDevChips");
-
-        foreach(var chipString in researchChipString)
-        {
-            var chip = new Button
-            {
-                text = chipString
-            };
-
-            chip.RegisterCallback<ClickEvent>(evt => ToggleInterestChip(chip, 0));
-            chip.AddToClassList("chip");
-            interestResearchContainer.Add(chip);
-        }
-
-        foreach(var chipString in designChipString)
-        {
-            var chip = new Button
-            {
-                text = chipString
-            };
-            
-            chip.RegisterCallback<ClickEvent>(evt => ToggleInterestChip(chip, 1));
-            chip.AddToClassList("chip");
-            interestDesignContainer.Add(chip);
-        }
-
-        foreach(var chipString in devChipString)
-        {
-            var chip = new Button
-            {
-                text = chipString
-            };
-            
-            chip.RegisterCallback<ClickEvent>(evt => ToggleInterestChip(chip, 2));
-            chip.AddToClassList("chip");
-            interestDevContainer.Add(chip);
-        }
-
-        // 4. IntroduceScreen
-        userIntroduction = root.Q<TextField>("UserIntroduction");
-        userURL = root.Q<TextField>("UserURL");
-
-        // 6. SetPINScreen
-        pinFields[0] = root.Q<TextField>("PIN1");
-        pinFields[1] = root.Q<TextField>("PIN2");
-        pinFields[2] = root.Q<TextField>("PIN3");
-        pinFields[3] = root.Q<TextField>("PIN4");
-        pinFields[4] = root.Q<TextField>("PIN5");
-
-        duplicateExplanation = root.Q<Label>("DuplicateExplanation");
-        
-        for(int i=0; i<5; i++)
-        {
-            int index = i; // 람다 캡처 문제 방지
-            //pinFields[i].maxLength = 1; // 한 글자만 입력 가능하도록 설정
-            pinFields[i].RegisterValueChangedCallback(evt => PINInput(evt.newValue, index));
         }
     }
 
@@ -276,6 +281,7 @@ public class UIToolkitManager : MonoBehaviour
                     _keywordChipContainer.style.visibility = Visibility.Hidden;
                     break;
                 case 4:
+                    _interestChipContainer.style.visibility = Visibility.Hidden;
                     break;
                 case 5:
                     // DB에 넣을 데이터 정제하기

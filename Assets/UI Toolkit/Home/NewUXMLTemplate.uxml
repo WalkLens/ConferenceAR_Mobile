@@ -1,0 +1,29 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement name="Content" style="flex-grow: 1;">
+        <engine:GroupBox text="ddddddd" name="GroupBox" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&amp;guid=5dc7bb8e4b593254ab6b630e1cd5c49a&amp;type=3#Pretendard-Regular&quot;); color: rgb(0, 0, 0);">
+            <engine:Button text="Button" />
+            <engine:Toggle label="Toggle" />
+            <engine:ToggleButtonGroup label="Toggle Button Group" />
+            <engine:Foldout text="Foldout">
+                <engine:Button text="Button" />
+                <engine:Button text="Button" />
+                <engine:Button text="Button" />
+                <engine:Scroller high-value="100" direction="Horizontal" value="42" />
+            </engine:Foldout>
+            <engine:EnumField label="Enum" value="Center" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" />
+            <engine:RadioButton label="Radio Button" />
+        </engine:GroupBox>
+        <engine:TabView>
+            <engine:Tab label="Tab">
+                <engine:Vector3Field label="Vec3 Field" />
+            </engine:Tab>
+            <engine:Tab label="Tab">
+                <engine:RectField label="Rect" />
+            </engine:Tab>
+            <engine:Tab label="Tab">
+                <engine:BoundsField label="Bounds" />
+            </engine:Tab>
+        </engine:TabView>
+        <engine:MultiColumnTreeView />
+    </engine:VisualElement>
+</engine:UXML>

@@ -18,10 +18,10 @@
     margin-right: 0;
     margin-top: 0;
     margin-bottom: 0;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .unity-toggle__checkmark {
@@ -128,7 +128,7 @@
 }
 
 .header {
-    font-size: 28px;
+    font-size: 24px;
     -unity-font-style: normal;
     -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&guid=7d44473115e622a4ea5717417f60c41d&type=3#Mobile_Pretendard-SemiBold');
     color: rgb(255, 255, 255);
@@ -255,6 +255,7 @@
     margin-bottom: 0;
     -unity-text-align: middle-center;
     height: 40px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
 }
 
 .tab-button-selected {
@@ -290,7 +291,8 @@
     margin-right: 5px;
     margin-bottom: 5px;
     -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
-    -unity-font-definition: initial;
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
+    color: rgb(255, 255, 255);
 }
 
 .chip-active {
@@ -305,7 +307,7 @@
 }
 
 .pin-text-field {
-    -unity-font-definition: initial;
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Bold.otf?fileID=12800000&guid=0fdd4ffec825f1d499a43df7ff6d88d7&type=3#Pretendard-Bold");
     -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Bold.otf?fileID=12800000&guid=ae90eba771d38664e98cbc517b66fe3a&type=3#Mobile_Pretendard-Bold');
     font-size: 32px;
     -unity-font-style: bold;
@@ -319,4 +321,12 @@
     margin-top: 5px;
     margin-bottom: 5px;
     -unity-text-align: middle-center;
+}
+
+.pin-text-field #unity-text-input {
+    -unity-text-align: middle-center;
+}
+
+.base-info {
+    height: 40px;
 }

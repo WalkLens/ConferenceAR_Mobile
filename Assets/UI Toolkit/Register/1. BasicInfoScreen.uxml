@@ -14,15 +14,15 @@
         <ui:VisualElement name="InputContainer" style="width: 100%; padding-left: 20px; padding-right: 20px; padding-top: 30px; padding-bottom: 30px;">
             <ui:VisualElement>
                 <ui:Label text="이름" display-tooltip-when-elided="true" style="-unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;);" />
-                <ui:TextField picking-mode="Ignore" name="UserName" value="ddd" class="inputfield" />
+                <ui:TextField picking-mode="Ignore" name="UserName" value="ddd" class="inputfield base-info" />
             </ui:VisualElement>
             <ui:VisualElement style="padding-top: 15px;">
                 <ui:Label text="직업(기관명)" display-tooltip-when-elided="true" style="-unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;);" />
-                <ui:TextField picking-mode="Ignore" name="UserJob" class="inputfield" />
+                <ui:TextField picking-mode="Ignore" name="UserJob" class="inputfield base-info" />
             </ui:VisualElement>
             <ui:VisualElement style="padding-top: 15px;">
                 <ui:Label text="언어" display-tooltip-when-elided="true" style="-unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;);" />
-                <ui:DropdownField label="Dropdown" index="-1" choices="Korean,English,Japanese,Chinese,Spanish,German, Russian" name="UserLanguage" />
+                <ui:DropdownField label="Dropdown" index="-1" choices="Korean,English,Japanese,Chinese,Spanish,German, Russian" name="UserLanguage" class="base-info" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
