@@ -522,8 +522,9 @@ public class UIToolkitManager : MonoBehaviour
         // 영어 - "en-US"
         // 일본어 - "ja-JP"
         // Korean,English,Japanese,Chinese,Spanish,German,Russian
+        // 한국어, English, 日本語, 中文, Español, Deutsch, Русский
         
-        if(language == "Korean")
+        if(language == "한국어")
         {
             return "ko-KR";
         }
@@ -531,23 +532,23 @@ public class UIToolkitManager : MonoBehaviour
         {
             return "en-US";
         }
-        else if(language == "Japanese")
+        else if(language == "日本語")
         {
             return "ja-JP";
         }
-        else if(language == "Chinese")
+        else if(language == "中文")
         {
             return "zh-HK";
         }
-        else if(language == "Spanish")
+        else if(language == "Español")
         {
             return "es-ES";
         }
-        else if(language == "German")
+        else if(language == "Deutsch")
         {
             return "de-DE";
         }
-        else if(language == "Russian")
+        else if(language == "Русский")
         {
             return "ru-RU";
         }

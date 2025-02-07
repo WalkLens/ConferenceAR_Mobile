@@ -13,7 +13,7 @@
     border-bottom-width: 0;
     background-color: rgba(0, 0, 0, 0);
     -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
-    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;
@@ -42,7 +42,7 @@
     border-top-color: rgba(255, 255, 255, 0);
     border-bottom-color: rgba(255, 255, 255, 0);
     -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
-    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -78,7 +78,7 @@
     border-bottom-color: rgba(255, 255, 255, 0);
     background-color: rgba(195, 220, 255, 0.04);
     -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
-    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
     color: rgba(255, 255, 255, 0.5);
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -104,8 +104,15 @@
     border-bottom-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(68, 68, 68);
+    border-right-color: rgb(68, 68, 68);
+    border-top-color: rgb(68, 68, 68);
+    border-bottom-color: rgb(68, 68, 68);
     padding: 10px;
-    border: 1px solid rgb(68, 68, 68);
 }
 
 .unity-popup-field__item {
@@ -130,7 +137,7 @@
 .header {
     font-size: 24px;
     -unity-font-style: normal;
-    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&guid=7d44473115e622a4ea5717417f60c41d&type=3#Mobile_Pretendard-SemiBold');
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
     color: rgb(255, 255, 255);
     -unity-text-align: upper-center;
     -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
@@ -149,7 +156,7 @@
     font-size: 16px;
     color: rgb(255, 255, 255);
     height: 60px;
-    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&guid=7d44473115e622a4ea5717417f60c41d&type=3#Mobile_Pretendard-SemiBold');
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
     -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
     transition-timing-function: ease-in;
     width: 100%;
@@ -238,12 +245,11 @@
     background-color: transparent;
     border: none;
     border-bottom: 2px solid transparent;
-    cursor: pointer;
     border-left-width: 0;
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 0;
-    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
     width: 80px;
     padding-left: 0;
     padding-right: 0;
@@ -255,7 +261,7 @@
     margin-bottom: 0;
     -unity-text-align: middle-center;
     height: 40px;
-    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
 }
 
 .tab-button-selected {
@@ -264,7 +270,7 @@
     background-color: transparent;
     border: none;
     border-bottom: 2px solid white;
-    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&guid=7d44473115e622a4ea5717417f60c41d&type=3#Mobile_Pretendard-SemiBold');
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
 }
 
 .chip {
@@ -290,7 +296,7 @@
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
-    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&guid=a89cdade1f1a94c4d95268c2759459a5&type=3#Mobile_Pretendard-Regular');
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
     -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&guid=5dc7bb8e4b593254ab6b630e1cd5c49a&type=3#Pretendard-Regular");
     color: rgb(255, 255, 255);
 }
@@ -308,7 +314,7 @@
 
 .pin-text-field {
     -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-Bold.otf?fileID=12800000&guid=0fdd4ffec825f1d499a43df7ff6d88d7&type=3#Pretendard-Bold");
-    -unity-font: url('project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Bold.otf?fileID=12800000&guid=ae90eba771d38664e98cbc517b66fe3a&type=3#Mobile_Pretendard-Bold');
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-Bold.otf?fileID=12800000&guid=0fdd4ffec825f1d499a43df7ff6d88d7&type=3#Pretendard-Bold");
     font-size: 32px;
     -unity-font-style: bold;
     color: rgb(255, 255, 255);

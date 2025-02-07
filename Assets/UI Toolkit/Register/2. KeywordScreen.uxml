@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=7603fa8d7f15c4b419b63a0e7ebb78f4&amp;type=3#MobileUIStyle" />
-    <ui:VisualElement name="Container" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); background-image: none; align-items: center; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;); -unity-font-definition: initial; color: rgb(255, 255, 255);">
+    <ui:VisualElement name="Container" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); background-image: none; align-items: center;">
         <ui:Label text="나를 표현하는 키워드를&#10;최대 3가지 선택해주세요" display-tooltip-when-elided="true" name="Header1" class="header" />
         <ui:VisualElement name="TabContainer" style="flex-direction: row; margin-top: 20%;">
             <ui:Button text="기획" display-tooltip-when-elided="true" name="KeywordResearch" class="tab-button tab-button-selected" />

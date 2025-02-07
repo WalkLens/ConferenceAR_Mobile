@@ -1,15 +1,15 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=7603fa8d7f15c4b419b63a0e7ebb78f4&amp;type=3#MobileUIStyle" />
-    <ui:VisualElement name="Container" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); background-image: none; align-items: center; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;); -unity-font-definition: initial; color: rgb(255, 255, 255); font-size: 16px;">
+    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
+    <ui:VisualElement name="Container" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); background-image: none; align-items: center;">
         <ui:Label text="분야와 관련된 경험 및&#10;자기소개를 작성해주세요" display-tooltip-when-elided="true" name="Header1" class="header" />
         <ui:VisualElement name="InputContainer" style="width: 100%; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px;">
             <ui:VisualElement>
                 <ui:Label text="자기소개 (0/200)" display-tooltip-when-elided="true" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" text="자신을 나타낼 수 있는 소개를 작성하세요." multiline="true" name="UserIntroduction" style="height: 120px; white-space: normal;" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" multiline="true" name="UserIntroduction" placeholder-text="AI 시대 디자이너의 역할에 관심이 많아요" style="height: 120px; white-space: normal;" />
             </ui:VisualElement>
             <ui:VisualElement style="margin-top: 20px;">
                 <ui:Label text="개인 URL (선택)" display-tooltip-when-elided="true" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" text="www.naver.com" name="UserURL" class="inputfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" name="UserURL" placeholder-text="https://www.xreal.info" class="inputfield" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
