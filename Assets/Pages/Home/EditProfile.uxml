@@ -27,15 +27,15 @@
             <ui:VisualElement name="divider" class="divider" />
             <ui:VisualElement name="keyword" style="padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
                 <ui:Label text="내 키워드" display-tooltip-when-elided="true" name="header-label" style="font-size: 16px; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;); -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); margin-bottom: 6px;" />
-                <ui:VisualElement name="chip-container" style="flex-grow: 1; flex-wrap: wrap; flex-direction: row;">
-                    <ui:Button text="+" name="add-keyword-button" class="chip" style="background-color: rgb(57, 118, 242);" />
+                <ui:VisualElement name="keyword-chip-container" style="flex-grow: 1; flex-wrap: wrap; flex-direction: row;">
+                    <ui:Button text="+" name="add-keyword-button" class="chip chip-add" style="background-color: rgb(57, 118, 242);" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="divider" class="divider" />
             <ui:VisualElement name="interest" style="padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
                 <ui:Label text="관심 키워드" display-tooltip-when-elided="true" name="header-label" style="font-size: 16px; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;); -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); margin-bottom: 6px;" />
-                <ui:VisualElement name="chip-container" style="flex-grow: 1; flex-wrap: wrap; flex-direction: row;">
-                    <ui:Button text="+" name="add-interest-button" class="chip" style="background-color: rgb(57, 118, 242);" />
+                <ui:VisualElement name="interest-chip-container" style="flex-grow: 1; flex-wrap: wrap; flex-direction: row;">
+                    <ui:Button text="+" name="add-interest-button" class="chip chip-add" style="background-color: rgb(57, 118, 242);" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="divider" class="divider" />
@@ -45,7 +45,7 @@
                     <ui:Label text="(선택)" display-tooltip-when-elided="true" name="header-label-small" style="font-size: 14px; -unity-font: url(&apos;scale-and-crop&apos;); color: rgb(143, 143, 143); margin-bottom: 6px;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="chip-container" style="flex-grow: 1; flex-wrap: wrap; flex-direction: row;">
-                    <ui:Button text="+" name="add-url-button" class="chip" style="background-color: rgb(57, 118, 242);" />
+                    <ui:Button text="+" name="add-url-button" class="chip chip-add" style="background-color: rgb(57, 118, 242);" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
@@ -61,14 +61,14 @@
         <ui:VisualElement name="modal-keyword" style="flex-grow: 1; position: absolute; bottom: 0; width: 100%; background-color: rgb(0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px; display: none;">
             <ui:VisualElement name="modal-bar" style="flex-grow: 1; width: 40px; height: 5px; background-color: rgb(255, 255, 255); border-top-left-radius: 2.5px; border-top-right-radius: 2.5px; border-bottom-right-radius: 2.5px; border-bottom-left-radius: 2.5px; position: absolute; align-self: center; top: 10px;" />
             <ui:VisualElement name="modal-content" style="flex-grow: 1;">
-                <ui:VisualElement name="keyword-chip-container" style="flex-grow: 1;" />
+                <ui:VisualElement name="modal-keyword-chip-container" style="flex-grow: 1;" />
             </ui:VisualElement>
             <ui:Button text="저장하기" name="submit-button" class="button" />
         </ui:VisualElement>
         <ui:VisualElement name="modal-interest" style="flex-grow: 1; position: absolute; bottom: 0; width: 100%; background-color: rgb(0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px; display: none;">
             <ui:VisualElement name="modal-bar" style="flex-grow: 1; width: 40px; height: 5px; background-color: rgb(255, 255, 255); border-top-left-radius: 2.5px; border-top-right-radius: 2.5px; border-bottom-right-radius: 2.5px; border-bottom-left-radius: 2.5px; position: absolute; align-self: center; top: 10px;" />
             <ui:VisualElement name="modal-content" style="flex-grow: 1;">
-                <ui:VisualElement name="interest-chip-container" style="flex-grow: 1;" />
+                <ui:VisualElement name="modal-interest-chip-container" style="flex-grow: 1;" />
             </ui:VisualElement>
             <ui:Button text="저장하기" name="submit-button" class="button" />
         </ui:VisualElement>

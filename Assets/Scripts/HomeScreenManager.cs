@@ -44,6 +44,8 @@ public class HomeScreenManager : MonoBehaviour
     private Button _addKeywordButton;
     private Button _addInterestButton;
     private Button _addURLButton;
+    private VisualElement _editKeywordChipContainer;
+    private VisualElement _editInterestChipContainer;
 
     // History
     private VisualElement _prevButtonHistory;
@@ -111,27 +113,29 @@ public class HomeScreenManager : MonoBehaviour
         _modalURL = editProfile.Q<VisualElement>("modal-url");
         
         var _keywordChip = new ChipsTab(3, 0);
-        editProfile.Q<VisualElement>("keyword-chip-container").Add(_keywordChip);
+        editProfile.Q<VisualElement>("modal-keyword-chip-container").Add(_keywordChip);
         var _interestChip = new ChipsTab(3, 0);
-        editProfile.Q<VisualElement>("interest-chip-container").Add(_interestChip);
+        editProfile.Q<VisualElement>("modal-interest-chip-container").Add(_interestChip);
 
         _modalIntroductionSubmitButton = _modalIntroduction.Q<Button>("submit-button");
-        _modalIntroductionSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal());
+        _modalIntroductionSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal("introduction"));
         _modalKeywordSubmitButton = _modalKeyword.Q<Button>("submit-button");
-        _modalKeywordSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal());
+        _modalKeywordSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal("keyword"));
         _modalInterestSubmitButton = _modalInterest.Q<Button>("submit-button");
-        _modalInterestSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal());
+        _modalInterestSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal("interest"));
         _modalURLSubmitButton = _modalURL.Q<Button>("submit-button");
-        _modalURLSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal());
+        _modalURLSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal("url"));
 
         _editIntroductionButton = editProfile.Q<VisualElement>("edit-button");
         _editIntroductionButton.RegisterCallback<ClickEvent>(evt => OpenModal(0));
 
         _addKeywordButton = editProfile.Q<Button>("add-keyword-button");
         _addKeywordButton.RegisterCallback<ClickEvent>(evt => OpenModal(1));
+        _editKeywordChipContainer = editProfile.Q<VisualElement>("keyword-chip-container");
 
         _addInterestButton = editProfile.Q<Button>("add-interest-button");
         _addInterestButton.RegisterCallback<ClickEvent>(evt => OpenModal(2));
+        _editInterestChipContainer = editProfile.Q<VisualElement>("interest-chip-container");
 
         _addURLButton = editProfile.Q<Button>("add-url-button");
         _addURLButton.RegisterCallback<ClickEvent>(evt => OpenModal(3));
@@ -211,8 +215,54 @@ public class HomeScreenManager : MonoBehaviour
         _modalBackground.style.display = DisplayStyle.None;
     }
 
-    private void SaveAndCloseModal()
+    private void SaveAndCloseModal(string type)
     {
+        if(type == "introduction")
+        {
+            ;
+        }
+        else if(type == "keyword")
+        {
+            var selection = _modalKeyword.Q<ChipsTab>().SelectedKeywords;
+            // 리스트에 먼저 저장한 후 삭제
+            List<VisualElement> children = new List<VisualElement>(_editKeywordChipContainer.Children());
+            
+            foreach (var child in children)
+            {
+                if (!child.ClassListContains("chip-add"))
+                {
+                    _editKeywordChipContainer.Remove(child);
+                }
+            }
+            foreach(var text in selection)
+            {
+                AddChip(text, _editKeywordChipContainer);
+            }
+        }
+        else if(type == "interest")
+        {
+            var selection = _modalInterest.Q<ChipsTab>().SelectedKeywords;
+            // 리스트에 먼저 저장한 후 삭제
+            List<VisualElement> children = new List<VisualElement>(_editInterestChipContainer.Children());
+            
+            foreach (var child in children)
+            {
+                if (!child.ClassListContains("chip-add"))
+                {
+                    _editInterestChipContainer.Remove(child);
+                }
+            }
+            foreach(var text in selection)
+            {
+                AddChip(text, _editInterestChipContainer);
+            }
+        }
+        else if(type == "url")
+        {
+            ;
+        }
+
+        
         // TODO Save
         CloseModal();
     }

@@ -11,7 +11,9 @@ public class ProfileCard : VisualElement
     private VisualElement _keywordsContainer;
     private VisualElement _interestsContainer;
     private Button _wishButton;
+    private Button _meetButton;
     private int status; // 0: offline, 1: online, 2: away
+    private VisualElement _card;
 
     public ProfileCard(string name, string job, string photoURL, List<string> keywords, List<string> interests)
     {
@@ -21,9 +23,13 @@ public class ProfileCard : VisualElement
         // styleSheets.Add(Resources.Load<StyleSheet>("Chip"));
 
         // 요소 참조 가져오기
+        _card = this.Q<VisualElement>("card");
+        _card.RegisterCallback<ClickEvent>(evt => ShowHMD());
         _nameLabel = this.Q<Label>("name");
         _jobLabel = this.Q<Label>("job");
         _profilePhoto = this.Q<VisualElement>("photo");
+        _meetButton = this.Q<Button>("meet-button");
+        _meetButton.RegisterCallback<ClickEvent>(evt => Meet());
         
         _keywordsContainer = this.Q<VisualElement>("keywords-container");
         _interestsContainer = this.Q<VisualElement>("interests-container");
@@ -53,5 +59,15 @@ public class ProfileCard : VisualElement
     {
         var chip = new SelectableChip(text);
         container.Add(chip);
+    }
+
+    private void ShowHMD()
+    {
+        ; // AR에 프로필 띄우기
+    }
+
+    private void Meet()
+    {
+        ; // 만나러 가기;
     }
 }
