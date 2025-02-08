@@ -11,6 +11,7 @@ public class ProfileCard : VisualElement
     private VisualElement _keywordsContainer;
     private VisualElement _interestsContainer;
     private Button _wishButton;
+    private int status; // 0: offline, 1: online, 2: away
 
     public ProfileCard(string name, string job)//, string photoURL, List<string> keywords, List<string> interests)
     {
@@ -32,5 +33,12 @@ public class ProfileCard : VisualElement
         _jobLabel.text = job;
         // Profilephoto URL 설정
         // Container에 추가
+    }
+
+    public void SetStatus(int status) // 0: offline, 1: online, 2: away
+    {
+        this.status = status;
+
+        // TODO status 이미지 변경
     }
 }

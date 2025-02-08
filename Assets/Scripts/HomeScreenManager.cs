@@ -16,24 +16,45 @@ public class HomeScreenManager : MonoBehaviour
     private TemplateContainer editProfile;
     private TemplateContainer history;
     private TemplateContainer wish;
+    private TemplateContainer search;
+
+    private TextField _searchBar;
 
     // Home
-    private VisualElement _editButton;
-    private VisualElement _keywordsContainer;
-    private VisualElement _interestsContainer;
+    private VisualElement _editProfileButton;
+    private VisualElement _homeKeywordsContainer;
+    private VisualElement _homeInterestsContainer;
 
     private VisualElement _historyButton;
     private VisualElement _wishButton;
-    // private ScrollView _profileCardsContainer;
 
     // EditProfile
     private VisualElement _prevButtonEditProfile;
+    private VisualElement _modalBackground;
+    private VisualElement _modalIntroduction;
+    private VisualElement _modalKeyword;
+    private VisualElement _modalInterest;
+    private VisualElement _modalURL;
+
+    private Button _modalIntroductionSubmitButton;
+    private Button _modalKeywordSubmitButton;
+    private Button _modalInterestSubmitButton;
+    private Button _modalURLSubmitButton;
+    private VisualElement _editIntroductionButton;
+    private Button _addKeywordButton;
+    private Button _addInterestButton;
+    private Button _addURLButton;
 
     // History
     private VisualElement _prevButtonHistory;
+    // 다음에 개발..
 
     // Wish
     private VisualElement _prevButtonWish;
+    private ScrollView _profileCardsContainer;
+
+    // Search
+    private VisualElement _prevButtonSearch;
     
     
     private void OnEnable()
@@ -44,6 +65,7 @@ public class HomeScreenManager : MonoBehaviour
         editProfile = root.Q<TemplateContainer>("edit-profile");
         history = root.Q<TemplateContainer>("history");
         wish = root.Q<TemplateContainer>("wish");
+        search = root.Q<TemplateContainer>("search");
 
         Debug.Log("UI Document 연결완료");
 
@@ -54,20 +76,65 @@ public class HomeScreenManager : MonoBehaviour
         // 크기 변경 이벤트 등록
         root.RegisterCallback<GeometryChangedEvent>(evt => UpdateScreenWidth());
 
+        _searchBar = root.Q<TextField>("search-bar");
+        _searchBar.RegisterCallback<ClickEvent>(evt => ShowSearchScreen());
+
         // Home
-        _editButton = home.Q<VisualElement>("edit-button");
-        _keywordsContainer = home.Q<VisualElement>("keyword-chips-container");
-        _interestsContainer = home.Q<VisualElement>("interest-chips-container");
+        _editProfileButton = home.Q<VisualElement>("edit-button");
+        _homeKeywordsContainer = home.Q<VisualElement>("keyword-chips-container");
+        _homeInterestsContainer = home.Q<VisualElement>("interest-chips-container");
         _historyButton = home.Q<VisualElement>("history-button");
         _wishButton = home.Q<VisualElement>("wish-button");
 
-        _editButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(editProfile));
+        AddChip("모션그래픽", _homeKeywordsContainer);
+        AddChip("3D 디자인", _homeKeywordsContainer);
+        AddChip("UX/UI", _homeKeywordsContainer);
+
+        AddChip("데이터/AI", _homeInterestsContainer);
+        AddChip("XR", _homeInterestsContainer);
+        AddChip("UX/UI", _homeInterestsContainer);
+
+        _editProfileButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(editProfile));
         _historyButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(history));
         _wishButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(wish));
 
         // EditProfile
         _prevButtonEditProfile = editProfile.Q<VisualElement>("prev-button");
         _prevButtonEditProfile.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(editProfile));
+
+        _modalBackground = editProfile.Q<VisualElement>("modal-background");
+        _modalBackground.RegisterCallback<ClickEvent>(evt => CloseModal());
+        
+        _modalIntroduction = editProfile.Q<VisualElement>("modal-introduction");
+        _modalKeyword = editProfile.Q<VisualElement>("modal-keyword");
+        _modalInterest = editProfile.Q<VisualElement>("modal-interest");
+        _modalURL = editProfile.Q<VisualElement>("modal-url");
+        
+        var _keywordChip = new ChipsTab(3, 0);
+        editProfile.Q<VisualElement>("keyword-chip-container").Add(_keywordChip);
+        var _interestChip = new ChipsTab(3, 0);
+        editProfile.Q<VisualElement>("interest-chip-container").Add(_interestChip);
+
+        _modalIntroductionSubmitButton = _modalIntroduction.Q<Button>("submit-button");
+        _modalIntroductionSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal());
+        _modalKeywordSubmitButton = _modalKeyword.Q<Button>("submit-button");
+        _modalKeywordSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal());
+        _modalInterestSubmitButton = _modalInterest.Q<Button>("submit-button");
+        _modalInterestSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal());
+        _modalURLSubmitButton = _modalURL.Q<Button>("submit-button");
+        _modalURLSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal());
+
+        _editIntroductionButton = editProfile.Q<VisualElement>("edit-button");
+        _editIntroductionButton.RegisterCallback<ClickEvent>(evt => OpenModal(0));
+
+        _addKeywordButton = editProfile.Q<Button>("add-keyword-button");
+        _addKeywordButton.RegisterCallback<ClickEvent>(evt => OpenModal(1));
+
+        _addInterestButton = editProfile.Q<Button>("add-interest-button");
+        _addInterestButton.RegisterCallback<ClickEvent>(evt => OpenModal(2));
+
+        _addURLButton = editProfile.Q<Button>("add-url-button");
+        _addURLButton.RegisterCallback<ClickEvent>(evt => OpenModal(3));
 
         // History
         _prevButtonHistory = history.Q<VisualElement>("prev-button");
@@ -77,10 +144,22 @@ public class HomeScreenManager : MonoBehaviour
         _prevButtonWish = wish.Q<VisualElement>("prev-button");
         _prevButtonWish.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(wish));
 
-        // _profileCardsContainer = root.Q<ScrollView>("profile-cards-container");
-        // AddProfileCard("김김김", "무직");
-        // AddProfileCard("이이이", "학생");
+        _profileCardsContainer = wish.Q<ScrollView>("profile-cards-container");
+        AddProfileCard("김김김", "무직");
+        AddProfileCard("이이이", "학생");
         // AddLinkCard("하계 학술대회 논문", "www.naver.com");
+
+        // Search
+        _prevButtonSearch = search.Q<VisualElement>("prev-button");
+        _prevButtonSearch.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(search));
+        var _searchChip = new ChipsTab(-1,0);
+        search.Q<VisualElement>("content").Add(_searchChip);
+    }
+
+    private void UpdateScreenWidth()
+    {
+        screenWidth = root.resolvedStyle.width;
+        Debug.Log($"Updated Screen Width: {screenWidth}px");
     }
 
     private void ShowNextScreen(VisualElement nextScreen)
@@ -95,22 +174,63 @@ public class HomeScreenManager : MonoBehaviour
         currentScreen.style.display = DisplayStyle.None;
     }
 
-    private void UpdateScreenWidth()
+    private void ShowSearchScreen() // 서치바가 홈에서 움직이지 않을 경우를 대비한 함수
     {
-        screenWidth = root.resolvedStyle.width;
-        Debug.Log($"Updated Screen Width: {screenWidth}px");
+        search.style.display = DisplayStyle.Flex;
+        container.style.translate = new Translate(-screenWidth, 0, 0);
     }
 
-    // private void AddProfileCard(string name, string job)
-    // {
-    //     var profileCard = new ProfileCard(name, job);
-    //     _profileCardsContainer.Add(profileCard);
-    // }
+    private void OpenModal(int type) // 0: Introduction, 1: Keyword, 2: Interest, 3: URL
+    {
+        switch(type)
+        {
+            case 0:
+                _modalIntroduction.style.display = DisplayStyle.Flex;
+                break;
+            case 1:
+                _modalKeyword.style.display = DisplayStyle.Flex;
+                break;
+            case 2:
+                _modalInterest.style.display = DisplayStyle.Flex;
+                break;
+            case 3:
+                _modalURL.style.display = DisplayStyle.Flex;
+                break;
+        }
+        
+        _modalBackground.style.display = DisplayStyle.Flex;
+    }
 
-    // private void AddLinkCard(string title, string link)
-    // {
-    //     var linkCard = new LinkCard(title, link);
-    //     _profileCardsContainer.Add(linkCard);
-    // }
-    
+    private void CloseModal()
+    {
+        _modalIntroduction.style.display = DisplayStyle.None;
+        _modalKeyword.style.display = DisplayStyle.None;
+        _modalInterest.style.display = DisplayStyle.None;
+        _modalURL.style.display = DisplayStyle.None;
+        _modalBackground.style.display = DisplayStyle.None;
+    }
+
+    private void SaveAndCloseModal()
+    {
+        // TODO Save
+        CloseModal();
+    }
+
+    private void AddProfileCard(string name, string job)
+    {
+        var profileCard = new ProfileCard(name, job);
+        _profileCardsContainer.Add(profileCard);
+    }
+
+    private void AddLinkCard(string title, string link)
+    {
+        var linkCard = new LinkCard(title, link);
+        _profileCardsContainer.Add(linkCard);
+    }
+
+    private void AddChip(string text, VisualElement container)
+    {
+        var chip = new SelectableChip(text);
+        container.Add(chip);
+    }
 }

@@ -28,24 +28,14 @@
             <ui:VisualElement name="keyword">
                 <ui:Label text="내 키워드" display-tooltip-when-elided="true" name="header-label" style="font-size: 16px; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;);" />
                 <ui:VisualElement name="chip-container" style="flex-grow: 1; flex-wrap: wrap; flex-direction: row;">
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
+                    <ui:Button text="+" name="add-keyword-button" class="chip" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="divider" class="divider" />
             <ui:VisualElement name="interest">
                 <ui:Label text="관심 키워드" display-tooltip-when-elided="true" name="header-label" style="font-size: 16px; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;);" />
                 <ui:VisualElement name="chip-container" style="flex-grow: 1; flex-wrap: wrap; flex-direction: row;">
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
+                    <ui:Button text="+" name="add-interest-button" class="chip" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="divider" class="divider" />
@@ -55,21 +45,38 @@
                     <ui:Label text="(선택)" display-tooltip-when-elided="true" name="header-label-small" style="font-size: 14px; -unity-font: url(&apos;scale-and-crop&apos;); color: rgb(143, 143, 143);" />
                 </ui:VisualElement>
                 <ui:VisualElement name="chip-container" style="flex-grow: 1; flex-wrap: wrap; flex-direction: row;">
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
-                    <ui:Button text="Button" class="chip" />
+                    <ui:Button text="+" name="add-url-button" class="chip" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="modal-background" style="flex-grow: 0; position: absolute; flex-shrink: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.31); display: none;" />
-        <ui:VisualElement name="modal" style="flex-grow: 1; position: absolute; bottom: 0; width: 100%; background-color: rgb(0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px;">
+        <ui:VisualElement name="modal-introduction" style="flex-grow: 1; position: absolute; bottom: 0; width: 100%; background-color: rgb(0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px; display: none;">
             <ui:VisualElement name="modal-bar" style="flex-grow: 1; width: 40px; height: 5px; background-color: rgb(255, 255, 255); border-top-left-radius: 2.5px; border-top-right-radius: 2.5px; border-bottom-right-radius: 2.5px; border-bottom-left-radius: 2.5px; position: absolute; align-self: center; top: 10px;" />
             <ui:Label text="자기소개" name="modal-header" style="font-size: 16px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); margin-top: 29px;" />
             <ui:VisualElement name="modal-content" style="flex-grow: 1;">
                 <ui:TextField label="Text Field" placeholder-text="자기소개~" name="introduction-textfield" style="height: 200px;" />
+            </ui:VisualElement>
+            <ui:Button text="저장하기" name="submit-button" class="button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="modal-keyword" style="flex-grow: 1; position: absolute; bottom: 0; width: 100%; background-color: rgb(0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px; display: none;">
+            <ui:VisualElement name="modal-bar" style="flex-grow: 1; width: 40px; height: 5px; background-color: rgb(255, 255, 255); border-top-left-radius: 2.5px; border-top-right-radius: 2.5px; border-bottom-right-radius: 2.5px; border-bottom-left-radius: 2.5px; position: absolute; align-self: center; top: 10px;" />
+            <ui:VisualElement name="modal-content" style="flex-grow: 1;">
+                <ui:VisualElement name="keyword-chip-container" style="flex-grow: 1;" />
+            </ui:VisualElement>
+            <ui:Button text="저장하기" name="submit-button" class="button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="modal-interest" style="flex-grow: 1; position: absolute; bottom: 0; width: 100%; background-color: rgb(0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px; display: none;">
+            <ui:VisualElement name="modal-bar" style="flex-grow: 1; width: 40px; height: 5px; background-color: rgb(255, 255, 255); border-top-left-radius: 2.5px; border-top-right-radius: 2.5px; border-bottom-right-radius: 2.5px; border-bottom-left-radius: 2.5px; position: absolute; align-self: center; top: 10px;" />
+            <ui:VisualElement name="modal-content" style="flex-grow: 1;">
+                <ui:VisualElement name="interest-chip-container" style="flex-grow: 1;" />
+            </ui:VisualElement>
+            <ui:Button text="저장하기" name="submit-button" class="button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="modal-url" style="flex-grow: 1; position: absolute; bottom: 0; width: 100%; background-color: rgb(0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px; display: none;">
+            <ui:VisualElement name="modal-bar" style="flex-grow: 1; width: 40px; height: 5px; background-color: rgb(255, 255, 255); border-top-left-radius: 2.5px; border-top-right-radius: 2.5px; border-bottom-right-radius: 2.5px; border-bottom-left-radius: 2.5px; position: absolute; align-self: center; top: 10px;" />
+            <ui:Label text="개인 URL (선택)" name="modal-header" style="font-size: 16px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); margin-top: 29px;" />
+            <ui:VisualElement name="modal-content" style="flex-grow: 1;">
+                <ui:TextField label="Text Field" placeholder-text="URL ~" name="url-textfield" style="height: 200px;" />
             </ui:VisualElement>
             <ui:Button text="저장하기" name="submit-button" class="button" />
         </ui:VisualElement>

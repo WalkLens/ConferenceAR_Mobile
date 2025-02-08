@@ -1,0 +1,12 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="ManyPeople" src="project://database/Assets/Pages/Share/ManyPeople.uxml?fileID=9197481963319205126&amp;guid=1edc22868e5b3bb42bec54aab60a27ad&amp;type=3#ManyPeople" />
+    <engine:Template name="ShareComplete" src="project://database/Assets/Pages/Share/ShareComplete.uxml?fileID=9197481963319205126&amp;guid=d2d6d9753e6caca46abfef9c0774d6a7&amp;type=3#ShareComplete" />
+    <engine:Template name="ShareHome" src="project://database/Assets/Pages/Share/ShareHome.uxml?fileID=9197481963319205126&amp;guid=7eacdc2009ec2ae4995ffaf78e62ac0f&amp;type=3#ShareHome" />
+    <engine:Template name="ShareURLs" src="project://database/Assets/Pages/Share/ShareURLs.uxml?fileID=9197481963319205126&amp;guid=2f8bda32b3ef5264fac9b5fb6a8be316&amp;type=3#ShareURLs" />
+    <engine:VisualElement name="content" style="flex-grow: 0; flex-shrink: 0; position: absolute; width: 100%; height: 100%; flex-direction: row;">
+        <engine:Instance template="ManyPeople" name="many" style="flex-shrink: 0; width: 100%; height: 100%;" />
+        <engine:Instance template="ShareHome" name="home" style="flex-shrink: 0; width: 100%; height: 100%;" />
+        <engine:Instance template="ShareURLs" name="url" style="flex-shrink: 0; width: 100%; height: 100%;" />
+        <engine:Instance template="ShareComplete" name="share-complete" style="flex-shrink: 0; height: 100%; width: 100%;" />
+    </engine:VisualElement>
+</engine:UXML>

@@ -5,37 +5,36 @@ using UnityEngine.UIElements;
 
 public class SelectableChip : VisualElement
 {
-    private Label _nameLabel;
-    private Label _jobLabel;
-    private VisualElement _profilePhoto;
-    private VisualElement _keywordsContainer;
-    private VisualElement _interestsContainer;
-    private Button _wishButton;
+    private VisualElement _chip;
+    private Label _label;
+    private VisualElement _closeButton;
 
-    public SelectableChip(string name, string job)//, string photoURL, List<string> keywords, List<string> interests)
+    public SelectableChip(string text)//, string photoURL, List<string> keywords, List<string> interests)
     {
         // UXML 및 USS 불러오기
         var visualTree = Resources.Load<VisualTreeAsset>("UI/VisualTree/Chip");
         visualTree.CloneTree(this);
+        _chip = this.Q<VisualElement>("content");
         // styleSheets.Add(Resources.Load<StyleSheet>("Chip"));
 
         // 요소 참조 가져오기
-        _nameLabel = this.Q<Label>("name");
-        _jobLabel = this.Q<Label>("job");
-        _profilePhoto = this.Q<VisualElement>("photo");
-        
-        _keywordsContainer = this.Q<VisualElement>("keywords_container");
-        _interestsContainer = this.Q<VisualElement>("interests_container");
+        _label = this.Q<Label>("label");
+        _closeButton = this.Q<VisualElement>("close-button");
+        _closeButton.style.display = DisplayStyle.None;
 
         // 텍스트 설정
-        _nameLabel.text = name;
-        _jobLabel.text = job;
-        // Profilephoto URL 설정
-        // Container에 추가
+        _label.text = text;
     }
 
     public void ToggleSelect()
     {
-        Debug.Log("Toggled!");
+        if(_chip.ClassListContains("tab-button-selected"))
+        {
+            _chip.RemoveFromClassList("tab-button-selected");
+        }
+        else
+        {
+            _chip.AddToClassList("tab-button-selected");
+        }
     }
 }

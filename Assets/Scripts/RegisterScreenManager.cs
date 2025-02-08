@@ -8,6 +8,7 @@ public class RegisterScreenManager : MonoBehaviour
 {
     // 0. Common
     [SerializeField] private UIDocument uiDocument;
+    [SerializeField] private GameObject home;
     
     private VisualElement root;
     private VisualElement container; // 컨텐츠를 감싸는 컨테이너
@@ -263,6 +264,12 @@ public class RegisterScreenManager : MonoBehaviour
             {
                 DatabaseManager.Instance.registerProfile(ConvertToUserData());
             }
+        }
+
+        if(currentPage == 7)
+        {
+            home.SetActive(true);
+            this.gameObject.SetActive(false);
         }
 
         // Debug.Log("Clicked!!");

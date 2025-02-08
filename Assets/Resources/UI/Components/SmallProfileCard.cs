@@ -28,9 +28,10 @@ public class SmallProfileCard : VisualElement
         // _profilePhoto.~~background~~ = photoURL;
     }
 
-    public void changeStatus(int status) // 0: offline, 1: online, 2: away
+    public void SetStatus(int status) // 0: offline, 1: online, 2: away
     {
         this.status = status;
-        // TODO 이미지 전환 코드
+
+        // TODO status 이미지 변경
     }
 }
