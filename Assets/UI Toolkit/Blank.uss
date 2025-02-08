@@ -111,3 +111,7 @@
 .unity-base-slider__tracker {
     display: none;
 }
+
+.unity-base-text-field__input--placeholder {
+    color: rgb(100, 105, 124);
+}

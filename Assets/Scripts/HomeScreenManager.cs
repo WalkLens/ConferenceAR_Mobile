@@ -145,14 +145,15 @@ public class HomeScreenManager : MonoBehaviour
         _prevButtonWish.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(wish));
 
         _profileCardsContainer = wish.Q<ScrollView>("profile-cards-container");
-        AddProfileCard("김김김", "무직");
-        AddProfileCard("이이이", "학생");
+        AddProfileCard("권가경", "기관명 도식", ".", new List<string>(){"디자인", "3D Modeling", "UX/UI"}, new List<string>(){"Game", "Character", "AI"});
+        AddProfileCard("권나경", "기관명 도식", ",", new List<string>(){"디자인", "3D Modeling", "UX/UI"}, new List<string>(){"Game", "Character", "AI"});
         // AddLinkCard("하계 학술대회 논문", "www.naver.com");
 
         // Search
         _prevButtonSearch = search.Q<VisualElement>("prev-button");
         _prevButtonSearch.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(search));
         var _searchChip = new ChipsTab(-1,0);
+        _searchChip.style.width = Length.Percent(90);
         search.Q<VisualElement>("content").Add(_searchChip);
     }
 
@@ -216,9 +217,9 @@ public class HomeScreenManager : MonoBehaviour
         CloseModal();
     }
 
-    private void AddProfileCard(string name, string job)
+    private void AddProfileCard(string name, string job, string photoURL, List<string> keywords, List<string> interests)
     {
-        var profileCard = new ProfileCard(name, job);
+        var profileCard = new ProfileCard(name, job, photoURL, keywords, interests);
         _profileCardsContainer.Add(profileCard);
     }
 

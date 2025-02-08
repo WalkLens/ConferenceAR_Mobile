@@ -5,9 +5,9 @@
             <ui:VisualElement name="prev-button" style="flex-grow: 0; flex-shrink: 0; width: 24px; height: 24px; position: absolute; left: 20px; background-image: resource(&apos;Vectors/Icons/back&apos;); -unity-background-scale-mode: scale-to-fit;" />
             <ui:Label text="유저 검색" display-tooltip-when-elided="true" name="header" style="font-size: 18px; -unity-font: url(&apos;scale-and-crop&apos;); -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;);" />
         </ui:VisualElement>
-        <ui:TextField label="Text Field" placeholder-text="사용자를 검색하세요" name="search-bar" style="width: 90%; height: 60px; align-items: center;">
+        <ui:TextField label="Text Field" placeholder-text="사용자를 검색하세요" name="search-bar" style="width: 90%; height: 60px; align-items: center; padding-right: 20px;">
             <ui:VisualElement name="icon-search" style="flex-grow: 0; flex-shrink: 0; width: 20px; height: 20px; background-image: resource(&apos;Vectors/Icons/search&apos;); -unity-background-image-tint-color: rgba(162, 162, 162, 0.57);" />
         </ui:TextField>
-        <ui:ScrollView name="selected-chips" style="flex-direction: row; width: 90%;" />
+        <ui:ScrollView name="selected-chips" style="flex-direction: row; width: 90%; margin-top: 40px;" />
     </ui:VisualElement>
 </ui:UXML>
