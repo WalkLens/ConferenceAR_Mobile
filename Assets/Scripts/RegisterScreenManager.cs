@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.IO;
 
-public class UIToolkitManager : MonoBehaviour
+public class RegisterScreenManager : MonoBehaviour
 {
     // 0. Common
     [SerializeField] private UIDocument uiDocument;

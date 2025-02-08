@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
+    <ui:VisualElement name="content" style="width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Resources/Background.png?fileID=2800000&amp;guid=d9183688c3cc8dc4a933373d8614e8be&amp;type=3#Background&quot;); -unity-background-scale-mode: scale-and-crop; position: absolute; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-Regular.otf?fileID=12800000&amp;guid=a89cdade1f1a94c4d95268c2759459a5&amp;type=3#Mobile_Pretendard-Regular&apos;); align-items: center;">
+        <ui:VisualElement name="nav" style="height: 60px; flex-shrink: 0; width: 100%; flex-direction: row; justify-content: center; align-items: center;">
+            <ui:VisualElement name="prev-button" style="flex-grow: 0; flex-shrink: 0; width: 24px; height: 24px; position: absolute; left: 20px; background-image: resource(&apos;Vectors/Icons/back&apos;); -unity-background-scale-mode: scale-to-fit;" />
+            <ui:Label text="찜 목록" display-tooltip-when-elided="true" name="header" style="font-size: 18px; -unity-font: url(&apos;scale-and-crop&apos;); -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;);" />
+        </ui:VisualElement>
+        <ui:ScrollView name="profile-cards-container" style="width: 100%;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ClearDynamicDataOnBuild: 1
   m_EnableEmojiSupport: 0
   m_EmojiFallbackTextAssets: []
-  m_DefaultSpriteAsset: {fileID: 0}
+  m_DefaultSpriteAsset: {fileID: 11400000, guid: 775e636f83a598a48b6d1ec9ea4c19c6, type: 2}
   m_DefaultSpriteAssetPath: Sprite Assets/
   m_FallbackSpriteAssets: []
   m_MissingSpriteCharacterUnicode: 0
