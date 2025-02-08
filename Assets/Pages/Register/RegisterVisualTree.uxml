@@ -1,0 +1,29 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="BasicInfoScreen" src="project://database/Assets/Pages/Register/1.%20BasicInfoScreen.uxml?fileID=9197481963319205126&amp;guid=a5886e377ed38c642bfa80552b52ae38&amp;type=3#1. BasicInfoScreen" />
+    <ui:Template name="KeywordScreen" src="project://database/Assets/Pages/Register/2.%20KeywordScreen.uxml?fileID=9197481963319205126&amp;guid=d269caf751c16fc48962870f0a138ca3&amp;type=3#2. KeywordScreen" />
+    <ui:Template name="3. InterestScreen" src="project://database/Assets/Pages/Register/3.%20InterestScreen.uxml?fileID=9197481963319205126&amp;guid=9fdcefc6f7b11644bb51e2099b1e9fbb&amp;type=3#3. InterestScreen" />
+    <ui:Template name="4. IntroduceScreen" src="project://database/Assets/Pages/Register/4.%20IntroduceScreen.uxml?fileID=9197481963319205126&amp;guid=7957178a178f79b4ab66982a642167a7&amp;type=3#4. IntroduceScreen" />
+    <ui:Template name="5. RegisterCompleteScreen" src="project://database/Assets/Pages/Register/5.%20RegisterCompleteScreen.uxml?fileID=9197481963319205126&amp;guid=7cbc62955e299d842939b4ee26ec6e41&amp;type=3#5. RegisterCompleteScreen" />
+    <ui:Template name="6. SetPINScreen" src="project://database/Assets/Pages/Register/6.%20SetPINScreen.uxml?fileID=9197481963319205126&amp;guid=253c4ae6e35d4ab439c81058f0fe49b3&amp;type=3#6. SetPINScreen" />
+    <ui:Template name="7. ConnectDeviceScreen" src="project://database/Assets/Pages/Register/7.%20ConnectDeviceScreen.uxml?fileID=9197481963319205126&amp;guid=cd8c026953000d046b2ec7c95ebb7e28&amp;type=3#7. ConnectDeviceScreen" />
+    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
+    <ui:VisualElement name="Background" style="position: absolute; width: 100%; height: 100%; background-image: resource(&apos;Background&apos;); -unity-background-scale-mode: scale-and-crop;" />
+    <ui:VisualElement name="Content" style="width: auto; height: 100%; flex-direction: row; transition-duration: 0.2s; transition-timing-function: ease-out-circ;">
+        <ui:Instance template="BasicInfoScreen" name="1" class="app-main" />
+        <ui:Instance template="KeywordScreen" name="2" class="app-main" />
+        <ui:Instance template="3. InterestScreen" name="3" class="app-main" />
+        <ui:Instance template="4. IntroduceScreen" name="4" class="app-main" />
+        <ui:Instance template="5. RegisterCompleteScreen" name="5" class="app-main" />
+        <ui:Instance template="6. SetPINScreen" name="6" class="app-main" />
+        <ui:Instance template="7. ConnectDeviceScreen" name="7" class="app-main" />
+    </ui:VisualElement>
+    <ui:VisualElement name="PopupBackground" style="position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.2); display: none;" />
+    <ui:VisualElement name="Popup" style="width: 100%; height: auto; position: absolute; bottom: 0; background-color: rgb(123, 123, 123); border-top-left-radius: 56px; border-top-right-radius: 56px; background-image: none; -unity-background-scale-mode: scale-and-crop; padding-left: 27px; padding-right: 27px; padding-top: 11px; padding-bottom: 27px; align-items: center; display: none;">
+        <ui:VisualElement name="Handle" style="width: 10%; height: 5px; background-color: rgba(255, 255, 255, 0.5); border-top-left-radius: 2.5px; border-bottom-left-radius: 2.5px; border-top-right-radius: 2.5px; border-bottom-right-radius: 2.5px; margin-bottom: 25px;" />
+        <ui:Label text="자기소개" display-tooltip-when-elided="true" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;); font-size: 16px; margin-bottom: 16px; width: 100%;" />
+        <ui:TextField picking-mode="Ignore" label="Text Field" value="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa." multiline="true" style="color: rgb(255, 255, 255); white-space: normal;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="SubmitContainer" style="position: absolute; bottom: 50px; align-items: center; width: 100%; padding-left: 20px; padding-right: 20px;">
+        <ui:Button text="다음으로" display-tooltip-when-elided="true" name="SubmitButton" class="button" />
+    </ui:VisualElement>
+</ui:UXML>

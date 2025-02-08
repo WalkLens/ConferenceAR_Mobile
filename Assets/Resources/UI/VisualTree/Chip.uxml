@@ -1,0 +1,7 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
+    <engine:VisualElement name="chip-container" class="chip" style="flex-grow: 0; flex-direction: row; align-items: center; justify-content: center; min-height: 35px; max-height: 35px; border-top-left-radius: 17.5px; border-top-right-radius: 17.5px; border-bottom-right-radius: 17.5px; border-bottom-left-radius: 17.5px; padding-right: 10px; padding-left: 10px;">
+        <engine:Label text="Label" name="label" style="margin-bottom: 6px;" />
+        <engine:VisualElement name="close-button" style="flex-grow: 0; flex-shrink: 0; width: 10px; height: 10px; position: absolute; right: 20px; background-image: resource(&apos;Vectors/Icons/back&apos;); -unity-background-scale-mode: scale-to-fit;" />
+    </engine:VisualElement>
+</engine:UXML>

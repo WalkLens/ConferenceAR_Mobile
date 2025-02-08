@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Home" src="project://database/Assets/Pages/Home/Home.uxml?fileID=9197481963319205126&amp;guid=c997d4af9005a324fa67783dc612dfb0&amp;type=3#Home" />
+    <ui:Template name="EditProfile" src="project://database/Assets/Pages/Home/EditProfile.uxml?fileID=9197481963319205126&amp;guid=2d7ee65f1e485df4ab45c3162396d0c2&amp;type=3#EditProfile" />
+    <ui:Template name="History" src="project://database/Assets/Pages/Home/History.uxml?fileID=9197481963319205126&amp;guid=4905418d66026f746812983a86c55b79&amp;type=3#History" />
+    <ui:Template name="Wish" src="project://database/Assets/Pages/Home/Wish.uxml?fileID=9197481963319205126&amp;guid=613d38a88f8be164596236c322a96eef&amp;type=3#Wish" />
+    <ui:Template name="Search" src="project://database/Assets/Pages/Home/Search.uxml?fileID=9197481963319205126&amp;guid=b043e94700c59e949bcd34833f8e77fc&amp;type=3#Search" />
+    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
+    <ui:VisualElement name="content" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-image: resource(&apos;Background&apos;); -unity-background-scale-mode: scale-and-crop; flex-direction: row; transition-duration: 0.2s;">
+        <ui:VisualElement name="home-screen" style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 100%; align-items: center;">
+            <ui:TextField label="Text Field" placeholder-text="사용자를 검색하세요" name="search-bar" style="width: 90%; height: 60px; align-items: center; margin-top: 40px; padding-right: 20px;">
+                <ui:VisualElement name="icon-search" style="flex-grow: 0; flex-shrink: 0; width: 20px; height: 20px; background-image: resource(&apos;Vectors/Icons/search&apos;); -unity-background-image-tint-color: rgba(162, 162, 162, 0.57);" />
+            </ui:TextField>
+            <ui:Instance template="Home" name="home" style="width: 100%; height: 100%; flex-shrink: 1;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="next-screen" style="flex-grow: 1; width: 100%; height: 100%; flex-shrink: 0;">
+            <ui:Instance template="EditProfile" name="edit-profile" style="width: 100%; height: 100%; flex-grow: 1; display: none;" />
+            <ui:Instance template="History" name="history" style="width: 100%; height: 100%; flex-grow: 1; display: none;" />
+            <ui:Instance template="Wish" name="wish" style="width: 100%; height: 100%; display: none;" />
+            <ui:Instance template="Search" name="search" style="width: 100%; height: 100%; display: none;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

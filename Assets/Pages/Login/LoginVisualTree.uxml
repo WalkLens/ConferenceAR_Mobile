@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
+    <ui:VisualElement name="Login" style="width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Resources/Background.png?fileID=2800000&amp;guid=d9183688c3cc8dc4a933373d8614e8be&amp;type=3#Background&quot;); -unity-background-scale-mode: scale-and-crop; justify-content: center; align-items: center;">
+        <ui:IMGUIContainer style="width: 240px; height: 240px; background-image: url(&quot;project://database/Assets/Resources/Vectors/Illusts/logo.svg?fileID=7388822144124034973&amp;guid=4deb417ee04cb524c8df601180a0f995&amp;type=3#logo&quot;); -unity-background-scale-mode: scale-to-fit; margin-bottom: 0;" />
+        <ui:VisualElement style="flex-grow: 0; align-items: center;">
+            <ui:Label text="가입 시 생성한 PIN 번호를 입력하세요" />
+            <ui:VisualElement name="PINField" style="width: 100%; padding-left: 30px; padding-right: 30px; padding-top: 30px; padding-bottom: 30px; flex-direction: row; justify-content: center; margin-top: 0;">
+                <ui:TextField picking-mode="Ignore" label="Text Field" max-length="1" name="PIN1" class="pin-text-field" style="width: 60px; height: 80px;" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" max-length="1" name="PIN2" class="pin-text-field" style="width: 60px; height: 80px;" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" max-length="1" name="PIN3" class="pin-text-field" style="width: 60px; height: 80px;" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" max-length="1" name="PIN4" class="pin-text-field" style="width: 60px; height: 80px;" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" max-length="1" name="PIN5" class="pin-text-field" style="width: 60px; height: 80px;" />
+            </ui:VisualElement>
+            <ui:Label text="존재하지 않는 PIN 번호입니다" display-tooltip-when-elided="true" name="DuplicateExplanation" style="-unity-font: url(&apos;scale-and-crop&apos;); color: rgb(240, 123, 125);" />
+            <ui:VisualElement name="CreateAccount" style="flex-grow: 1;">
+                <ui:Label text="&lt;u&gt;Create Account&lt;/u&gt;" name="label" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); color: rgb(145, 155, 177);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

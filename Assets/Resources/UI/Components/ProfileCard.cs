@@ -11,8 +11,9 @@ public class ProfileCard : VisualElement
     private VisualElement _keywordsContainer;
     private VisualElement _interestsContainer;
     private Button _wishButton;
+    private int status; // 0: offline, 1: online, 2: away
 
-    public ProfileCard(string name, string job)//, string photoURL, List<string> keywords, List<string> interests)
+    public ProfileCard(string name, string job, string photoURL, List<string> keywords, List<string> interests)
     {
         // UXML 및 USS 불러오기
         var visualTree = Resources.Load<VisualTreeAsset>("UI/VisualTree/ProfileCard");
@@ -24,13 +25,33 @@ public class ProfileCard : VisualElement
         _jobLabel = this.Q<Label>("job");
         _profilePhoto = this.Q<VisualElement>("photo");
         
-        _keywordsContainer = this.Q<VisualElement>("keywords_container");
-        _interestsContainer = this.Q<VisualElement>("interests_container");
+        _keywordsContainer = this.Q<VisualElement>("keywords-container");
+        _interestsContainer = this.Q<VisualElement>("interests-container");
 
         // 텍스트 설정
         _nameLabel.text = name;
         _jobLabel.text = job;
         // Profilephoto URL 설정
-        // Container에 추가
+        foreach(var keyword in keywords)
+        {
+            AddChip(keyword, _keywordsContainer);
+        }
+        foreach(var interest in interests)
+        {
+            AddChip(interest, _interestsContainer);
+        }
+    }
+
+    public void SetStatus(int status) // 0: offline, 1: online, 2: away
+    {
+        this.status = status;
+
+        // TODO status 이미지 변경
+    }
+
+    private void AddChip(string text, VisualElement container)
+    {
+        var chip = new SelectableChip(text);
+        container.Add(chip);
     }
 }
