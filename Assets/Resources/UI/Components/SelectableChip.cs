@@ -9,12 +9,14 @@ public class SelectableChip : VisualElement
     private Label _label;
     private VisualElement _closeButton;
 
+    public string text{get{return _label.text;}}
+
     public SelectableChip(string text)//, string photoURL, List<string> keywords, List<string> interests)
     {
         // UXML 및 USS 불러오기
         var visualTree = Resources.Load<VisualTreeAsset>("UI/VisualTree/Chip");
         visualTree.CloneTree(this);
-        _chip = this.Q<VisualElement>("content");
+        _chip = this.Q<VisualElement>("chip-container");
         // styleSheets.Add(Resources.Load<StyleSheet>("Chip"));
 
         // 요소 참조 가져오기
@@ -28,13 +30,15 @@ public class SelectableChip : VisualElement
 
     public void ToggleSelect()
     {
-        if(_chip.ClassListContains("tab-button-selected"))
+        if(_chip.ClassListContains("chip-active"))
         {
-            _chip.RemoveFromClassList("tab-button-selected");
+            _chip.RemoveFromClassList("chip-active");
+            _label.style.color = Color.white;
         }
         else
         {
-            _chip.AddToClassList("tab-button-selected");
+            _chip.AddToClassList("chip-active");
+            _label.style.color = Color.gray;
         }
     }
 }

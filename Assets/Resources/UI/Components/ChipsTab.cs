@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -25,6 +27,8 @@ public class ChipsTab : VisualElement
     private List<string> _selectedKeywords = new List<string>();
     private Label _nameLabel;
 
+    public List<string> SelectedKeywords{get{return _selectedKeywords;}}
+
     public ChipsTab(int maxLength, int style) 
     {
         this._maxLength = maxLength;
@@ -38,9 +42,9 @@ public class ChipsTab : VisualElement
         _tabButtons[1] = this.Q<Button>("tab-button-design");
         _tabButtons[2] = this.Q<Button>("tab-button-dev");
 
-        _tabButtons[0].RegisterCallback<ClickEvent>(evt => ToggleKeywordTabButton(0));
-        _tabButtons[1].RegisterCallback<ClickEvent>(evt => ToggleKeywordTabButton(1));
-        _tabButtons[2].RegisterCallback<ClickEvent>(evt => ToggleKeywordTabButton(2));
+        _tabButtons[0].RegisterCallback<ClickEvent>(evt => ToggleTabButton(0));
+        _tabButtons[1].RegisterCallback<ClickEvent>(evt => ToggleTabButton(1));
+        _tabButtons[2].RegisterCallback<ClickEvent>(evt => ToggleTabButton(2));
 
         _bar = this.Q<VisualElement>("tab-bar");
 
@@ -53,19 +57,19 @@ public class ChipsTab : VisualElement
 
         foreach(var item in researchChipString)
         {
-            AddChip(item, _researchContainer);
+            AddChip(item, 0);
         }
         foreach(var item in designChipString)
         {
-            AddChip(item, _designContainer);
+            AddChip(item, 1);
         }
         foreach(var item in devChipString)
         {
-            AddChip(item, _devContainer);
+            AddChip(item, 2);
         }
     }
 
-    private void ToggleKeywordTabButton(int category)
+    private void ToggleTabButton(int category)
     {
         if(_activeTab != category)
         {
@@ -76,6 +80,52 @@ public class ChipsTab : VisualElement
             _bar.style.translate = new Translate(Length.Percent(132*(_activeTab-1)), 0);
             _chipsContainer.style.translate = new Translate(Length.Percent(-33*(_activeTab-1)), 0);
         }
+    }
+
+    private void ToggleChip(SelectableChip chip, int category)
+    {
+        if(_selectedKeywords.Contains(chip.text))
+        {
+            _selectedKeywords.Remove(chip.text);
+            chip.ToggleSelect();
+            switch(category)
+            {
+                case 0:
+                    _researchChipCount -= 1;
+                    break;
+                case 1:
+                    _designChipCount -= 1;
+                    break;
+                case 2:
+                    _devChipCount -= 1;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            if(_maxLength == -1 || _selectedKeywords.Count < _maxLength) // 선택 가능할 때
+            {
+                _selectedKeywords.Add(chip.text);
+                chip.ToggleSelect();
+                switch(category)
+                {
+                    case 0:
+                        _researchChipCount += 1;
+                        break;
+                    case 1:
+                        _designChipCount += 1;
+                        break;
+                    case 2:
+                        _devChipCount += 1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        UpdateTabButtonText();
     }
 
     private void UpdateTabButtonText()
@@ -108,9 +158,23 @@ public class ChipsTab : VisualElement
         }
     }
 
-    private void AddChip(string text, VisualElement container)
+    private void AddChip(string text, int category) // 0: Research, 1: Design, 2: Dev
     {
         var chip = new SelectableChip(text);
-        container.Add(chip);
+        switch(category)
+        {
+            case 0:
+                _researchContainer.Add(chip);
+                break;
+            case 1:
+                _designContainer.Add(chip);
+                break;
+            case 2:
+                _devContainer.Add(chip);
+                break;
+            default:
+                break;
+        }
+        chip.RegisterCallback<ClickEvent>(evt => ToggleChip(chip, category));
     }
 }
