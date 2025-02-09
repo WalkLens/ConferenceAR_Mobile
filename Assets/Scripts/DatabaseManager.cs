@@ -280,4 +280,42 @@ public class DatabaseManager : MonoBehaviour
         
         return receivedUserData;
     }
+
+    public UserDataList getAllUserData()
+    {
+        string apiUrl = $"http://{address}:{port}/users/";
+
+        UserDataList userDatas = new UserDataList();
+
+        try
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+
+            using (HttpWebResponse httpResponse = (HttpWebResponse)request.GetResponse())
+            {
+                using (StreamReader reader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    string jsonResponse = reader.ReadToEnd();
+
+                    // JSON 배열을 감싸는 객체로 변환
+                    if (jsonResponse.TrimStart().StartsWith("["))
+                    {
+                        jsonResponse = "{\"users\":" + jsonResponse + "}";
+                    }
+
+                    UserDataList userDataList = JsonUtility.FromJson<UserDataList>(jsonResponse);
+                    userDatas = JsonUtility.FromJson<UserDataList>(jsonResponse);
+                    Debug.Log($"User data retrieved successfully: {jsonResponse}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error retrieving user data: {ex.Message}");
+        }
+
+        return userDatas;
+    }
 }

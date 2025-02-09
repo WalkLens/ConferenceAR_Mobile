@@ -23,3 +23,9 @@ public class UserData
     public string photo_url;
     public bool autoaccept;
 }
+
+[System.Serializable]
+public class UserDataList
+{
+    public UserData[] users;
+}
