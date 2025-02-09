@@ -754,7 +754,6 @@ Transform:
   - {fileID: 1222289590}
   - {fileID: 1252066497}
   - {fileID: 948512413}
-  - {fileID: 1943942398}
   - {fileID: 643007059}
   - {fileID: 1280091783}
   m_Father: {fileID: 0}
@@ -993,20 +992,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c70a097c49dcb64eb5e81ac4d630501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myUserInfoText: {fileID: 1913582225}
-  userInfosText: {fileID: 1913582225}
-  buttonTransforms:
-  - {fileID: 270127308}
-  - {fileID: 689717259}
-  - {fileID: 1763770295}
-  - {fileID: 1388604377}
-  - {fileID: 1356143777}
-  - {fileID: 579766609}
-  - {fileID: 2036191732}
-  - {fileID: 1596516986}
-  - {fileID: 1541341920}
-  userButtonTexts: []
-  userButtons: []
   matchButtonGameObject: {fileID: 0}
   newMatchGameObject: {fileID: 0}
   matchButtons: []
@@ -1997,7 +1982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7de7425fac3c044986e5904227fc23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input_PIN: 
+  input_PIN: 12345
 --- !u!114 &1222289592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3493,7 +3478,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 553526358}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1943942399
 MonoBehaviour:
@@ -3920,4 +3905,5 @@ SceneRoots:
   - {fileID: 351697042}
   - {fileID: 1019202816}
   - {fileID: 1801960993}
+  - {fileID: 1943942398}
   - {fileID: 553526358}

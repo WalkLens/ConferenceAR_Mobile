@@ -27,6 +27,7 @@ public class UserMatchingManager : HostOnlyBehaviour
     public const byte SendCustomStringEvent = 6; // 초기에 접속하는 코드
     public const byte SendURLDataEvent = 7;// URL 전송 이벤트 코드
     public const byte ViewProfileEvent = 8;
+    public const byte SendMyUIPopUP = 9;
 
     //============ SM ADD ============//
     public bool _isMatchingSucceed = false;
@@ -55,7 +56,8 @@ public class UserMatchingManager : HostOnlyBehaviour
             { SendMeetingInfoEvent, HandleSendMeetingInfoEvent },
             { SendCustomStringEvent, HandleSendCustomStringEvent },
             { SendURLDataEvent, HandleSendURLDataEvent },
-            { ViewProfileEvent, HandleSendViewProfileEvent }
+            { ViewProfileEvent, HandleSendViewProfileEvent },
+            { SendMyUIPopUP, HandleSendMyUIPopUPEvent }
         };
     }
 
@@ -178,7 +180,33 @@ public class UserMatchingManager : HostOnlyBehaviour
         }
     }
 
+    public void PopUpUINotify(int targetActorNumber)
+    {
+        object[] data = new object[] { };
 
+        // 전송 옵션: 지정한 Actor에게만 보내기
+        RaiseEventOptions options = new RaiseEventOptions
+        {
+            TargetActors = new int[] { targetActorNumber }
+        };
+
+        try
+        {
+            PhotonNetwork.RaiseEvent(SendMyUIPopUP, data, options, SendOptions.SendReliable);
+            FileLogger.Log($"[PopUpUINotify] UI {targetActorNumber}에게 전송", this);
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"[PopUpUINotify] 메시지 전송 실패: {ex.Message}", this);
+        }
+    }
+
+
+
+    private void HandleSendMyUIPopUPEvent(EventData photonEvent)
+    {
+        //notificationManager.OpenSendAcceptPopupUI();
+    }
 
     private void HandleSendViewProfileEvent(EventData photonEvent)
     {
@@ -398,19 +426,19 @@ public class UserMatchingManager : HostOnlyBehaviour
             Debug.Log("Meeting Time: " + meetingInfo.MeetingDateTime);
 
             // Set MatchInfo 저장, 알람 실행 코드
-            if (MeetingManager.Instance && PhotonNetwork.NickName.Contains("Hololens"))
+            /*if (MeetingManager.Instance && PhotonNetwork.NickName.Contains("Hololens"))
             {
                 MeetingManager.Instance.SetAlarmFromMeetingInfo(meetingInfo);
 
                 HololenUIManager.Instance.AddReservedData();
-                /*HololenUIManager.Instance.timers["12345"] =
-                    (float)MatchingUtils.GetRemainingMinutes(meetingInfo.MeetingDateTime) * 60; // 분 단위에서 초 단위로 변경*/
+                *//*HololenUIManager.Instance.timers["12345"] =
+                    (float)MatchingUtils.GetRemainingMinutes(meetingInfo.MeetingDateTime) * 60; // 분 단위에서 초 단위로 변경*//*
                 HololenUIManager.Instance.LoadReservatedDataFromDB();
             }
             else
             {
                 FileLogger.Log("Meeting Manager is Null", this);
-            }
+            }*/
         }
     }
 
@@ -555,7 +583,7 @@ public class UserMatchingManager : HostOnlyBehaviour
         try
         {
             PhotonNetwork.RaiseEvent(SendMeetingInfoEvent, data, options, SendOptions.SendReliable);
-            MeetingManager.Instance.SetAlarmFromMeetingInfo(meetingInfo);
+            //MeetingManager.Instance.SetAlarmFromMeetingInfo(meetingInfo);
 
             FileLogger.Log($"Successfully sent Meeting Info to {targetActorNumber}", this);
         }

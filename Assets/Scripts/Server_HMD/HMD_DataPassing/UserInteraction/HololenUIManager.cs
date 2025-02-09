@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
@@ -32,10 +32,10 @@ public class HololenUIManager : MonoBehaviour
     [Header("Base UI Canvas")]
     public GameObject MatchingRequestDataPrefab;
     public Transform MatchingRequestDataParent;
-    public List<GameObject> MatchingRequestData;                   // ??? ????? ???? ?????? ??????? ?????? ??
+    public List<GameObject> MatchingRequestData;                   // ï¿½ï¿½Äª ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Å¾ï¿½ ï¿½ï¿½
     public GameObject ReservedDataPrefab;
     public Transform ReservedDataParent;
-    public List<GameObject> ReservedData;                           // ??? ????? ????? ?????? ??????? ?????? ??
+    public List<GameObject> ReservedData;                           // ï¿½ï¿½Äª ï¿½ï¿½Ã»ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Å¾ï¿½ ï¿½ï¿½
 
     public Dictionary<string, float> timers = new Dictionary<string, float>();
     public bool isTimerUpdated;
@@ -65,12 +65,12 @@ public class HololenUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ?©£? ????
+        // ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
         currentTime.text = DateTime.Now.ToString(("hh:mm tt"));
 
         LoadReservatedDataUpdate();
 
-        // DB ????
+        // DB ï¿½ï¿½ï¿½ï¿½
         if (isTimerUpdated)
         {
             timers["12345"] = (float)GetTime();
@@ -81,7 +81,7 @@ public class HololenUIManager : MonoBehaviour
             SetTime(0);
         }
 
-        //if (Input.GetKey(KeyCode.M))                            // ??? ????? ?? ???? ??????? ???
+        //if (Input.GetKey(KeyCode.M))                            // ï¿½ï¿½Äª ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô·ï¿½
         //{
         //    AddMatchingRequestData();
         //    LoadMatchingSenderDataFromDB();
@@ -94,7 +94,7 @@ public class HololenUIManager : MonoBehaviour
         SenderDataText[0].text = DatabaseManager.Instance.getUserData("12345").name;
         SenderDataText[1].text = DatabaseManager.Instance.getUserData("12345").job;
 
-        // TODO : ?????, ???? ????? ?¥å? ???
+        // TODO : ï¿½Ì¹ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ ï¿½Îµï¿½ ï¿½Ê¿ï¿½
     }
 
     //=================== Calendar_R =================//
@@ -102,44 +102,44 @@ public class HololenUIManager : MonoBehaviour
     {
         ReservatedDataText[2].text = DatabaseManager.Instance.getUserData("12345").name;
         ReservatedDataText[3].text = DatabaseManager.Instance.getUserData("12345").job;
-        // TODO : ?????, ???? ????? ?¥å? ???
+        // TODO : ï¿½Ì¹ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ ï¿½Îµï¿½ ï¿½Ê¿ï¿½
     }
 
     public void LoadReservatedDataUpdate()
     {
-        List<string> keys = new List<string>(timers.Keys);                      // ????? ?????? ????? ???? ???
+        List<string> keys = new List<string>(timers.Keys);                      // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½é¿¡ ï¿½ï¿½ï¿½Ø¼ï¿½ Å¸ï¿½Ì¸ï¿½ ï¿½Ûµï¿½
         foreach (string key in keys)
         {
             if (timers[key] >= 3600)
             {
                 timers[key] -= Time.deltaTime;
-                ReservatedDataText[0].text = (timers[key] / 3600).ToString("F0") + "½Ã°£ " + ((timers[key] % 3600) / 60).ToString("F0") + "ºĞ ÀÌ³»";
-                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ??? ?????? ??? ??????? ???¨¨? ?????? ??????
+                ReservatedDataText[0].text = (timers[key] / 3600).ToString("F0") + "ì‹œê°„ " + ((timers[key] % 3600) / 60).ToString("F0") + "ë¶„ ì´ë‚´";
+                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 ReservatedDataCircleTimer.fillAmount = timers[key] / (4 * 60 * 60);
             }
             else if (timers[key] >= 60)
             {
                 timers[key] -= Time.deltaTime;
-                ReservatedDataText[0].text = (timers[key] / 60).ToString("F0") + "ºĞ ÀÌ³»";
-                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ??? ?????? ??? ??????? ???¨¨? ?????? ??????
+                ReservatedDataText[0].text = (timers[key] / 60).ToString("F0") + "ë¶„ ì´ë‚´";
+                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 ReservatedDataCircleTimer.fillAmount = timers[key] / (4 * 60 * 60);
             }
             else if (timers[key] >= 0)
             {
                 timers[key] -= Time.deltaTime;
-                ReservatedDataText[0].text = timers[key].ToString("F0") + "ÃÊ ÀÌ³»";
-                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ??? ?????? ??? ??????? ???¨¨? ?????? ??????
+                ReservatedDataText[0].text = timers[key].ToString("F0") + "ì´ˆ ì´ë‚´";
+                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 ReservatedDataCircleTimer.fillAmount = timers[key] / (4 * 60 * 60);
             }
             else
             {
                 if (timers[key] != -1)
                 {
-                    timers[key] = -1; // ??? ???????? ?¢¥? ???? ??? ?????
+                    timers[key] = -1; // ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½Ø¾ï¿½ï¿½ï¿½
                     OpenMatchingStartPopupUI();
                     RemoveReservedData();
                 }
-                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ??? ?????? ??? ??????? ???¨¨? ?????? ??????
+                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 ReservatedDataCircleTimer.fillAmount = timers[key] / (4 * 60 * 60);
             }
         }
@@ -149,16 +149,16 @@ public class HololenUIManager : MonoBehaviour
     {
         RecentMetDataText[0].text = DatabaseManager.Instance.getUserData("12345").name;
 
-        // TODO : ?????, ???? ????? ?¥å? ???
+        // TODO : ï¿½Ì¹ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ ï¿½Îµï¿½ ï¿½Ê¿ï¿½
     }
 
 
 
-    public void AddMatchingRequestData()                                        // !!! ????? ???? ????? ?¥ê?
+    public void AddMatchingRequestData()                                        // !!! ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
     {
         GameObject newObject = Instantiate(MatchingRequestDataPrefab);
 
-        // ?¥è?? MatchingRequestData?? ????
+        // ï¿½Î¸ï¿½ï¿½ MatchingRequestDataï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         newObject.transform.SetParent(MatchingRequestDataParent);
 
         int index = MatchingRequestDataParent.childCount;
@@ -167,16 +167,16 @@ public class HololenUIManager : MonoBehaviour
         newObject.transform.localScale = Vector3.one;
         newObject.transform.localRotation = Quaternion.identity;
 
-        // MatchingRequestData ??????? ???
+        // MatchingRequestData ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
         MatchingRequestData.Add(newObject);
 
-        // ?????? ????
+        // ï¿½Ø½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Transform senderNameObject = newObject.transform.Find("Data0/ProfileBaseData - V/Name");
         Transform senderPositionObject = newObject.transform.Find("Data0/ProfileBaseData - V/Position|Team");
         SenderDataText[0] = senderNameObject.GetComponent<TextMeshProUGUI>();
         SenderDataText[1] = senderPositionObject.GetComponent<TextMeshProUGUI>();
 
-        // ????? ??? ????
+        // ï¿½ï¿½Æ°ï¿½é¿¡ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Transform sendMatchingRequestObject = newObject.transform.Find("Buttons - H/Send Matching Request");
         Transform declineObject = newObject.transform.Find("Buttons - H/Decline");
         Transform timePlusObject = newObject.transform.Find("Buttons - H/TimePlus");
@@ -192,7 +192,7 @@ public class HololenUIManager : MonoBehaviour
         {
             RemoveMatchingRequestData(newObject);
             notificationManager.SendAcceptMessage();
-            AddReservedData();                                  // ???ë¡?? ???? ??? ???? ??, UI?? ???
+            AddReservedData();                                  // ï¿½ï¿½ï¿½æ¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, UIï¿½ï¿½ Ç¥ï¿½ï¿½
 
             MeetTimeUpdate();
 
@@ -229,10 +229,10 @@ public class HololenUIManager : MonoBehaviour
 
     public void RemoveMatchingRequestData(GameObject objectToRemove)
     {
-        if (MatchingRequestData.Contains(objectToRemove)) // ??? ????????? ??????? ?????? ????? ???
+        if (MatchingRequestData.Contains(objectToRemove)) // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         {
-            MatchingRequestData.Remove(objectToRemove);        // ????????? ??? ??????? ????
-            Destroy(objectToRemove);                           // ?????? ??? ??????? ????
+            MatchingRequestData.Remove(objectToRemove);        // ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+            Destroy(objectToRemove);                           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         }
     }
 
@@ -241,7 +241,7 @@ public class HololenUIManager : MonoBehaviour
         Debug.Log("Add Reserved Data");
         GameObject newObject = Instantiate(ReservedDataPrefab);
 
-        //// ?¥è?? MatchingRequestData?? ????
+        //// ï¿½Î¸ï¿½ï¿½ MatchingRequestDataï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         newObject.transform.SetParent(ReservedDataParent);
 
         int index = ReservedDataParent.childCount;
@@ -252,7 +252,7 @@ public class HololenUIManager : MonoBehaviour
 
         ReservedData.Add(newObject);
 
-        // ?????? ????
+        // ï¿½Ø½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Transform leftTimeObject = newObject.transform.Find("DataContainer/TimeData/ProfileBaseData - V/LeftTime");
         Transform futureTimeObject = newObject.transform.Find("DataContainer/TimeData/ProfileBaseData - V/FutureTime");
         Transform timePlusObject = newObject.transform.Find("DataContainer/UserData/ProfileBaseData - V/Name");
@@ -271,18 +271,18 @@ public class HololenUIManager : MonoBehaviour
     {
         if (ReservedData.Count > 0)
         {
-            GameObject lastItem = ReservedData[ReservedData.Count - 1]; // ¸¶Áö¸· ¿ÀºêÁ§Æ® °¡Á®¿À±â
-            ReservedData.RemoveAt(ReservedData.Count - 1); // ¸®½ºÆ®¿¡¼­ Á¦°Å
-            Destroy(lastItem); // ¿ÀºêÁ§Æ® »èÁ¦
+            GameObject lastItem = ReservedData[ReservedData.Count - 1]; // ë§ˆì§€ë§‰ ì˜¤ë¸Œì íŠ¸ ê°€ì ¸ì˜¤ê¸°
+            ReservedData.RemoveAt(ReservedData.Count - 1); // ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œê±°
+            Destroy(lastItem); // ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
         }
         else
         {
-            Debug.LogWarning("ReservedData ¸®½ºÆ®°¡ ºñ¾î ÀÖ½À´Ï´Ù.");
+            Debug.LogWarning("ReservedData ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤.");
         }
         /*if (ReservedData.Count > 0)
         {
-            ReservedData.RemoveAt(ReservedData.Count-1);        // ? ??¡Æ ???? ????????? ????
-            Destroy(ReservedData[ReservedData.Count-1]);        // ?????? ? ??¡Æ ????? ???? ????????? ????
+            ReservedData.RemoveAt(ReservedData.Count-1);        // Ã¹ ï¿½ï¿½Â° ï¿½ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            Destroy(ReservedData[ReservedData.Count-1]);        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¹ ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }*/
     }
 
@@ -306,7 +306,7 @@ public class HololenUIManager : MonoBehaviour
         SenderDetailsText[12].text = DatabaseManager.Instance.getUserData("12345").interest_5;
         SenderDetailsText[13].text = DatabaseManager.Instance.getUserData("12345").url;
 
-        // TODO : ?????, ???? ????? ?¥å? ???
+        // TODO : ï¿½Ì¹ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ ï¿½Îµï¿½ ï¿½Ê¿ï¿½
     }
 
 
@@ -332,7 +332,7 @@ public class HololenUIManager : MonoBehaviour
     {
         isTimerUpdated = true;
 
-        MeetingManager.Instance.SetAndSendMeetingInfo(time);
+        //MeetingManager.Instance.SetAndSendMeetingInfo(time);
     }
 
     public int GetTime()
@@ -351,9 +351,9 @@ public class HololenUIManager : MonoBehaviour
     //=================== Matching  =================//
     public void ShowMeetingUI()
     {
-        Debug.Log("?? ?©£?? ????!");
+        Debug.Log("ï¿½ï¿½ ï¿½Ã°ï¿½È­ ï¿½ï¿½ï¿½ï¿½!");
         Vector3 temp = UserMatchingManager.Instance.partnerGameObject.transform.position - UserMatchingManager.Instance.myGameObject.transform.position;
-        Debug.Log(temp.magnitude);              // 250205 : UI?? ??m ??????? ????? ?? ???????? ??
+        Debug.Log(temp.magnitude);              // 250205 : UIï¿½ï¿½ ï¿½ï¿½m ï¿½ï¿½ï¿½Ò´ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½ ï¿½ï¿½
     }
 
     public void UpdateRouteUI(Vector3 direction, float myRotY)

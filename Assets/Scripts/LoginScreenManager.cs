@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.IO;
+using MRTK.Tutorials.MultiUserCapabilities;
+using UnityEngine.Windows;
 
 public class LoginScreenManager: MonoBehaviour
 {
@@ -84,7 +86,8 @@ public class LoginScreenManager: MonoBehaviour
         {
             if(DatabaseManager.Instance.isPINDuplicate(code))
             {
-                DatabaseManager.Instance.playerUserData = DatabaseManager.Instance.getUserData(code);
+                DatabaseManager.Instance.playerUserData = DatabaseManager.Instance.getUserData(code);// -> 여기서 접속 진행
+                PhotonLobbyConferenceAR.Lobby.JoinOrCreateRoom(code);
                 home.SetActive(true);
                 this.gameObject.SetActive(false);
             }

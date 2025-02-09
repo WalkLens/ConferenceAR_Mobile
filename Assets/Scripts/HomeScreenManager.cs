@@ -199,8 +199,9 @@ public class HomeScreenManager : MonoBehaviour
         _prevButtonWish.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(wish));
 
         _profileCardsContainer = wish.Q<ScrollView>("profile-cards-container");
-        AddProfileCard(dummyUserData);
-        AddProfileCard(dummyUserData);
+        AddProfileCard(DatabaseManager.Instance.getUserData("77777"));
+        AddProfileCard(DatabaseManager.Instance.getUserData("99999"));
+        /*AddProfileCard(dummyUserData);*/
         // AddLinkCard("하계 학술대회 논문", "www.naver.com");
 
         // Search

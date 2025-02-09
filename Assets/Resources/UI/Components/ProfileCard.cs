@@ -3,6 +3,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -77,10 +78,34 @@ public class ProfileCard : VisualElement
     private void ShowHMD()
     {
         Debug.Log(this.profileData.pin); // AR에 프로필 띄우기
-        OnSendURLButtonClicked(this.profileData.pin);
+        OnSendPinNumButtonClicked(this.profileData.pin);
+
     }
 
-    public void OnSendURLButtonClicked(string myNick)
+
+    public void OnSendPinNumButtonClicked(string myNick)
+    {
+        // 현재 사용자의 닉네임에서 PIN 추출 (예: "12345_Mobile" -> "12345")
+        //string myNick = PhotonNetwork.NickName;
+        string pin = DatabaseManager.Instance.playerUserData.pin;
+      
+        // 대응하는 Hololens 사용자의 닉네임은 "PIN_Hololens"로 가정
+        string targetUserName = $"{pin}_Hololens";
+        int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetUserName);
+        Debug.Log($"{targetUserName}에게 데이터 전송햇음!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.");
+        if (targetActorNumber == null)
+        {
+            Debug.LogError($"대상 사용자 '{targetUserName}'를 찾을 수 없습니다.");
+            return;
+        }
+
+        UserMatchingManager.Instance.ReceivePinnumForProfile(targetActorNumber, myNick);
+    }
+
+
+
+
+    public void OnSendMatchingButtonClicked(string myNick)
     {
         // 현재 사용자의 닉네임에서 PIN 추출 (예: "12345_Mobile" -> "12345")
         //string myNick = PhotonNetwork.NickName;
@@ -94,7 +119,7 @@ public class ProfileCard : VisualElement
 
         if (targetUserInfo == null)
         {
-            Debug.LogError($"대상 사용자 '{targetUserName}'를 찾을 수 없습니다.");
+            //Debug.LogError($"대상 사용자 '{targetUserName}'를 찾을 수 없습니다.");
             return;
         }
 
@@ -102,8 +127,16 @@ public class ProfileCard : VisualElement
 
         // 매칭 요청 전송 (매칭 요청 ID 0은 "Request..."로 처리한다고 가정)
         int matchRequestId = 0;
-        DebugUserInfos.Instance.SendMatchRequestToAUser(targetUserName, myUserInfo, matchRequestId);
 
+        if(myNick != DatabaseManager.Instance.playerUserData.pin)
+        {
+            DebugUserInfos.Instance.SendMatchRequestToAUser(targetUserName, myUserInfo, matchRequestId);
+
+        }
+        else
+        {
+            Debug.Log("Same ID!!!!!!!!!!!!!!!!!!!! You cant send");
+        }
 
         // PhotonUserUtility를 통해 해당 닉네임의 ActorNumber를 획득
         /*int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetHololensNick);
@@ -122,7 +155,16 @@ public class ProfileCard : VisualElement
 
     private void Meet()
     {
-        Debug.Log(this.profileData.pin); // 만나러 가기;
+        Debug.Log(this.profileData.pin); // AR에 프로필 띄우기
+        OnSendMatchingButtonClicked(this.profileData.pin);
+
+        string pin = DatabaseManager.Instance.playerUserData.pin;
+
+        // 대응하는 Hololens 사용자의 닉네임은 "PIN_Hololens"로 가정
+        string targetUserName = $"{pin}_Hololens";
+        int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetUserName);
+        UserMatchingManager.Instance.PopUpUINotify(targetActorNumber);
+
     }
 
     private void OnFocused()
