@@ -26,6 +26,7 @@ public class UserMatchingManager : HostOnlyBehaviour
     public const byte SendMeetingInfoEvent = 5; // 미팅 정보 이벤트 코드(매칭 성사)
     public const byte SendCustomStringEvent = 6; // 초기에 접속하는 코드
     public const byte SendURLDataEvent = 7;// URL 전송 이벤트 코드
+    public const byte ViewProfileEvent = 8;
 
     //============ SM ADD ============//
     public bool _isMatchingSucceed = false;
@@ -53,7 +54,8 @@ public class UserMatchingManager : HostOnlyBehaviour
             { SendMatchInfoEvent, HandleSendMatchInfoEvent },
             { SendMeetingInfoEvent, HandleSendMeetingInfoEvent },
             { SendCustomStringEvent, HandleSendCustomStringEvent },
-            { SendURLDataEvent, HandleSendURLDataEvent }
+            { SendURLDataEvent, HandleSendURLDataEvent },
+            { ViewProfileEvent, HandleSendViewProfileEvent }
         };
     }
 
@@ -73,7 +75,7 @@ public class UserMatchingManager : HostOnlyBehaviour
     {
 
 
-        //FileLogger.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", this);
+        FileLogger.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", this);
 
         // 현재 로컬 플레이어가 Hololens인 경우에만 실행 (닉네임에 "Hololens"가 포함되어 있다고 가정)
         if (!PhotonNetwork.NickName.Contains("Hololens"))
@@ -155,9 +157,42 @@ public class UserMatchingManager : HostOnlyBehaviour
         }
     }
 
-    private void UpdateURLUI(string url)
+    public void ReceivePinnumForProfile(int targetActorNumber, string pinnum)
     {
-        Debug.Log("I receive URLURLLLLLLLLLLLLLL");
+        object[] data = new object[] { pinnum };
+
+        // 전송 옵션: 지정한 Actor에게만 보내기
+        RaiseEventOptions options = new RaiseEventOptions
+        {
+            TargetActors = new int[] { targetActorNumber }
+        };
+
+        try
+        {
+            PhotonNetwork.RaiseEvent(ViewProfileEvent, data, options, SendOptions.SendReliable);
+            FileLogger.Log($"[ReceivePinnumForProfile] 메시지 '{pinnum}'를 Actor {targetActorNumber}에게 전송", this);
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"[ReceivePinnumForProfile] 메시지 전송 실패: {ex.Message}", this);
+        }
+    }
+
+
+
+    private void HandleSendViewProfileEvent(EventData photonEvent)
+    {
+        object[] data = (object[])photonEvent.CustomData;
+        if (data != null && data.Length > 0)
+        {
+            // 전송 받은 pin 데이터
+            string receivedpin = data[0] as string;
+            FileLogger.Log($"[SendURLDataEvent] 수신된 pin: {receivedpin}", this);
+        }
+        else
+        {
+            FileLogger.Log("SendURLDataEvent: 전달된 데이터가 없습니다.", this);
+        }
     }
 
 
@@ -169,7 +204,6 @@ public class UserMatchingManager : HostOnlyBehaviour
             // 전송 받은 url 데이터
             string receivedURL = data[0] as string;
             FileLogger.Log($"[SendURLDataEvent] 수신된 URL: {receivedURL}", this);
-            UpdateURLUI(receivedURL);
         }
         else
         {
@@ -196,215 +230,6 @@ public class UserMatchingManager : HostOnlyBehaviour
         {
             SyncUserListWithPhotonPlayers();
         }
-        /*if (photonEvent.Code == SendUserInfoEvent)
-        {
-            try
-            {
-                // 데이터 무결성 확인
-                object[] data = (object[])photonEvent.CustomData;
-                if (data.Length < 1 || !(data[0] is UserInfo))
-                {
-                    FileLogger.Log("Invalid CustomData received", this);
-                    return;
-                }
-
-                // 데이터 처리
-                UserInfo receivedUserInfo = (UserInfo)data[0];
-                userInfos.Add(receivedUserInfo); // 연결된 유저 데이터가 리스트에 추가됨
-
-                // 모든 유저 정보 시각화
-                debugUserInfo.LogAllUsersInfo(ref userInfos);
-                DebugUserInfos.Instance.DebugAllUsersInfo();
-
-                // List<UserInfo> 동기화 
-                BroadcastUserInfos();
-                FileLogger.Log($"UserInfo received for {receivedUserInfo.PhotonUserName}", this);
-            }
-            catch (Exception ex)
-            {
-                FileLogger.Log($"Error handling photon event: {ex.Message}", this);
-            }
-        }
-        else if (photonEvent.Code == SendUsersInfoEvent)
-        {
-            try
-            {
-                FileLogger.Log($"photon event {photonEvent.Code} received", this);
-
-                // 수신된 데이터를 배열로 역직렬화
-                UserInfo[] receivedUserInfoArray = (UserInfo[])photonEvent.CustomData;
-
-                // 배열을 List로 변환
-                var receivedUserInfos = new List<UserInfo>(receivedUserInfoArray);
-
-                foreach (var receivedUserInfo in receivedUserInfos)
-                {
-                    // 기존 리스트에서 해당 유저 정보 찾기
-                    var existingUserInfo =
-                        userInfos.Find(user => user.PhotonUserName == receivedUserInfo.PhotonUserName);
-
-                    if (existingUserInfo != null)
-                    {
-                        // 기존 유저 정보 업데이트
-                        existingUserInfo.CurrentRoomNumber = receivedUserInfo.CurrentRoomNumber;
-                        existingUserInfo.PhotonRole = receivedUserInfo.PhotonRole;
-                        existingUserInfo.CurrentState = receivedUserInfo.CurrentState;
-                    }
-                    else
-                    {
-                        // 새로운 유저 정보 추가
-                        userInfos.Add(receivedUserInfo);
-                        FileLogger.Log($"Added new UserInfo: {receivedUserInfo.PhotonUserName}", this);
-                    }
-                }
-
-                DebugUserInfos.Instance.DebugAllUsersInfo();
-                FileLogger.Log($"UserInfo list updated successfully. Total users: {userInfos.Count}", this);
-            }
-            catch (Exception ex)
-            {
-                FileLogger.Log($"Failed to handle UserInfoList event: {ex.Message}", this);
-            }
-        }
-        else if (photonEvent.Code == RenameEvent) // 닉네임 변경 이벤트
-        {
-            object[] data = (object[])photonEvent.CustomData;
-            int actorNumber = (int)data[0];
-            string newNickName = (string)data[1];
-
-            Player player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
-            if (player != null)
-            {
-                player.NickName = newNickName; // 닉네임 업데이트
-                DebugUserInfos.Instance.DebugMyUserInfo(myUserInfo);
-                FileLogger.Log($"Photon Actor Number [{actorNumber}]의 닉네임이 {newNickName}(으)로 변경되었습니다.");
-            }
-            else
-            {
-                Debug.Log($"[Error] 플레이어를 찾을 수 없음! actorNumber: {actorNumber}");
-            }
-        }*/
-        /*else if (photonEvent.Code == SendMatchInfoEvent) // 매칭 요청, 응답 이벤트
-        {
-            try
-            {
-                //Debug.Log("AAA");
-                // 데이터 무결성 확인
-                if (photonEvent.CustomData == null)
-                {
-                    FileLogger.Log("CustomData is null", this);
-                    return;
-                }
-                //Debug.Log("BBB");
-
-                object[] data = photonEvent.CustomData as object[];
-                if (data == null || data.Length < 1 || !(data[0] is MatchInfo))
-                {
-                    FileLogger.Log("Invalid CustomData received or missing MatchInfo", this);
-                    return;
-                }
-                //Debug.Log("CCC");
-
-                // 데이터 처리
-                MatchInfo receivedMatchInfo = (MatchInfo)data[0];
-
-                if (debugUserInfo == null)
-                {
-                    FileLogger.Log("debugUserInfo is null", this);
-                    return;
-                }
-                //Debug.Log("DDD");
-
-                debugUserInfo.receivedMatchInfo = receivedMatchInfo;
-                //debugUserInfo.DebugMatchText();
-
-                // 요청을 받았을 때, 받은 곳에서 작동
-                //Debug.Log($"요청 받음! : {debugUserInfo.receivedMatchInfo.matchRequest}");
-
-                // 매칭을 보냈을 때 - Send
-                if (debugUserInfo.receivedMatchInfo.MatchRequest == "Request...") // 매칭 요청을 받음
-                {
-                    Debug.Log("난 분명 Request... 를 받았다");
-                    if (!isMatchingSucceed) // 매칭이 이루어지지 않았다면
-                    {
-                        partnerUserInfo = null;
-                        partnerUserInfo = new UserInfo();
-                        partnerUserInfo.PhotonUserName = debugUserInfo.receivedMatchInfo.UserWhoSend;
-                        debugUserInfo.SetMatchButtonStatus(true);
-                        debugUserInfo.ShowMatchRequestUI();
-                    }
-                    else // 매칭이 되어있었다면 
-                    {
-                        // !! 현재는 반복되는 Request 요청 수신이 안 되고 있음.. !!
-                        debugUserInfo.ShowNewMatchRequestUI();
-                    }
-
-                    //Debug.Log($"matchInfo.whoSend = {receivedMatchInfo.userWhoSend}"); -> Player2라고 제대로 나오고 있음. 근데 답장으로는 여기로 안 가고 있음..
-                }
-                // 매칭을 받았을 때 - Receive
-                else if (debugUserInfo.receivedMatchInfo.MatchRequest == "Accept") // 매칭 응답(Yes)을 받음
-                {
-                    partnerUserInfo.PhotonUserName = debugUserInfo.receivedMatchInfo.UserWhoSend;
-                    debugUserInfo.ShowReceiveAcceptUI();
-
-                    HololenUIManager.Instance.AddReservedData();
-                    HololenUIManager.Instance.timers["12345"] = 10f;            // 임시로 시간 넣었음
-                    HololenUIManager.Instance.LoadReservatedDataFromDB();
-
-                    MatchingStateUpdateAsTrue();
-                    //Debug.Log("난 분명 Accept 응답을 받았다");
-                    //notificationManager.SendAcceptMessage();
-                    //Debug.Log("보낸 요청에 대해 Accept 응답을 받음!");
-                }
-                else if (debugUserInfo.receivedMatchInfo.MatchRequest == "Decline") // 매칭 응답(No)을 받음
-                {
-                    debugUserInfo.ShowReceiveDeclineUI();
-                    //Debug.Log("난 분명 Decline 응답을 받았다");
-                    //notificationManager.SendDeclineMessage();
-                    //Debug.Log("보낸 요청에 대해 Decline 응답을 받음!");
-                }
-            }
-            catch (Exception ex)
-            {
-                FileLogger.Log($"Error handling photon event: {ex.Message}", this);
-            }
-        }
-        else if (photonEvent.Code == SendMeetingInfoEvent) // 미팅 정보 수신
-        {
-            try
-            {
-                // 데이터 무결성 확인
-                if (photonEvent.CustomData == null)
-                {
-                    FileLogger.Log("CustomData is null", this);
-                    return;
-                }
-
-                object[] data = photonEvent.CustomData as object[];
-                if (data == null || data.Length < 1 || !(data[0] is MeetingInfo))
-                {
-                    FileLogger.Log("Invalid CustomData received or missing MatchInfo", this);
-                    return;
-                }
-
-                // 데이터 처리
-                MeetingInfo receivedMatchInfo = (MeetingInfo)data[0];
-
-                if (debugUserInfo == null)
-                {
-                    FileLogger.Log("debugUserInfo is null", this);
-                    return;
-                }
-
-                // TODO: Set MatchInfo 저장 코드 
-                Debug.Log("Match Key: " + receivedMatchInfo.MatchKey);
-                Debug.Log("Meeting Time: " + receivedMatchInfo.MeetingDateTime);
-            }
-            catch (Exception ex)
-            {
-                FileLogger.Log($"Error handling photon event: {ex.Message}", this);
-            }
-        }*/
     }
 
     // 📌 제네릭 데이터 처리 메서드 (어떤 데이터 타입이든 처리 가능)
@@ -527,20 +352,13 @@ public class UserMatchingManager : HostOnlyBehaviour
 
             if (debugUserInfo.receivedMatchInfo.MatchRequest == "Request...") // 매칭 요청을 받음
             {
-                Debug.Log("난 분명 Request... 를 받았다");
-                if (!isMatchingSucceed) // 매칭이 이루어지지 않았다면
-                {
-                    partnerUserInfo = null;
-                    partnerUserInfo = new UserInfo();
-                    partnerUserInfo.PhotonUserName = debugUserInfo.receivedMatchInfo.UserWhoSend;
-                    debugUserInfo.SetMatchButtonStatus(true);
-                    debugUserInfo.ShowMatchRequestUI();
-                }
-                else // 매칭이 되어있었다면 
-                {
-                    // !! 현재는 반복되는 Request 요청 수신이 안 되고 있음.. !!
-                    debugUserInfo.ShowNewMatchRequestUI();
-                }
+                partnerUserInfo = null;
+                partnerUserInfo = new UserInfo();
+                partnerUserInfo.PhotonUserName = debugUserInfo.receivedMatchInfo.UserWhoSend;
+                debugUserInfo.SetMatchButtonStatus(true);
+                debugUserInfo.ShowMatchRequestUI();
+                HololenUIManager.Instance.AddMatchingRequestData();
+                HololenUIManager.Instance.LoadMatchingSenderDataFromDB();
 
                 //Debug.Log($"matchInfo.whoSend = {receivedMatchInfo.userWhoSend}"); -> Player2라고 제대로 나오고 있음. 근데 답장으로는 여기로 안 가고 있음..
             }
@@ -550,7 +368,10 @@ public class UserMatchingManager : HostOnlyBehaviour
                 partnerUserInfo.PhotonUserName = debugUserInfo.receivedMatchInfo.UserWhoSend;
                 debugUserInfo.ShowReceiveAcceptUI();
 
-                // TODO : 여기에 HoloenUIManager.cs로 부터 함수를 가져와 매칭에 대한 이력을 띄워야함
+                /*// TODO : 여기에 HoloenUIManager.cs로 부터 함수를 가져와 매칭에 대한 이력을 띄워야함
+                HololenUIManager.Instance.AddReservedData();
+                HololenUIManager.Instance.timers["12345"] = 10f;            // 임시로 시간 넣었음
+                HololenUIManager.Instance.LoadReservatedDataFromDB();*/
 
                 MatchingStateUpdateAsTrue();
                 //Debug.Log("난 분명 Accept 응답을 받았다");
@@ -573,11 +394,23 @@ public class UserMatchingManager : HostOnlyBehaviour
         if (meetingInfo != null)
         {
             FileLogger.Log($"Meeting confirmed for: {meetingInfo.MeetingDateTime}", this);
-            // TODO: 미팅 관련 데이터 처리
-
-            // TODO: Set MatchInfo 저장 코드 
             Debug.Log("Match Key: " + meetingInfo.MatchKey);
             Debug.Log("Meeting Time: " + meetingInfo.MeetingDateTime);
+
+            // Set MatchInfo 저장, 알람 실행 코드
+            if (MeetingManager.Instance && PhotonNetwork.NickName.Contains("Hololens"))
+            {
+                MeetingManager.Instance.SetAlarmFromMeetingInfo(meetingInfo);
+
+                HololenUIManager.Instance.AddReservedData();
+                /*HololenUIManager.Instance.timers["12345"] =
+                    (float)MatchingUtils.GetRemainingMinutes(meetingInfo.MeetingDateTime) * 60; // 분 단위에서 초 단위로 변경*/
+                HololenUIManager.Instance.LoadReservatedDataFromDB();
+            }
+            else
+            {
+                FileLogger.Log("Meeting Manager is Null", this);
+            }
         }
     }
 
@@ -722,6 +555,8 @@ public class UserMatchingManager : HostOnlyBehaviour
         try
         {
             PhotonNetwork.RaiseEvent(SendMeetingInfoEvent, data, options, SendOptions.SendReliable);
+            MeetingManager.Instance.SetAlarmFromMeetingInfo(meetingInfo);
+
             FileLogger.Log($"Successfully sent Meeting Info to {targetActorNumber}", this);
         }
         catch (Exception ex)
@@ -742,12 +577,6 @@ public class UserMatchingManager : HostOnlyBehaviour
             object[] content = new object[] { PhotonNetwork.LocalPlayer.ActorNumber, newNickName };
             RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.All };
             PhotonNetwork.RaiseEvent(1, content, options, SendOptions.SendReliable);
-
-            /*if (PhotonUserConferenceAR.Instance)
-            {
-                PhotonUserConferenceAR.Instance.username = newNickName;
-                PhotonUserConferenceAR.Instance.ReSetPunRPC_SetNickName();
-            }*/
         }
         else
         {
@@ -798,6 +627,7 @@ public class UserMatchingManager : HostOnlyBehaviour
     public void MatchingStateUpdateAsTrue()
     {
         isMatchingSucceed = true;
+        // 버튼들에 반드시 할당할 것!
     }
 
     // 프로퍼티로 추가
@@ -830,7 +660,7 @@ public class UserMatchingManager : HostOnlyBehaviour
                         FileLogger.Log($"Not Found Partner GameObject:", this);
                     }
 
-                    ShowMeetingUI();
+                    HololenUIManager.Instance.ShowMeetingUI();
                     isTravelingToMeet = true;
                 }
             }
@@ -847,16 +677,6 @@ public class UserMatchingManager : HostOnlyBehaviour
         isTravelingToMeet = false;
     }
 
-    public void ShowMeetingUI()
-    {
-        //Debug.Log("매칭 이후 UI 뜰 화면1");
-        Debug.Log("길 시각화 시작!");
-        Vector3 temp = partnerGameObject.transform.position - myGameObject.transform.position;
-        Debug.Log(temp.magnitude);              // 250205 : UI에 몇m 남았는지 표시할 때 사용해야할 듯
-
-        //Debug.Log("매칭 이후 UI 뜰 화면2");
-    }
-
     public bool isTravelingToMeet
     {
         get => _isTravelingToMeet;
@@ -864,8 +684,7 @@ public class UserMatchingManager : HostOnlyBehaviour
         {
             if (_isTravelingToMeet != value) // 값 변경 확인
             {
-                Debug.Log("값이 바뀜!");
-
+                //Debug.Log("값이 바뀜!");
                 _isTravelingToMeet = value;
 
                 if (_isTravelingToMeet) // 만나기 위해 이동 중이 true라면
@@ -883,15 +702,12 @@ public class UserMatchingManager : HostOnlyBehaviour
 
     private async void StartTravelingLoop()
     {
-        Debug.Log("길 시각화 시작!");
         _isLoopRunning = true;
 
         while (_isTravelingToMeet && _isLoopRunning)
         {
-            //Debug.Log("이동 중...");
-
             Vector3 temp = myGameObject.transform.position - partnerGameObject.transform.position;
-            debugUserInfo.UpdateRouteUI(temp, myGameObject.transform.rotation.eulerAngles.y);
+            HololenUIManager.Instance.UpdateRouteUI(temp, myGameObject.transform.rotation.eulerAngles.y);
             await Task.Delay(500); // 1초 대기
 
             // 만남 종료 - 테스트를 위해 0.5m으로 잡음
@@ -904,23 +720,9 @@ public class UserMatchingManager : HostOnlyBehaviour
 
     private void StopTravelingLoop()
     {
-        Debug.Log("길 시각화 종료");
         _isLoopRunning = false;
-        debugUserInfo.HideRouteUI();
+        HololenUIManager.Instance.HideRouteUI();
     }
     //============ SM ADD ============//
-
-
-    //private void UpdateMeetingUI()
-    //{
-    //    Vector3 temp = myGameObject.transform.position - partnerGameObject.transform.position;
-    //    debugUserInfo.UpdateRouteUI(temp);
-    //}
-    //private void HideMeetingUI()
-    //{
-    //    Debug.Log("길 시각화 종료!");
-    //    debugUserInfo.HideRouteUI();        // SM - 임시로 여기에 작성함. 이후에 UI관련 연결 수정해야할 듯
-    //}
-
     #endregion
 }

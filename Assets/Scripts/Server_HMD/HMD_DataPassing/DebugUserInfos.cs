@@ -12,12 +12,12 @@ using UnityEngine.UI;
 
 public class DebugUserInfos : MonoBehaviour
 {
-    public TextMeshProUGUI myUserInfoText;
-    public TextMeshProUGUI userInfosText;
+    //public TextMeshProUGUI myUserInfoText;
+    //public TextMeshProUGUI userInfosText;
 
-    public Transform[] buttonTransforms;
-    public TextMeshProUGUI[] userButtonTexts;
-    public Button[] userButtons;
+    //public Transform[] buttonTransforms;
+    //public TextMeshProUGUI[] userButtonTexts;
+   // public Button[] userButtons;
     public static DebugUserInfos Instance;
 
     public MatchInfo matchInfo; // 보낼 Match Info
@@ -83,7 +83,7 @@ public class DebugUserInfos : MonoBehaviour
     // 각 버튼에 필요한 기능을 할당한다.
     private void SetButtonTextsFromAllUsersInfo()
     {
-        foreach (var userButton in userButtons)
+        /*foreach (var userButton in userButtons)
         {
             if (userButton != null)
             {
@@ -98,7 +98,7 @@ public class DebugUserInfos : MonoBehaviour
 
         int index = 0;
         userButtonTexts[0].text = "Test_url";
-        userButtons[0].onClick.AddListener(() => { OnSendURLButtonClicked(); }); 
+        userButtons[0].onClick.AddListener(() => { OnSendURLButtonClicked(); }); */
 
 
 
@@ -357,7 +357,7 @@ public class DebugUserInfos : MonoBehaviour
     private void CacheDebugUserButtons()
     {
         // 버튼, 텍스트 할당
-        userButtonTexts = new TextMeshProUGUI[buttonTransforms.Length];
+       /* userButtonTexts = new TextMeshProUGUI[buttonTransforms.Length];
         userButtons = new Button[buttonTransforms.Length];
         for (int i = 0; i < userButtonTexts.Length; i++)
         {
@@ -366,7 +366,7 @@ public class DebugUserInfos : MonoBehaviour
 
             Button button = buttonTransforms[i].GetComponentInChildren<Button>();
             userButtons[i] = button;
-        }
+        }*/
     }
 
     public void DebugMatchText()
@@ -389,18 +389,18 @@ public class DebugUserInfos : MonoBehaviour
         //Debug.Log("testtesttesttesttesttesttesttesttesttest");
 
         
-            myUserInfoText.text = $"• Current Room Number: {userInfo.CurrentRoomNumber} \n" +
+            /*myUserInfoText.text = $"• Current Room Number: {userInfo.CurrentRoomNumber} \n" +
                               $"• Photon Role: {userInfo.PhotonRole} \n" +
                               $"• Photon UserName: {userInfo.PhotonUserName} \n" +
                               $"• Photon State: {userInfo.CurrentState} \n";
-            Debug.Log("testtesttesttesttesttesttesttesttesttest");
+            Debug.Log("testtesttesttesttesttesttesttesttesttest");*/
         
 
     }
 
     public void DebugAllUsersInfo()
     {
-        if (HostBehaviourManager.Instance.IsCentralHost)
+        /*if (HostBehaviourManager.Instance.IsCentralHost)
         {
             userInfosText.text = ""; // 텍스트 초기화
             foreach (var userInfo in UserMatchingManager.Instance.userInfos)
@@ -422,7 +422,7 @@ public class DebugUserInfos : MonoBehaviour
         for (int i = 0; i < userButtonTexts.Length; i++)
         {
             userButtonTexts[i].text = "player_@";
-        }
+        }*/
 
         SetButtonTextsFromAllUsersInfo();
         //SetUITextsFromAllUsersInfo();       // 클릭한 사람의 pin 번호를 입력받아서 시각화
@@ -492,9 +492,9 @@ public class DebugUserInfos : MonoBehaviour
 
     void OnDestroy()
     {
-        foreach (var userButton in userButtons)
+        /*foreach (var userButton in userButtons)
         {
             if (userButton != null) userButton.onClick.RemoveAllListeners();
-        }
+        }*/
     }
 }

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
-
 using UnityEngine.Diagnostics;
 using System;
+using System.Linq;
 using Unity.VisualScripting;
-
 
 public class HololenUIManager : MonoBehaviour
 {
+    public static HololenUIManager Instance;
+
     public NotificationManager notificationManager;
 
     [Header("MainBar")]
@@ -19,6 +20,7 @@ public class HololenUIManager : MonoBehaviour
     [Space]
     [Header("Calendar_L")]
     public TextMeshProUGUI[] SenderDataText;
+    public List<GameObject> requestCanvas;
 
     [Space]
     [Header("Calendar_R")]
@@ -30,46 +32,56 @@ public class HololenUIManager : MonoBehaviour
     [Header("Base UI Canvas")]
     public GameObject MatchingRequestDataPrefab;
     public Transform MatchingRequestDataParent;
-    public List<GameObject> MatchingRequestData;                   // 매칭 요청이 들어올 때마다 리스트에 추가돼야 함
+    public List<GameObject> MatchingRequestData;                   // ??? ????? ???? ?????? ??????? ?????? ??
     public GameObject ReservedDataPrefab;
     public Transform ReservedDataParent;
-    public List<GameObject> ReservedData;                           // 매칭 요청을 처리할 때마다 리스트에 추가돼야 함
+    public List<GameObject> ReservedData;                           // ??? ????? ????? ?????? ??????? ?????? ??
 
-    private Dictionary<string, float> timers = new Dictionary<string, float>();
-
+    public Dictionary<string, float> timers = new Dictionary<string, float>();
+    public bool isTimerUpdated;
+    private int time = 0;
 
     [Space]
     [Header("MatchingRequest")]
     public TextMeshProUGUI[] SenderDetailsText;
+    [SerializeField] GameObject matchingStartPopupUI;
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        // 시간 관련
+        // ?ð? ????
         currentTime.text = DateTime.Now.ToString(("hh:mm tt"));
 
         LoadReservatedDataUpdate();
 
-        // DB 관련
-        if (notificationManager.isTimerUpdated)
+        // DB ????
+        if (isTimerUpdated)
         {
-            timers["12345"] = (float)notificationManager.GetTime();
+            timers["12345"] = (float)GetTime();
             LoadReservatedDataFromDB();
             LoadRecentMetDataFromDB();
 
-            notificationManager.isTimerUpdated = false;
-            notificationManager.SetTime(0);
+            isTimerUpdated = false;
+            SetTime(0);
         }
 
-        //if (Input.GetKey(KeyCode.M))                            // 매칭 요청이 온 것을 가정하는 입력
+        //if (Input.GetKey(KeyCode.M))                            // ??? ????? ?? ???? ??????? ???
         //{
         //    AddMatchingRequestData();
         //    LoadMatchingSenderDataFromDB();
@@ -82,7 +94,7 @@ public class HololenUIManager : MonoBehaviour
         SenderDataText[0].text = DatabaseManager.Instance.getUserData("12345").name;
         SenderDataText[1].text = DatabaseManager.Instance.getUserData("12345").job;
 
-        // TODO : 이미지, 접속 상태도 로드 필요
+        // TODO : ?????, ???? ????? ?ε? ???
     }
 
     //=================== Calendar_R =================//
@@ -90,40 +102,45 @@ public class HololenUIManager : MonoBehaviour
     {
         ReservatedDataText[2].text = DatabaseManager.Instance.getUserData("12345").name;
         ReservatedDataText[3].text = DatabaseManager.Instance.getUserData("12345").job;
-        // TODO : 이미지, 접속 상태도 로드 필요
+        // TODO : ?????, ???? ????? ?ε? ???
     }
 
     public void LoadReservatedDataUpdate()
     {
-        List<string> keys = new List<string>(timers.Keys);                      // 예약된 유저들에 대해서 타이머 작동
+        List<string> keys = new List<string>(timers.Keys);                      // ????? ?????? ????? ???? ???
         foreach (string key in keys)
         {
             if (timers[key] >= 3600)
             {
                 timers[key] -= Time.deltaTime;
-                ReservatedDataText[0].text = (timers[key] / 3600).ToString("F0") + "시간 " + ((timers[key]% 3600) / 60).ToString("F0") + "분 후";
-                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! 계속 연산할 필요 없으므로 이후에 밖으로 빼야함
-                ReservatedDataCircleTimer.fillAmount = timers[key] / (3 * 60 * 60);
+                ReservatedDataText[0].text = (timers[key] / 3600).ToString("F0") + "시간 " + ((timers[key] % 3600) / 60).ToString("F0") + "분 이내";
+                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ??? ?????? ??? ??????? ???Ŀ? ?????? ??????
+                ReservatedDataCircleTimer.fillAmount = timers[key] / (4 * 60 * 60);
             }
             else if (timers[key] >= 60)
             {
                 timers[key] -= Time.deltaTime;
-                ReservatedDataText[0].text = (timers[key] / 60).ToString("F0") + "분 후";
-                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! 계속 연산할 필요 없으므로 이후에 밖으로 빼야함
-                ReservatedDataCircleTimer.fillAmount = timers[key] / (3 * 60 * 60);
+                ReservatedDataText[0].text = (timers[key] / 60).ToString("F0") + "분 이내";
+                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ??? ?????? ??? ??????? ???Ŀ? ?????? ??????
+                ReservatedDataCircleTimer.fillAmount = timers[key] / (4 * 60 * 60);
             }
             else if (timers[key] >= 0)
             {
                 timers[key] -= Time.deltaTime;
-                ReservatedDataText[0].text = timers[key].ToString("F0") + "초 후";
-                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! 계속 연산할 필요 없으므로 이후에 밖으로 빼야함
-                ReservatedDataCircleTimer.fillAmount = timers[key] / (3 * 60 * 60);
+                ReservatedDataText[0].text = timers[key].ToString("F0") + "초 이내";
+                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ??? ?????? ??? ??????? ???Ŀ? ?????? ??????
+                ReservatedDataCircleTimer.fillAmount = timers[key] / (4 * 60 * 60);
             }
             else
             {
-                notificationManager.OpenMatchingStartPopupUI();                 // 다른 유저별로 맞는 것이 뜨게 해야함
-                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! 계속 연산할 필요 없으므로 이후에 밖으로 빼야함
-                ReservatedDataCircleTimer.fillAmount = timers[key] / (3 * 60 * 60);
+                if (timers[key] != -1)
+                {
+                    timers[key] = -1; // ??? ???????? ?´? ???? ??? ?????
+                    OpenMatchingStartPopupUI();
+                    RemoveReservedData();
+                }
+                ReservatedDataText[1].text = DateTime.Now.AddSeconds(timers[key]).ToString("hh:mm tt");     // !!! ??? ?????? ??? ??????? ???Ŀ? ?????? ??????
+                ReservatedDataCircleTimer.fillAmount = timers[key] / (4 * 60 * 60);
             }
         }
     }
@@ -132,16 +149,16 @@ public class HololenUIManager : MonoBehaviour
     {
         RecentMetDataText[0].text = DatabaseManager.Instance.getUserData("12345").name;
 
-        // TODO : 이미지, 접속 상태도 로드 필요
+        // TODO : ?????, ???? ????? ?ε? ???
     }
 
 
 
-    public void AddMatchingRequestData()                                        // !!! 포톤과 같이 사용할 부분
+    public void AddMatchingRequestData()                                        // !!! ????? ???? ????? ?κ?
     {
         GameObject newObject = Instantiate(MatchingRequestDataPrefab);
 
-        // 부모로 MatchingRequestData를 설정
+        // ?θ?? MatchingRequestData?? ????
         newObject.transform.SetParent(MatchingRequestDataParent);
 
         int index = MatchingRequestDataParent.childCount;
@@ -150,68 +167,81 @@ public class HololenUIManager : MonoBehaviour
         newObject.transform.localScale = Vector3.one;
         newObject.transform.localRotation = Quaternion.identity;
 
-        // MatchingRequestData 리스트에 추가
+        // MatchingRequestData ??????? ???
         MatchingRequestData.Add(newObject);
 
-        // 텍스트들 연결
+        // ?????? ????
         Transform senderNameObject = newObject.transform.Find("Data0/ProfileBaseData - V/Name");
         Transform senderPositionObject = newObject.transform.Find("Data0/ProfileBaseData - V/Position|Team");
         SenderDataText[0] = senderNameObject.GetComponent<TextMeshProUGUI>();
         SenderDataText[1] = senderPositionObject.GetComponent<TextMeshProUGUI>();
 
-        // 버튼들에 기능 세팅
+        // ????? ??? ????
         Transform sendMatchingRequestObject = newObject.transform.Find("Buttons - H/Send Matching Request");
         Transform declineObject = newObject.transform.Find("Buttons - H/Decline");
         Transform timePlusObject = newObject.transform.Find("Buttons - H/TimePlus");
-        Transform expandObject = newObject.transform.Find("Data0/Expand");
+        //Transform expandObject = newObject.transform.Find("Data0/Expand");
 
         Button[] MatchingRequestButton = new Button[4];
         MatchingRequestButton[0] = sendMatchingRequestObject.GetComponent<Button>();
         MatchingRequestButton[1] = declineObject.GetComponent<Button>();
         MatchingRequestButton[2] = timePlusObject.GetComponent<Button>();
-        MatchingRequestButton[3] = expandObject.GetComponent<Button>();
+        //MatchingRequestButton[3] = expandObject.GetComponent<PressableButton>();
 
         MatchingRequestButton[0].onClick.AddListener(() =>
         {
-            notificationManager.MeetTimeUpdate();
             RemoveMatchingRequestData(newObject);
             notificationManager.SendAcceptMessage();
-            AddReservedData();                                  // 상대방에게 받은 요청 수락 후, UI에 표시
-            notificationManager.MeetTimeUpdate();
+            AddReservedData();                                  // ???濡?? ???? ??? ???? ??, UI?? ???
+
+            MeetTimeUpdate();
+
+            MatchingRequestButton[0].onClick.RemoveAllListeners();
+            MatchingRequestButton[2].onClick.RemoveAllListeners();
         });
 
         MatchingRequestButton[1].onClick.AddListener(() =>
         {
             RemoveMatchingRequestData(newObject);
             notificationManager.SendDeclineMessage();
+            SetTime(0);
+
+            MatchingRequestButton[1].onClick.RemoveAllListeners();
+            MatchingRequestButton[2].onClick.RemoveAllListeners();
         });
 
         MatchingRequestButton[2].onClick.AddListener(() =>
         {
-            notificationManager.MeetTimePlus();
+            MeetTimePlus();
+
         });
 
-        MatchingRequestButton[3].onClick.AddListener(() =>
+        /*MatchingRequestButton[3].OnClicked.AddListener(() =>
         {
             notificationManager.OpenProfileUI();
             LoadMatchingSenderDetailsFromDB();
-        });
+            
+            MatchingRequestButton[3].OnClicked.RemoveAllListeners();
+        });*/
+
+        requestCanvas.Add(newObject);
     }
 
     public void RemoveMatchingRequestData(GameObject objectToRemove)
     {
-        if (MatchingRequestData.Contains(objectToRemove)) // 해당 오브젝트가 리스트에 포함되어 있는지 확인
+        if (MatchingRequestData.Contains(objectToRemove)) // ??? ????????? ??????? ?????? ????? ???
         {
-            MatchingRequestData.Remove(objectToRemove);        // 리스트에서 해당 오브젝트 제거
-            Destroy(objectToRemove);                           // 씬에서 해당 오브젝트 삭제
+            MatchingRequestData.Remove(objectToRemove);        // ????????? ??? ??????? ????
+            Destroy(objectToRemove);                           // ?????? ??? ??????? ????
         }
     }
 
     public void AddReservedData()
     {
+        Debug.Log("Add Reserved Data");
         GameObject newObject = Instantiate(ReservedDataPrefab);
 
-        //// 부모로 MatchingRequestData를 설정
+        //// ?θ?? MatchingRequestData?? ????
         newObject.transform.SetParent(ReservedDataParent);
 
         int index = ReservedDataParent.childCount;
@@ -222,7 +252,7 @@ public class HololenUIManager : MonoBehaviour
 
         ReservedData.Add(newObject);
 
-        // 텍스트들 연결
+        // ?????? ????
         Transform leftTimeObject = newObject.transform.Find("DataContainer/TimeData/ProfileBaseData - V/LeftTime");
         Transform futureTimeObject = newObject.transform.Find("DataContainer/TimeData/ProfileBaseData - V/FutureTime");
         Transform timePlusObject = newObject.transform.Find("DataContainer/UserData/ProfileBaseData - V/Name");
@@ -241,9 +271,19 @@ public class HololenUIManager : MonoBehaviour
     {
         if (ReservedData.Count > 0)
         {
-            ReservedData.RemoveAt(0);        // 첫 번째 요소를 리스트에서 제거
-            Destroy(ReservedData[0]);        // 씬에서 첫 번째 요소의 게임 오브젝트를 삭제
+            GameObject lastItem = ReservedData[ReservedData.Count - 1]; // 마지막 오브젝트 가져오기
+            ReservedData.RemoveAt(ReservedData.Count - 1); // 리스트에서 제거
+            Destroy(lastItem); // 오브젝트 삭제
         }
+        else
+        {
+            Debug.LogWarning("ReservedData 리스트가 비어 있습니다.");
+        }
+        /*if (ReservedData.Count > 0)
+        {
+            ReservedData.RemoveAt(ReservedData.Count-1);        // ? ??° ???? ????????? ????
+            Destroy(ReservedData[ReservedData.Count-1]);        // ?????? ? ??° ????? ???? ????????? ????
+        }*/
     }
 
 
@@ -266,6 +306,67 @@ public class HololenUIManager : MonoBehaviour
         SenderDetailsText[12].text = DatabaseManager.Instance.getUserData("12345").interest_5;
         SenderDetailsText[13].text = DatabaseManager.Instance.getUserData("12345").url;
 
-        // TODO : 이미지, 접속 상태도 로드 필요
+        // TODO : ?????, ???? ????? ?ε? ???
     }
+
+
+
+    //=================== Time  =================//
+    public void MeetTimePlus()
+    {
+        time += 600;
+        Debug.Log(time);
+    }
+
+    public void MeetTimeMinus()
+    {
+        int temp = time;
+        temp -= 600;
+        if (temp > 0) { time = temp; }
+        else { time = 0; }
+
+        Debug.Log(time);
+    }
+
+    public void MeetTimeUpdate()
+    {
+        isTimerUpdated = true;
+
+        MeetingManager.Instance.SetAndSendMeetingInfo(time);
+    }
+
+    public int GetTime()
+    {
+        return time;
+    }
+
+    public void SetTime(int newTime)
+    {
+        time = newTime;
+    }
+
+
+
+
+    //=================== Matching  =================//
+    public void ShowMeetingUI()
+    {
+        Debug.Log("?? ?ð?? ????!");
+        Vector3 temp = UserMatchingManager.Instance.partnerGameObject.transform.position - UserMatchingManager.Instance.myGameObject.transform.position;
+        Debug.Log(temp.magnitude);              // 250205 : UI?? ??m ??????? ????? ?? ???????? ??
+    }
+
+    public void UpdateRouteUI(Vector3 direction, float myRotY)
+    {
+        notificationManager.UpdateRouteVisualizationUI(direction, myRotY);
+    }
+    public void HideRouteUI()
+    {
+        notificationManager.CloseRouteVisualizationUI();
+    }
+    public void OpenMatchingStartPopupUI()
+    {
+        matchingStartPopupUI.SetActive(true);
+    }
+    // !!!!         2
 }
