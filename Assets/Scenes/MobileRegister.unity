@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &164917280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,24 +466,24 @@ MonoBehaviour:
     photo_url: 
     autoaccept: 0
   playerUserData:
-    pin: 
-    name: 
-    job: 
-    language: 
-    introduction_1: 
-    introduction_2: 
-    introduction_3: 
+    pin: 12345
+    name: "\uC6D0\uC6B1\uD76C"
+    job: "\uD559\uC0DD"
+    language: ko-KR
+    introduction_1: "\uD504\uB860\uD2B8\uC5D4\uB4DC"
+    introduction_2: "\uBC31\uC5D4\uB4DC/\uC11C\uBC84"
+    introduction_3: "\uD480\uC2A4\uD0DD"
     introduction_4: 
     introduction_5: 
-    interest_1: 
-    interest_2: 
-    interest_3: 
+    interest_1: "\uBE14\uB85D\uCCB4\uC778"
+    interest_2: "\uB370\uC774\uD130/AI"
+    interest_3: "\uB370\uBE0C\uC635\uC2A4/\uC9C0\uC6D0"
     interest_4: 
     interest_5: 
-    introduction_text: 
-    url: 
+    introduction_text: "\uC548\uB155\uD558\uC138\uC694, \uC6D0\uC6B1\uD76C\uC785\uB2C8\uB2E4."
+    url: www.google.com
     photo_url: 
-    autoaccept: 0
+    autoaccept: 1
   address: 127.0.0.1
   port: 8000
 --- !u!4 &936990465
@@ -704,7 +704,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1801960991
 MonoBehaviour:
   m_ObjectHideFlags: 0

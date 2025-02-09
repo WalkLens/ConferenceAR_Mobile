@@ -348,3 +348,25 @@
     margin-left: 0;
     background-color: rgba(195, 220, 255, 0.16);
 }
+
+.button-gray {
+    transition-duration: 0.1s;
+    background-color: rgb(59, 64, 73);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    height: 60px;
+    -unity-font: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
+    -unity-font-definition: url("project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&guid=c5f2f18448a7a8340af7b5afdab1df03&type=3#Pretendard-SemiBold");
+    transition-timing-function: ease-in;
+    width: 100%;
+    align-items: center;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    -unity-text-align: middle-center;
+}
