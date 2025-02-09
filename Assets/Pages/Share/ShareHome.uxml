@@ -1,18 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
     <ui:VisualElement name="content" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); background-image: url(&quot;project://database/Assets/Resources/Background.png?fileID=2800000&amp;guid=d9183688c3cc8dc4a933373d8614e8be&amp;type=3#Background&quot;); align-items: center; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;); -unity-font-definition: initial; color: rgb(255, 255, 255); justify-content: center; -unity-background-scale-mode: scale-and-crop;">
-        <ui:VisualElement name="profile-photo" style="flex-grow: 0; width: 108px; height: 108px; flex-shrink: 0; border-top-left-radius: 54px; border-top-right-radius: 54px; border-bottom-right-radius: 54px; border-bottom-left-radius: 54px; background-color: rgb(125, 0, 0);" />
+        <ui:VisualElement name="profile-photo" style="flex-grow: 0; width: 108px; height: 108px; flex-shrink: 0; border-top-left-radius: 54px; border-top-right-radius: 54px; border-bottom-right-radius: 54px; border-bottom-left-radius: 54px; background-color: rgb(0, 0, 0);" />
         <ui:Label text="Hagyeong Gwon" display-tooltip-when-elided="true" name="name" class="header" style="margin-top: 9px;" />
         <ui:Label text="Lorem ipsum dolor sit amet, consectetuer dipiscing elit. Aenean commodo ligula eget dolor. " name="description" style="white-space: normal; -unity-text-align: upper-center; width: 50%;" />
-        <ui:VisualElement name="chips-container" style="flex-grow: 0; flex-direction: row; flex-wrap: wrap; width: 70%; justify-content: center;">
-            <ui:Button text="디자인" class="chip" />
-            <ui:Button text="3D Modeling" class="chip" />
-            <ui:Button text="UX/UI" class="chip" />
-            <ui:Button text="Game" class="chip" />
-            <ui:Button text="Character" class="chip" />
-        </ui:VisualElement>
-        <ui:VisualElement name="share-button" style="flex-grow: 0; width: 100px; height: 100px; flex-shrink: 0; border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; background-color: rgb(184, 0, 0); align-items: center; justify-content: center;">
-            <ui:VisualElement name="icon" style="flex-grow: 0; flex-shrink: 0; width: 36px; height: 36px; background-image: resource(&apos;Vectors/Icons/link&apos;);" />
+        <ui:VisualElement name="chips-container" style="flex-grow: 0; flex-direction: row; flex-wrap: wrap; width: 70%; justify-content: center;" />
+        <ui:VisualElement name="share-button" style="flex-grow: 0; width: 100px; height: 100px; flex-shrink: 0; border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; background-color: rgb(59, 64, 73); align-items: center; justify-content: center; margin-top: 40px;">
+            <ui:VisualElement name="icon" style="flex-grow: 0; flex-shrink: 0; width: 30px; height: 30px; background-image: resource(&apos;Vectors/Icons/union&apos;);" />
+            <ui:Label text="Link" style="margin-bottom: 0; margin-top: 10px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

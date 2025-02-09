@@ -51,6 +51,10 @@ public class HomeScreenManager : MonoBehaviour
     private VisualElement _editKeywordChipContainer;
     private VisualElement _editInterestChipContainer;
 
+    private Label _editProfileName;
+    private Label _editProfileJob;
+    private Label _editProfileIntroduction;
+    
     // History
     private VisualElement _prevButtonHistory;
     // 다음에 개발..
@@ -151,6 +155,7 @@ public class HomeScreenManager : MonoBehaviour
         }
 
         // EditProfile
+        // UI
         _prevButtonEditProfile = editProfile.Q<VisualElement>("prev-button");
         _prevButtonEditProfile.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(editProfile));
 
@@ -166,6 +171,10 @@ public class HomeScreenManager : MonoBehaviour
         editProfile.Q<VisualElement>("modal-keyword-chip-container").Add(_keywordChip);
         var _interestChip = new ChipsTab(3, 0);
         editProfile.Q<VisualElement>("modal-interest-chip-container").Add(_interestChip);
+
+        _editProfileName = editProfile.Q<Label>("Name");
+        _editProfileJob = editProfile.Q<Label>("Introduction");
+        _editProfileIntroduction = editProfile.Q<Label>("introduction-label");
 
         _modalIntroductionSubmitButton = _modalIntroduction.Q<Button>("submit-button");
         _modalIntroductionSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal("introduction"));
@@ -189,6 +198,31 @@ public class HomeScreenManager : MonoBehaviour
 
         _addURLButton = editProfile.Q<Button>("add-url-button");
         _addURLButton.RegisterCallback<ClickEvent>(evt => OpenModal(3));
+
+        // DB
+        _editProfileName.text = playerUserData.name;
+        _editProfileJob.text = playerUserData.job;
+        _editProfileIntroduction.text = playerUserData.introduction_text;
+
+        AddRemovableChip(playerUserData.introduction_1, _editKeywordChipContainer);
+        if(playerUserData.introduction_2 != "")
+        {
+            AddRemovableChip(playerUserData.introduction_2, _editKeywordChipContainer);
+        }
+        if(playerUserData.introduction_3 != "")
+        {
+            AddRemovableChip(playerUserData.introduction_3, _editKeywordChipContainer);
+        }
+
+        AddRemovableChip(playerUserData.interest_1, _editInterestChipContainer);
+        if(playerUserData.interest_2 != "")
+        {
+            AddRemovableChip(playerUserData.interest_2, _editInterestChipContainer);
+        }
+        if(playerUserData.interest_3 != "")
+        {
+            AddRemovableChip(playerUserData.interest_3, _editInterestChipContainer);
+        }
 
         // History
         _prevButtonHistory = history.Q<VisualElement>("prev-button");
@@ -266,7 +300,7 @@ public class HomeScreenManager : MonoBehaviour
         _modalBackground.style.display = DisplayStyle.None;
     }
 
-    private void SaveAndCloseModal(string type)
+    private void SaveAndCloseModal(string type) // TODO UserData에 저장
     {
         if(type == "introduction")
         {
@@ -287,7 +321,7 @@ public class HomeScreenManager : MonoBehaviour
             }
             foreach(var text in selection)
             {
-                AddChip(text, _editKeywordChipContainer);
+                AddRemovableChip(text, _editKeywordChipContainer);
             }
         }
         else if(type == "interest")
@@ -305,7 +339,7 @@ public class HomeScreenManager : MonoBehaviour
             }
             foreach(var text in selection)
             {
-                AddChip(text, _editInterestChipContainer);
+                AddRemovableChip(text, _editInterestChipContainer);
             }
         }
         else if(type == "url")
@@ -325,15 +359,16 @@ public class HomeScreenManager : MonoBehaviour
         _profileCardsContainer.Add(profileCard);
     }
 
-    private void AddLinkCard(string title, string link)
-    {
-        var linkCard = new LinkCard(title, link);
-        _profileCardsContainer.Add(linkCard);
-    }
-
     private void AddChip(string text, VisualElement container)
     {
         var chip = new SelectableChip(text);
+        container.Add(chip);
+    }
+
+    private void AddRemovableChip(string text, VisualElement container)
+    {
+        var chip = new RemovableChip(text);
+        chip.RegisterCallback<ClickEvent>(evt => {chip.RemoveChip();});
         container.Add(chip);
     }
 }

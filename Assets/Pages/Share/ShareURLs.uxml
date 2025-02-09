@@ -1,29 +1,32 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="LinkCard" src="project://database/Assets/UI%20Toolkit/Components/LinkCard.uxml?fileID=9197481963319205126&amp;guid=2c0211cb16658ac4ebc92d061f6b7f9e&amp;type=3#LinkCard" />
+    <ui:Template name="LinkCard" src="project://database/Assets/Resources/UI/VisualTree/LinkCard.uxml?fileID=9197481963319205126&amp;guid=2c0211cb16658ac4ebc92d061f6b7f9e&amp;type=3#LinkCard" />
     <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
-    <ui:VisualElement name="Container" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); background-image: url(&quot;project://database/Assets/UI%20Toolkit/Background.png?fileID=2800000&amp;guid=d9183688c3cc8dc4a933373d8614e8be&amp;type=3#Background&quot;); align-items: center; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;); -unity-font-definition: initial; color: rgb(255, 255, 255); justify-content: center; -unity-background-scale-mode: scale-and-crop;">
-        <ui:VisualElement name="Profile" style="flex-grow: 0; flex-direction: row; width: 90%;">
-            <ui:VisualElement name="ProfilePhoto" style="flex-grow: 0; width: 48px; height: 48px; flex-shrink: 0; border-top-left-radius: 24px; border-top-right-radius: 24px; border-bottom-right-radius: 24px; border-bottom-left-radius: 24px; background-color: rgb(125, 0, 0);" />
+    <ui:VisualElement name="Container" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); background-image: url(&quot;project://database/Assets/Resources/Background.png?fileID=2800000&amp;guid=d9183688c3cc8dc4a933373d8614e8be&amp;type=3#Background&quot;); align-items: center; -unity-font: url(&apos;project://database/Assets/Fonts_Mobile/Mobile_Pretendard-SemiBold.otf?fileID=12800000&amp;guid=7d44473115e622a4ea5717417f60c41d&amp;type=3#Mobile_Pretendard-SemiBold&apos;); -unity-font-definition: initial; color: rgb(255, 255, 255); justify-content: center; -unity-background-scale-mode: scale-and-crop;">
+        <ui:VisualElement name="Profile" style="flex-grow: 0; flex-direction: row; width: 80%; align-items: center; margin-bottom: 40px;">
+            <ui:VisualElement name="ProfilePhoto" style="flex-grow: 0; width: 48px; height: 48px; flex-shrink: 0; border-top-left-radius: 24px; border-top-right-radius: 24px; border-bottom-right-radius: 24px; border-bottom-left-radius: 24px; background-color: rgb(0, 0, 0); margin-right: 10px;" />
             <ui:VisualElement name="Detail" style="flex-grow: 1;">
-                <ui:Label text="권하경" display-tooltip-when-elided="true" name="Name" style="margin-top: 9px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); font-size: 18px;" />
-                <ui:Label text="UX Designer" name="Description" />
+                <ui:Label text="권하경" display-tooltip-when-elided="true" name="Name" style="margin-top: 10px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); font-size: 18px; margin-bottom: 0;" />
+                <ui:Label text="UX Designer" name="Description" style="margin-top: 0; margin-bottom: 10px;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:ScrollView style="width: 100%;">
+        <ui:ScrollView style="width: 80%;">
             <ui:Instance template="LinkCard" />
             <ui:Instance template="LinkCard" />
             <ui:Instance template="LinkCard" />
             <ui:Instance template="LinkCard" />
         </ui:ScrollView>
-        <ui:VisualElement name="Share" style="flex-grow: 0; width: 100px; height: 100px; flex-shrink: 0; border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; background-color: rgb(184, 0, 0);" />
+        <ui:VisualElement name="Share" style="flex-grow: 0; width: 100px; height: 100px; flex-shrink: 0; border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; background-color: rgb(59, 64, 73); align-items: center; justify-content: center; margin-top: 40px;">
+            <ui:VisualElement name="icon" style="flex-grow: 0; flex-shrink: 0; width: 30px; height: 30px; background-image: resource(&apos;Vectors/Icons/union&apos;);" />
+            <ui:Label text="Link" style="margin-bottom: 0; margin-top: 10px;" />
+        </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="Background" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.47); visibility: hidden;" />
-    <ui:VisualElement name="Popup" class="visiblecontainer" style="flex-grow: 1; position: absolute; top: 40%; visibility: hidden;">
-        <ui:Label text="링크 공유하기" />
-        <ui:TextField label="Text Field" placeholder-text="filler text" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.47); display: none;" />
+    <ui:VisualElement name="Popup" class="visiblecontainer" style="flex-grow: 1; position: absolute; top: 40%; background-color: rgba(51, 52, 53, 0.94); display: none;">
+        <ui:Label text="링크 공유하기" style="margin-bottom: 6px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); font-size: 20px;" />
+        <ui:TextField label="Text Field" placeholder-text="https://" name="PopupLink" style="margin-top: 9px; margin-right: 0; margin-bottom: 9px; margin-left: 0; height: 40px;" />
         <ui:VisualElement name="Buttons" style="flex-grow: 1; flex-direction: row;">
-            <ui:Button text="취소" name="ButtonCancel" class="button" style="width: 25%;" />
-            <ui:Button text="공유하기" name="ButtonShare" class="button" style="width: 75%;" />
+            <ui:Button text="취소" name="ButtonCancel" class="button-gray" style="width: 25%; margin-right: 1%;" />
+            <ui:Button text="공유하기" name="ButtonShare" class="button" style="width: 75%; margin-left: 1%;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
