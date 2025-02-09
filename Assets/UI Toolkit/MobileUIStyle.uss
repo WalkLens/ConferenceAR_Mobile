@@ -336,3 +336,15 @@
 .base-info {
     height: 40px;
 }
+
+.card {
+    background-color: rgba(195, 220, 255, 0.08);
+}
+
+.card-active {
+    margin-top: 35px;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    background-color: rgba(195, 220, 255, 0.16);
+}
