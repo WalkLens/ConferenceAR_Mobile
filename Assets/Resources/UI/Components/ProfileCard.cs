@@ -31,7 +31,7 @@ public class ProfileCard : VisualElement
         _jobLabel = this.Q<Label>("job");
         _profilePhoto = this.Q<VisualElement>("photo");
         _meetButton = this.Q<Button>("meet-button");
-        _meetButton.RegisterCallback<ClickEvent>(evt => Meet());
+        _meetButton.RegisterCallback<ClickEvent>(evt => {Meet(); evt.StopPropagation();});
         
         _keywordsContainer = this.Q<VisualElement>("keywords-container");
         _interestsContainer = this.Q<VisualElement>("interests-container");
