@@ -82,9 +82,20 @@ public class LoginScreenManager: MonoBehaviour
 
         if(code.Length == pinFields.Length)
         {
-            Debug.Log("LOGIN!!!");
-            home.SetActive(true);
-            this.gameObject.SetActive(false);
+            if(DatabaseManager.Instance.isPINDuplicate(code))
+            {
+                DatabaseManager.Instance.playerUserData = DatabaseManager.Instance.getUserData(code);
+                home.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
+            else
+            {
+                foreach (var field in pinFields)
+                {
+                    field.value = "";
+                }
+                // TODO 경고 메시지
+            }
         }
         return code;
     }

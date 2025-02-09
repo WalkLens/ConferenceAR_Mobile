@@ -8,6 +8,8 @@ public class HomeScreenManager : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
 
+    private UserData playerUserData;
+
     // Screens    
     private VisualElement root;
     private VisualElement container; // 컨텐츠를 감싸는 컨테이너
@@ -22,6 +24,8 @@ public class HomeScreenManager : MonoBehaviour
 
     // Home
     private VisualElement _editProfileButton;
+    private Label _homeName;
+    private Label _homeIntroduction;
     private VisualElement _homeKeywordsContainer;
     private VisualElement _homeInterestsContainer;
 
@@ -95,6 +99,9 @@ public class HomeScreenManager : MonoBehaviour
 
         Debug.Log("UI Document 연결완료");
 
+        playerUserData = DatabaseManager.Instance.playerUserData;
+        Debug.Log("DB 연결 완료");
+
         // VisualElement 생성 및 스타일 클래스 추가
         // 초기 화면 너비 출력
         UpdateScreenWidth();
@@ -106,23 +113,42 @@ public class HomeScreenManager : MonoBehaviour
         _searchBar.RegisterCallback<ClickEvent>(evt => ShowSearchScreen());
 
         // Home
+        // UI
         _editProfileButton = home.Q<VisualElement>("edit-button");
         _homeKeywordsContainer = home.Q<VisualElement>("keyword-chips-container");
         _homeInterestsContainer = home.Q<VisualElement>("interest-chips-container");
         _historyButton = home.Q<VisualElement>("history-button");
         _wishButton = home.Q<VisualElement>("wish-button");
 
-        AddChip("모션그래픽", _homeKeywordsContainer);
-        AddChip("3D 디자인", _homeKeywordsContainer);
-        AddChip("UX/UI", _homeKeywordsContainer);
-
-        AddChip("데이터/AI", _homeInterestsContainer);
-        AddChip("XR", _homeInterestsContainer);
-        AddChip("UX/UI", _homeInterestsContainer);
+        _homeName = home.Q<Label>("Name");
+        _homeIntroduction = home.Q<Label>("Introduction");
 
         _editProfileButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(editProfile));
         _historyButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(history));
         _wishButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(wish));
+
+        // DB
+        _homeName.text = playerUserData.name;
+        _homeIntroduction.text = playerUserData.introduction_text;
+        AddChip(playerUserData.introduction_1, _homeKeywordsContainer);
+        if(playerUserData.introduction_2 != "")
+        {
+            AddChip(playerUserData.introduction_2, _homeKeywordsContainer);
+        }
+        if(playerUserData.introduction_3 != "")
+        {
+            AddChip(playerUserData.introduction_3, _homeKeywordsContainer);
+        }
+
+        AddChip(playerUserData.interest_1, _homeInterestsContainer);
+        if(playerUserData.interest_2 != "")
+        {
+            AddChip(playerUserData.interest_2, _homeInterestsContainer);
+        }
+        if(playerUserData.interest_3 != "")
+        {
+            AddChip(playerUserData.interest_3, _homeInterestsContainer);
+        }
 
         // EditProfile
         _prevButtonEditProfile = editProfile.Q<VisualElement>("prev-button");

@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class ProfileCard : VisualElement
 {
+    private VisualElement _notification;
     private Label _nameLabel;
     private Label _jobLabel;
     private VisualElement _profilePhoto;
@@ -28,13 +29,20 @@ public class ProfileCard : VisualElement
         // styleSheets.Add(Resources.Load<StyleSheet>("Chip"));
 
         // 요소 참조 가져오기
+        _notification = this.Q<VisualElement>("notification");
         _card = this.Q<VisualElement>("card");
-        _card.RegisterCallback<ClickEvent>(evt => ShowHMD());
+        //_card.RegisterCallback<ClickEvent>(evt => ShowHMD());
+        // 포커스가 되었을 때 실행
+        _card.RegisterCallback<FocusEvent>(evt => ShowHMD());
+        _card.RegisterCallback<FocusEvent>(evt => OnFocused());
+
+        // 포커스를 잃었을 때 실행
+        _card.RegisterCallback<BlurEvent>(evt => OnBlurred());
         _nameLabel = this.Q<Label>("name");
         _jobLabel = this.Q<Label>("job");
         _profilePhoto = this.Q<VisualElement>("photo");
         _meetButton = this.Q<Button>("meet-button");
-        _meetButton.RegisterCallback<ClickEvent>(evt => Meet());
+        _meetButton.RegisterCallback<ClickEvent>(evt => {Meet(); evt.StopPropagation();});
         
         _keywordsContainer = this.Q<VisualElement>("keywords-container");
         _interestsContainer = this.Q<VisualElement>("interests-container");
@@ -115,5 +123,23 @@ public class ProfileCard : VisualElement
     private void Meet()
     {
         Debug.Log(this.profileData.pin); // 만나러 가기;
+    }
+
+    private void OnFocused()
+    {
+        _notification.style.display = DisplayStyle.Flex;
+        _notification.style.opacity = 1;
+        _meetButton.style.display = DisplayStyle.Flex;
+        _meetButton.style.opacity = 1;
+        _card.AddToClassList("card-active");
+    }
+
+    private void OnBlurred()
+    {
+        _notification.style.opacity = 0;
+        _notification.style.display = DisplayStyle.None;
+        _meetButton.style.opacity = 0;
+        _meetButton.style.display = DisplayStyle.None;
+        _card.RemoveFromClassList("card-active");
     }
 }

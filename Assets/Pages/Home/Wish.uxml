@@ -5,6 +5,6 @@
             <ui:VisualElement name="prev-button" style="flex-grow: 0; flex-shrink: 0; width: 24px; height: 24px; position: absolute; left: 20px; background-image: resource(&apos;Vectors/Icons/back&apos;); -unity-background-scale-mode: scale-to-fit;" />
             <ui:Label text="찜 목록" display-tooltip-when-elided="true" name="header" style="font-size: 18px; -unity-font: url(&apos;scale-and-crop&apos;); -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;);" />
         </ui:VisualElement>
-        <ui:ScrollView name="profile-cards-container" style="width: 100%; background-size: 90% 100%;" />
+        <ui:ScrollView name="profile-cards-container" style="width: 90%;" />
     </ui:VisualElement>
 </ui:UXML>
