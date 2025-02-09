@@ -14,9 +14,11 @@ public class ProfileCard : VisualElement
     private Button _meetButton;
     private int status; // 0: offline, 1: online, 2: away
     private VisualElement _card;
+    private UserData profileData;
 
     public ProfileCard(UserData userData)
     {
+        this.profileData = userData;
         // UXML 및 USS 불러오기
         var visualTree = Resources.Load<VisualTreeAsset>("UI/VisualTree/ProfileCard");
         visualTree.CloneTree(this);
@@ -24,12 +26,12 @@ public class ProfileCard : VisualElement
 
         // 요소 참조 가져오기
         _card = this.Q<VisualElement>("card");
-        _card.RegisterCallback<ClickEvent>(evt => ShowHMD(userData));
+        _card.RegisterCallback<ClickEvent>(evt => ShowHMD());
         _nameLabel = this.Q<Label>("name");
         _jobLabel = this.Q<Label>("job");
         _profilePhoto = this.Q<VisualElement>("photo");
         _meetButton = this.Q<Button>("meet-button");
-        _meetButton.RegisterCallback<ClickEvent>(evt => Meet(userData));
+        _meetButton.RegisterCallback<ClickEvent>(evt => Meet());
         
         _keywordsContainer = this.Q<VisualElement>("keywords-container");
         _interestsContainer = this.Q<VisualElement>("interests-container");
@@ -61,13 +63,13 @@ public class ProfileCard : VisualElement
         container.Add(chip);
     }
 
-    private void ShowHMD(UserData userData)
+    private void ShowHMD()
     {
-        Debug.Log(userData.pin); // AR에 프로필 띄우기
+        Debug.Log(this.profileData.pin); // AR에 프로필 띄우기
     }
 
-    private void Meet(UserData userData)
+    private void Meet()
     {
-        Debug.Log(userData.pin); // 만나러 가기;
+        Debug.Log(this.profileData.pin); // 만나러 가기;
     }
 }
