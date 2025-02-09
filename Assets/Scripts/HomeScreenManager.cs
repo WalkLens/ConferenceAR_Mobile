@@ -57,6 +57,30 @@ public class HomeScreenManager : MonoBehaviour
 
     // Search
     private VisualElement _prevButtonSearch;
+
+    private UserData dummyUserData = new UserData
+    {
+        pin = "12345",
+        name = "권가경",
+        job = "기관명 도식",
+        language = "ko-KR",
+        introduction_1 = "디자인",
+        introduction_2 = "3D Modeling",
+        introduction_3 = "UX/UI",
+        introduction_4 = "",
+        introduction_5 = "",
+        // interest_1 = selectedInterests.Count > 0 ? selectedInterests[0] : "", // TODO 최대 3개로 구조 수정
+        // interest_2 = selectedInterests.Count > 1 ? selectedInterests[1] : "",
+        // interest_3 = selectedInterests.Count > 2 ? selectedInterests[2] : "",
+        interest_1 = "Game",
+        interest_2 = "Character",
+        interest_3 = "AI",
+        interest_4 = "",
+        interest_5 = "",
+        introduction_text = "Hello",
+        url = "",
+        autoaccept = true
+    };
     
     
     private void OnEnable()
@@ -149,8 +173,8 @@ public class HomeScreenManager : MonoBehaviour
         _prevButtonWish.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(wish));
 
         _profileCardsContainer = wish.Q<ScrollView>("profile-cards-container");
-        AddProfileCard("권가경", "기관명 도식", ".", new List<string>(){"디자인", "3D Modeling", "UX/UI"}, new List<string>(){"Game", "Character", "AI"});
-        AddProfileCard("권나경", "기관명 도식", ",", new List<string>(){"디자인", "3D Modeling", "UX/UI"}, new List<string>(){"Game", "Character", "AI"});
+        AddProfileCard(dummyUserData);
+        AddProfileCard(dummyUserData);
         // AddLinkCard("하계 학술대회 논문", "www.naver.com");
 
         // Search
@@ -267,9 +291,10 @@ public class HomeScreenManager : MonoBehaviour
         CloseModal();
     }
 
-    private void AddProfileCard(string name, string job, string photoURL, List<string> keywords, List<string> interests)
+    private void AddProfileCard(UserData userData)
     {
-        var profileCard = new ProfileCard(name, job, photoURL, keywords, interests);
+        // string name, string job, string photoURL, List<string> keywords, List<string> interests
+        var profileCard = new ProfileCard(userData);
         _profileCardsContainer.Add(profileCard);
     }
 
