@@ -233,9 +233,7 @@ public class HomeScreenManager : MonoBehaviour
         _prevButtonWish.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(wish));
 
         _profileCardsContainer = wish.Q<ScrollView>("profile-cards-container");
-        AddProfileCard(DatabaseManager.Instance.getUserData("77777"));
-        AddProfileCard(DatabaseManager.Instance.getUserData("99999"));
-        /*AddProfileCard(dummyUserData);*/
+        AddProfileCards();
         // AddLinkCard("하계 학술대회 논문", "www.naver.com");
 
         // Search
@@ -357,6 +355,15 @@ public class HomeScreenManager : MonoBehaviour
         // string name, string job, string photoURL, List<string> keywords, List<string> interests
         var profileCard = new ProfileCard(userData);
         _profileCardsContainer.Add(profileCard);
+    }
+
+    private void AddProfileCards()
+    {
+        UserDataList userDataList = DatabaseManager.Instance.getAllUserData();
+        foreach(var userData in userDataList.users)
+        {
+            AddProfileCard(userData);
+        }
     }
 
     private void AddChip(string text, VisualElement container)
