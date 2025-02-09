@@ -84,13 +84,17 @@ public class ProfileCard : VisualElement
     private void OnFocused()
     {
         _notification.style.display = DisplayStyle.Flex;
+        _notification.style.opacity = 1;
         _meetButton.style.display = DisplayStyle.Flex;
+        _meetButton.style.opacity = 1;
         _card.AddToClassList("card-active");
     }
 
     private void OnBlurred()
     {
+        _notification.style.opacity = 0;
         _notification.style.display = DisplayStyle.None;
+        _meetButton.style.opacity = 0;
         _meetButton.style.display = DisplayStyle.None;
         _card.RemoveFromClassList("card-active");
     }
