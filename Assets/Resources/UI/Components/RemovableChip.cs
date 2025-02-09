@@ -30,8 +30,9 @@ public class RemovableChip : VisualElement
         _label.text = text;
     }
 
-    public void RemoveChip()
+    public string RemoveChip()
     {
         this.RemoveFromHierarchy();
+        return _label.text;
     }
 }
