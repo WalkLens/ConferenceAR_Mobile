@@ -58,6 +58,7 @@ public class HomeScreenManager : MonoBehaviour
     
     // History
     private VisualElement _prevButtonHistory;
+    private VisualElement _matchHistoryContainer;
     // 다음에 개발..
 
     // Wish
@@ -230,13 +231,15 @@ public class HomeScreenManager : MonoBehaviour
         // History
         _prevButtonHistory = history.Q<VisualElement>("prev-button");
         _prevButtonHistory.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(history));
+        _matchHistoryContainer = history.Q<VisualElement>("match-history-container");
+        AddMatchHistoryCards();
 
         // Wish
         _prevButtonWish = wish.Q<VisualElement>("prev-button");
         _prevButtonWish.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(wish));
 
         _profileCardsContainer = wish.Q<ScrollView>("profile-cards-container");
-        AddProfileCards();
+        AddWishCards();
         // AddLinkCard("하계 학술대회 논문", "www.naver.com");
 
         // Search
@@ -363,11 +366,32 @@ public class HomeScreenManager : MonoBehaviour
         fullUserDataList = DatabaseManager.Instance.getAllUserData();
     }
 
-    private void AddProfileCard(UserData userData)
+    private void AddWishProfileCard(UserData userData)
     {
         // string name, string job, string photoURL, List<string> keywords, List<string> interests
         var profileCard = new ProfileCard(userData);
+        profileCard.RegisterCallback<ClickEvent>(evt => RemoveWishProfileCard(profileCard));
         _profileCardsContainer.Add(profileCard);
+    }
+
+    private void RemoveWishProfileCard(ProfileCard card)
+    {
+        card.RemoveFromHierarchy();
+        DatabaseManager.Instance.removeWish(card.profileData.pin);
+    }
+
+    private void AddSmallProfileCard(UserData userData)
+    {
+        // string name, string job, string photoURL, List<string> keywords, List<string> interests
+        var profileCard = new SmallProfileCard(userData);
+        profileCard.RegisterCallback<ClickEvent>(evt => RemoveSmallProfileCard(profileCard));
+        _matchHistoryContainer.Add(profileCard);
+    }
+
+    private void RemoveSmallProfileCard(SmallProfileCard card)
+    {
+        card.RemoveFromHierarchy();
+        DatabaseManager.Instance.removeHistory(card.profileData.pin);
     }
 
     private void AddSearchResultCard(UserData userData)
@@ -381,7 +405,7 @@ public class HomeScreenManager : MonoBehaviour
         UserDataList userDataList = DatabaseManager.Instance.getAllUserData();
         foreach(var userData in userDataList.users)
         {
-            AddProfileCard(userData);
+            AddWishProfileCard(userData);
         }
     }
 
@@ -390,7 +414,16 @@ public class HomeScreenManager : MonoBehaviour
         UserDataList userDataList = DatabaseManager.Instance.getWishList(playerUserData.pin);
         foreach(var userData in userDataList.users)
         {
-            AddProfileCard(userData);
+            AddWishProfileCard(userData);
+        }
+    }
+
+    private void AddMatchHistoryCards()
+    {
+        UserDataList userDataList = DatabaseManager.Instance.getMatchHistory(playerUserData.pin);
+        foreach(var userData in userDataList.users)
+        {
+            AddSmallProfileCard(userData);
         }
     }
 

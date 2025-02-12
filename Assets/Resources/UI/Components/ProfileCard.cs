@@ -15,7 +15,7 @@ public class ProfileCard : VisualElement
     private Button _meetButton;
     private int status; // 0: offline, 1: online, 2: away
     private VisualElement _card;
-    private UserData profileData;
+    public UserData profileData;
 
     public ProfileCard(UserData userData)
     {
