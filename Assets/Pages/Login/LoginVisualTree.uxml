@@ -13,7 +13,7 @@
                     <ui:TextField picking-mode="Ignore" label="Text Field" max-length="1" name="PIN4" class="pin-text-field" style="width: 60px; height: 80px;" />
                     <ui:TextField picking-mode="Ignore" label="Text Field" max-length="1" name="PIN5" class="pin-text-field" style="width: 60px; height: 80px;" />
                 </ui:VisualElement>
-                <ui:Label text="존재하지 않는 PIN 번호입니다" display-tooltip-when-elided="true" name="DuplicateExplanation" style="-unity-font: url(&apos;scale-and-crop&apos;); color: rgb(240, 123, 125);" />
+                <ui:Label text="존재하지 않는 PIN 번호입니다" display-tooltip-when-elided="true" name="NotExistExplanation" style="-unity-font: url(&apos;scale-and-crop&apos;); color: rgb(240, 123, 125); visibility: hidden;" />
                 <ui:VisualElement name="CreateAccount" style="flex-grow: 1;">
                     <ui:Label text="&lt;u&gt;Create Account&lt;/u&gt;" name="label" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); color: rgb(145, 155, 177);" />
                 </ui:VisualElement>
