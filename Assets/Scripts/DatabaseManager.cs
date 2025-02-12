@@ -319,7 +319,7 @@ public class DatabaseManager : MonoBehaviour
         return userDatas;
     }
 
-    public UserDataList getWishList(string PIN)
+    public UserDataList getWishList(string PIN) // TODO 진짜 위시리스트
     {
         string apiUrl = $"http://{address}:{port}/users/";
 
@@ -359,7 +359,17 @@ public class DatabaseManager : MonoBehaviour
         return resultList;
     }
 
-    public UserDataList getMatchHistory(string PIN)
+    public bool addWish(string PIN) // playerUserData.pin + PIN으로 구성된 것 DB에 저장장
+    {
+        return false;
+    }
+
+    public bool removeWish(string PIN) // playerUserData.pin + PIN으로 구성된 것 삭제
+    {
+        return false;
+    }
+
+    public UserDataList getMatchHistory(string PIN) // TODO 진짜 히스토리
     {
         string apiUrl = $"http://{address}:{port}/users/";
 
@@ -397,6 +407,16 @@ public class DatabaseManager : MonoBehaviour
         }
 
         return resultList;
+    }
+
+    public bool addHistory(string PIN) // playerUserData.pin + PIN으로 구성된 것 DB에 저장장
+    {
+        return false;
+    }
+
+    public bool removeHistory(string PIN) // playerUserData.pin + PIN으로 구성된 것 삭제
+    {
+        return false;
     }
 
     public UserDataList Search(UserDataList userDataList, string keyword) // TODO 최적화...
