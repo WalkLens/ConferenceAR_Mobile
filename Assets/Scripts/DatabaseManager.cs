@@ -318,4 +318,105 @@ public class DatabaseManager : MonoBehaviour
 
         return userDatas;
     }
+
+    public UserDataList getWishList(string PIN)
+    {
+        string apiUrl = $"http://{address}:{port}/users/";
+
+        Debug.Log("TODO: getWishList, " + PIN);
+
+        UserDataList resultList = new UserDataList();
+
+        try
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+
+            using (HttpWebResponse httpResponse = (HttpWebResponse)request.GetResponse())
+            {
+                using (StreamReader reader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    string jsonResponse = reader.ReadToEnd();
+
+                    // JSON 배열을 감싸는 객체로 변환
+                    if (jsonResponse.TrimStart().StartsWith("["))
+                    {
+                        jsonResponse = "{\"users\":" + jsonResponse + "}";
+                    }
+
+                    UserDataList userDataList = JsonUtility.FromJson<UserDataList>(jsonResponse);
+                    resultList = JsonUtility.FromJson<UserDataList>(jsonResponse);
+                    Debug.Log($"User data retrieved successfully: {jsonResponse}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error retrieving user data: {ex.Message}");
+        }
+
+        return resultList;
+    }
+
+    public UserDataList getMatchHistory(string PIN)
+    {
+        string apiUrl = $"http://{address}:{port}/users/";
+
+        Debug.Log("TODO: getMatchHistory, " + PIN);
+
+        UserDataList resultList = new UserDataList();
+
+        try
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+
+            using (HttpWebResponse httpResponse = (HttpWebResponse)request.GetResponse())
+            {
+                using (StreamReader reader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    string jsonResponse = reader.ReadToEnd();
+
+                    // JSON 배열을 감싸는 객체로 변환
+                    if (jsonResponse.TrimStart().StartsWith("["))
+                    {
+                        jsonResponse = "{\"users\":" + jsonResponse + "}";
+                    }
+
+                    UserDataList userDataList = JsonUtility.FromJson<UserDataList>(jsonResponse);
+                    resultList = JsonUtility.FromJson<UserDataList>(jsonResponse);
+                    Debug.Log($"User data retrieved successfully: {jsonResponse}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error retrieving user data: {ex.Message}");
+        }
+
+        return resultList;
+    }
+
+    public UserDataList Search(UserDataList userDataList, string keyword) // TODO 최적화...
+    {
+        UserDataList searchResult = new UserDataList
+        {
+            users = new List<UserData>()
+        };
+
+        if(keyword != "")
+        {
+            foreach(var userData in userDataList.users)
+            {
+                if(userData.name.Contains(keyword))
+                {
+                    searchResult.users.Add(userData);
+                }
+            }
+        }
+
+        return searchResult;
+    }
 }

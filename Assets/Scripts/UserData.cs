@@ -27,5 +27,5 @@ public class UserData
 [System.Serializable]
 public class UserDataList
 {
-    public UserData[] users;
+    public List<UserData> users;
 }

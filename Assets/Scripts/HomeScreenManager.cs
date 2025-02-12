@@ -9,6 +9,7 @@ public class HomeScreenManager : MonoBehaviour
     [SerializeField] private UIDocument uiDocument;
 
     private UserData playerUserData;
+    private UserDataList fullUserDataList;
 
     // Screens    
     private VisualElement root;
@@ -65,6 +66,8 @@ public class HomeScreenManager : MonoBehaviour
 
     // Search
     private VisualElement _prevButtonSearch;
+    private TextField _searchBarTextField;
+    private ScrollView _searchResultsContainer;
 
     private UserData dummyUserData = new UserData
     {
@@ -239,9 +242,13 @@ public class HomeScreenManager : MonoBehaviour
         // Search
         _prevButtonSearch = search.Q<VisualElement>("prev-button");
         _prevButtonSearch.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(search));
+        _searchBarTextField = search.Q<TextField>("search-bar");
+        _searchBarTextField.RegisterValueChangedCallback(evt => UpdateSearchCards(evt.newValue));
+        _searchResultsContainer = search.Q<ScrollView>("profile-cards-container");
+
         var _searchChip = new ChipsTab(-1,0);
         _searchChip.style.width = Length.Percent(90);
-        search.Q<VisualElement>("content").Add(_searchChip);
+        search.Q<VisualElement>("search-chips-tab").Add(_searchChip); 
     }
 
     private void UpdateScreenWidth()
@@ -266,6 +273,7 @@ public class HomeScreenManager : MonoBehaviour
     {
         search.style.display = DisplayStyle.Flex;
         container.style.translate = new Translate(-screenWidth, 0, 0);
+        UpdateUserList();
     }
 
     private void OpenModal(int type) // 0: Introduction, 1: Keyword, 2: Interest, 3: URL
@@ -350,6 +358,11 @@ public class HomeScreenManager : MonoBehaviour
         CloseModal();
     }
 
+    private void UpdateUserList()
+    {
+        fullUserDataList = DatabaseManager.Instance.getAllUserData();
+    }
+
     private void AddProfileCard(UserData userData)
     {
         // string name, string job, string photoURL, List<string> keywords, List<string> interests
@@ -357,12 +370,37 @@ public class HomeScreenManager : MonoBehaviour
         _profileCardsContainer.Add(profileCard);
     }
 
-    private void AddProfileCards()
+    private void AddSearchResultCard(UserData userData)
+    {
+        var resultCard = new ProfileCard(userData);
+        _searchResultsContainer.Add(resultCard);
+    }
+
+    private void AddProfileCards() // TODO 받아오도록
     {
         UserDataList userDataList = DatabaseManager.Instance.getAllUserData();
         foreach(var userData in userDataList.users)
         {
             AddProfileCard(userData);
+        }
+    }
+
+    private void AddWishCards()
+    {
+        UserDataList userDataList = DatabaseManager.Instance.getWishList(playerUserData.pin);
+        foreach(var userData in userDataList.users)
+        {
+            AddProfileCard(userData);
+        }
+    }
+
+    private void UpdateSearchCards(string keyword)
+    {
+        UserDataList userDataList = DatabaseManager.Instance.Search(fullUserDataList, keyword);
+        _searchResultsContainer.Clear();
+        foreach(var userData in userDataList.users)
+        {
+            AddSearchResultCard(userData);
         }
     }
 
