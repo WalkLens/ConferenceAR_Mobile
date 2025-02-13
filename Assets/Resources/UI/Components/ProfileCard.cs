@@ -11,7 +11,7 @@ public class ProfileCard : VisualElement
     private VisualElement _profilePhoto;
     private VisualElement _keywordsContainer;
     private VisualElement _interestsContainer;
-    public Button _wishButton;
+    public VisualElement _wishButton;
     private Button _meetButton;
     private int status; // 0: offline, 1: online, 2: away
     private VisualElement _card;
@@ -39,7 +39,7 @@ public class ProfileCard : VisualElement
         _profilePhoto = this.Q<VisualElement>("photo");
         _meetButton = this.Q<Button>("meet-button");
         _meetButton.RegisterCallback<ClickEvent>(evt => {Meet(); evt.StopPropagation();});
-        _wishButton = this.Q<Button>("wish");
+        _wishButton = this.Q<VisualElement>("wish");
         
         _keywordsContainer = this.Q<VisualElement>("keywords-container");
         _interestsContainer = this.Q<VisualElement>("interests-container");
