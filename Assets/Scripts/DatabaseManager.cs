@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Text;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -281,6 +282,39 @@ public class DatabaseManager : MonoBehaviour
         return receivedUserData;
     }
 
+    public UserData getUserData(int userID)
+    {
+        string apiUrl = $"http://{address}:{port}/users/{userID}";
+        
+        UserData receivedUserData = null;
+
+        if (userID > 0) // 0, -1이 아님
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
+                request.Method = "GET";
+                request.ContentType = "application/json";
+
+                using (HttpWebResponse httpResponse = (HttpWebResponse)request.GetResponse())
+                {
+                    using (StreamReader reader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        string jsonResponse = reader.ReadToEnd();
+                        receivedUserData = JsonUtility.FromJson<UserData>(jsonResponse);
+                        Debug.Log($"User data retrieved successfully: {jsonResponse}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error retrieving user data: {ex.Message}");
+            }
+        }
+        
+        return receivedUserData;
+    }
+
     public UserDataList getAllUserData()
     {
         string apiUrl = $"http://{address}:{port}/users/";
@@ -319,13 +353,15 @@ public class DatabaseManager : MonoBehaviour
         return userDatas;
     }
 
-    public UserDataList getWishList(string PIN) // TODO 진짜 위시리스트
+    public UserDataList getWishList(string PIN)
     {
-        string apiUrl = $"http://{address}:{port}/users/";
+        int userId = findUser(PIN);
+        string apiUrl = $"http://{address}:{port}/wish/{userId}";
+        
 
-        Debug.Log("TODO: getWishList, " + PIN);
-
-        UserDataList resultList = new UserDataList();
+        UserDataList resultUserList = new UserDataList();
+        resultUserList.users = new List<UserData>();
+        WishList resultList = new WishList();
 
         try
         {
@@ -342,11 +378,11 @@ public class DatabaseManager : MonoBehaviour
                     // JSON 배열을 감싸는 객체로 변환
                     if (jsonResponse.TrimStart().StartsWith("["))
                     {
-                        jsonResponse = "{\"users\":" + jsonResponse + "}";
+                        jsonResponse = "{\"wishes\":" + jsonResponse + "}";
                     }
+                    WishList wishList = JsonUtility.FromJson<WishList>(jsonResponse);
 
-                    UserDataList userDataList = JsonUtility.FromJson<UserDataList>(jsonResponse);
-                    resultList = JsonUtility.FromJson<UserDataList>(jsonResponse);
+                    resultList = JsonUtility.FromJson<WishList>(jsonResponse);
                     Debug.Log($"User data retrieved successfully: {jsonResponse}");
                 }
             }
@@ -356,17 +392,98 @@ public class DatabaseManager : MonoBehaviour
             Debug.LogError($"Error retrieving user data: {ex.Message}");
         }
 
-        return resultList;
+        foreach(var wishData in resultList.wishes)
+        {
+            resultUserList.users.Add(getUserData(wishData.target_id));
+        }
+
+        return resultUserList;
     }
 
-    public bool addWish(string PIN) // playerUserData.pin + PIN으로 구성된 것 DB에 저장장
+    public bool addWish(string PIN) // playerUserData.pin + PIN으로 구성된 것 DB에 저장
     {
-        return false;
+        int userID = findUser(playerUserData.pin);
+        int targetID = findUser(PIN);
+        string apiUrl = $"http://{address}:{port}/wish/";
+
+        try
+        {
+            // JSON 데이터 생성
+            WishData wishData = new WishData { user_id = userID, target_id = targetID };
+            string json = JsonUtility.ToJson(wishData);
+
+            // HTTP 요청 객체 생성 및 설정
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
+            request.Method = "POST"; // POST 방식 설정
+            request.ContentType = "application/json"; // JSON 형식으로 설정
+            request.Accept = "application/json";
+
+            // 요청 본문에 JSON 데이터 작성
+            byte[] data = Encoding.UTF8.GetBytes(json);
+            request.ContentLength = data.Length;
+
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            // 서버로부터 응답 수신
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    // 요청이 성공적으로 처리되었음을 의미
+                    return true;
+                }
+                else
+                {
+                    Debug.LogError($"Error: {response.StatusCode}");
+                    return false;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Exception: {e.Message}");
+            return false;
+        }
     }
 
     public bool removeWish(string PIN) // playerUserData.pin + PIN으로 구성된 것 삭제
     {
-        return false;
+        int userID = findUser(playerUserData.pin);
+        int targetID = findUser(PIN);
+        string apiUrl = $"http://{address}:{port}/wish/{userID}/{targetID}";
+        
+        // DELETE 메서드를 활용하여 서버에 요청을 보냄
+        try
+        {
+            // HTTP 요청 객체 생성 및 설정
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
+            request.Method = "DELETE"; // DELETE 방식 설정
+            request.ContentType = "application/json"; // JSON 형식 요청
+            request.Accept = "application/json";
+
+            // 서버로부터 응답 수신
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.NoContent)
+                {
+                    // 요청이 성공적으로 처리되었음을 의미
+                    return true;
+                }
+                else
+                {
+                    Debug.LogError($"Error: {response.StatusCode}");
+                    return false;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Exception: {e.Message}");
+            return false;
+        }
     }
 
     public UserDataList getMatchHistory(string PIN) // TODO 진짜 히스토리

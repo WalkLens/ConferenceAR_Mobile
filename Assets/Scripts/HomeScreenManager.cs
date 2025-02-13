@@ -11,6 +11,7 @@ public class HomeScreenManager : MonoBehaviour
 
     private UserData playerUserData;
     private UserDataList fullUserDataList;
+    private UserDataList wishList;
 
     // Screens    
     private VisualElement root;
@@ -147,6 +148,7 @@ public class HomeScreenManager : MonoBehaviour
         _editProfileButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(editProfile));
         _historyButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(history));
         _wishButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(wish));
+        _wishButton.RegisterCallback<ClickEvent>(evt => UpdateWishCards());
 
         SelectedIntroductionString.Add(playerUserData.introduction_1);
         if(playerUserData.introduction_2 != "")
@@ -235,7 +237,7 @@ public class HomeScreenManager : MonoBehaviour
         _prevButtonWish.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(wish));
 
         _profileCardsContainer = wish.Q<ScrollView>("profile-cards-container");
-        AddWishCards();
+        UpdateWishCards();
         // AddLinkCard("하계 학술대회 논문", "www.naver.com");
 
         // Search
@@ -366,6 +368,7 @@ public class HomeScreenManager : MonoBehaviour
     private void UpdateUserList()
     {
         fullUserDataList = DatabaseManager.Instance.getAllUserData();
+        wishList = DatabaseManager.Instance.getWishList(playerUserData.pin);
     }
 
     private void AddWishProfileCard(UserData userData)
@@ -397,7 +400,16 @@ public class HomeScreenManager : MonoBehaviour
 
     private void AddSearchResultCard(UserData userData)
     {
-        var resultCard = new ProfileCard(userData);
+        bool isInWish = false;
+        foreach(var user in wishList.users)
+        {
+            if(userData.pin == user.pin)
+            {
+                isInWish = true;
+                break;
+            }
+        }
+        var resultCard = new ProfileCard(userData, isInWish);
         _searchResultsContainer.Add(resultCard);
     }
 
@@ -410,9 +422,10 @@ public class HomeScreenManager : MonoBehaviour
         }
     }
 
-    private void AddWishCards()
+    private void UpdateWishCards()
     {
         UserDataList userDataList = DatabaseManager.Instance.getWishList(playerUserData.pin);
+        _profileCardsContainer.Clear();
         foreach(var userData in userDataList.users)
         {
             AddWishProfileCard(userData);
