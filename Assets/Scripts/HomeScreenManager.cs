@@ -251,7 +251,7 @@ public class HomeScreenManager : MonoBehaviour
 
         // Search
         _prevButtonSearch = search.Q<VisualElement>("prev-button");
-        _prevButtonSearch.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(search));
+        _prevButtonSearch.RegisterCallback<ClickEvent>(evt => OnSearchBack());
         _searchBackground = search.Q<VisualElement>("background");
         _searchBarTextField = search.Q<TextField>("search-bar");
         _searchBarTextField.RegisterValueChangedCallback(evt => UpdateSearchCards(evt.newValue));
@@ -291,6 +291,20 @@ public class HomeScreenManager : MonoBehaviour
         search.style.display = DisplayStyle.Flex;
         container.style.translate = new Translate(-screenWidth, 0, 0);
         UpdateUserList();
+    }
+
+    private void OnSearchBack()
+    {
+        if(_searchChipsTab.style.visibility == Visibility.Hidden)
+        {
+            _searchBarTextField.value = "";
+            _searchResultsContainer.style.visibility = Visibility.Hidden;
+            _searchChipsTab.style.visibility = Visibility.Visible;
+        }
+        else
+        {
+            ShowHomeScreen(search);
+        }
     }
 
     private void OpenModal(int type) // 0: Introduction, 1: Keyword, 2: Interest, 3: URL

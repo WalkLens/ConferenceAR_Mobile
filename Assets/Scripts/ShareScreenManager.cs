@@ -34,6 +34,8 @@ public class ShareScreenManager : MonoBehaviour
     private TextField _popupLink;
     private Button _popupCancelButton;
     private Button _popupShareButton;
+    private Label _shareName;
+    private Label _shareJob;
 
     // Share-Complete
     
@@ -63,7 +65,7 @@ public class ShareScreenManager : MonoBehaviour
     private void OnEnable()
     {
         // playerUserData = DatabaseManager.Instance.playerUserData;
-        playerUserData = dummyUserData;
+        playerUserData = DatabaseManager.Instance.playerUserData;
         
         root = uiDocument.rootVisualElement;
         container = root.Q<VisualElement>("content");
@@ -95,6 +97,11 @@ public class ShareScreenManager : MonoBehaviour
         _description.text = playerUserData.introduction_text;
 
         // URL
+        _shareName = url.Q<Label>("Name");
+        _shareJob = url.Q<Label>("Description");
+        _shareName.text = playerUserData.name;
+        _shareJob.text = playerUserData.job;
+        
         _shareURLButton = url.Q<VisualElement>("Share");
         _shareURLButton.RegisterCallback<ClickEvent>(evt => ShowPopup());
 
