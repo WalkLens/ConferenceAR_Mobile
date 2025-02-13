@@ -370,7 +370,7 @@ public class HomeScreenManager : MonoBehaviour
     {
         // string name, string job, string photoURL, List<string> keywords, List<string> interests
         var profileCard = new ProfileCard(userData);
-        profileCard.RegisterCallback<ClickEvent>(evt => RemoveWishProfileCard(profileCard));
+        profileCard._wishButton.RegisterCallback<ClickEvent>(evt => RemoveWishProfileCard(profileCard));
         _profileCardsContainer.Add(profileCard);
     }
 
