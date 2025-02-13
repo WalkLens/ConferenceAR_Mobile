@@ -69,6 +69,9 @@ public class HomeScreenManager : MonoBehaviour
     private VisualElement _prevButtonSearch;
     private TextField _searchBarTextField;
     private ScrollView _searchResultsContainer;
+    private VisualElement _searchBackground;
+    private Button _searchSubmitKeywordOnly;
+    private VisualElement _searchChipsTab;
 
     private UserData dummyUserData = new UserData
     {
@@ -245,13 +248,20 @@ public class HomeScreenManager : MonoBehaviour
         // Search
         _prevButtonSearch = search.Q<VisualElement>("prev-button");
         _prevButtonSearch.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(search));
+        _searchBackground = search.Q<VisualElement>("background");
         _searchBarTextField = search.Q<TextField>("search-bar");
         _searchBarTextField.RegisterValueChangedCallback(evt => UpdateSearchCards(evt.newValue));
+        _searchBarTextField.RegisterCallback<FocusEvent>(evt => {_searchBackground.style.visibility = Visibility.Visible; _searchBackground.style.opacity = 1;});
+        _searchBarTextField.RegisterCallback<BlurEvent>(evt => {_searchBackground.style.visibility = Visibility.Hidden; _searchBackground.style.opacity = 0;});
         _searchResultsContainer = search.Q<ScrollView>("profile-cards-container");
+        _searchSubmitKeywordOnly = search.Q<Button>("submit-keyword-only");
+        _searchSubmitKeywordOnly.RegisterCallback<ClickEvent>(evt => OnSubmitKeywordsOnly());
 
         var _searchChip = new ChipsTab(-1,0);
         _searchChip.style.width = Length.Percent(90);
-        search.Q<VisualElement>("search-chips-tab").Add(_searchChip); 
+        _searchChipsTab = search.Q<VisualElement>("search-chips-tab");
+        _searchChipsTab.Add(_searchChip); 
+        _searchChipsTab.RegisterCallback<ClickEvent>(evt => OnFilterSelected());
     }
 
     private void UpdateScreenWidth()
@@ -429,8 +439,20 @@ public class HomeScreenManager : MonoBehaviour
 
     private void UpdateSearchCards(string keyword)
     {
-        UserDataList userDataList = DatabaseManager.Instance.Search(fullUserDataList, keyword);
+        UserDataList userDataList = DatabaseManager.Instance.Search(fullUserDataList, keyword, search.Q<ChipsTab>("").SelectedKeywords);
         _searchResultsContainer.Clear();
+
+        if(userDataList.users.Count == 0)
+        {
+            _searchResultsContainer.style.visibility = Visibility.Hidden;
+            ToggleSearchChipsTab();
+        }
+        else
+        {
+            _searchResultsContainer.style.visibility = Visibility.Visible;
+            ToggleSearchChipsTab();
+        }
+
         foreach(var userData in userDataList.users)
         {
             AddSearchResultCard(userData);
@@ -448,5 +470,37 @@ public class HomeScreenManager : MonoBehaviour
         var chip = new RemovableChip(text);
         chip.RegisterCallback<ClickEvent>(evt => {chip.RemoveChip();});
         container.Add(chip);
+    }
+
+    private void OnFilterSelected()
+    {
+        if(search.Q<ChipsTab>("").SelectedKeywords.Count > 0)
+        {
+            _searchSubmitKeywordOnly.style.visibility = Visibility.Visible;
+        }
+        else // 선택된 필터 없음
+        {
+            _searchSubmitKeywordOnly.style.visibility = Visibility.Hidden;
+        }
+    }
+
+    private void ToggleSearchChipsTab()
+    {
+        Debug.Log("Changed");
+        if(_searchResultsContainer.style.visibility == Visibility.Visible)
+        {
+            _searchChipsTab.style.visibility = Visibility.Hidden;
+        }
+        else
+        {
+            _searchChipsTab.style.visibility = Visibility.Visible;
+        }
+    }
+
+    private void OnSubmitKeywordsOnly()
+    {
+        UpdateSearchCards("");
+        search.Q<VisualElement>("search-chips-tab").style.visibility = Visibility.Hidden;
+        _searchSubmitKeywordOnly.style.visibility = Visibility.Hidden;
     }
 }

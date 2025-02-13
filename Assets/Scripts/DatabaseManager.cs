@@ -50,14 +50,14 @@ public class DatabaseManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.T))
-        {
-            Debug.Log("isPINDuplicate: " + isPINDuplicate("12345").ToString());
-            Debug.Log("registerProfile: " + registerProfile(userDataTest).ToString());
-            Debug.Log("editProfile: " + editProfile(userDataTest.pin, userDataTest));
-            Debug.Log("findUser: " + findUser("12345").ToString());
-            Debug.Log("getUserData: " + getUserData("12345").ToString());
-        }
+        // if(Input.GetKey(KeyCode.T))
+        // {
+        //     Debug.Log("isPINDuplicate: " + isPINDuplicate("12345").ToString());
+        //     Debug.Log("registerProfile: " + registerProfile(userDataTest).ToString());
+        //     Debug.Log("editProfile: " + editProfile(userDataTest.pin, userDataTest));
+        //     Debug.Log("findUser: " + findUser("12345").ToString());
+        //     Debug.Log("getUserData: " + getUserData("12345").ToString());
+        // }
     }
 
     public bool isPINDuplicate(string PIN) // PIN이 있는지 확인
@@ -419,18 +419,25 @@ public class DatabaseManager : MonoBehaviour
         return false;
     }
 
-    public UserDataList Search(UserDataList userDataList, string keyword) // TODO 최적화...
+    public UserDataList Search(UserDataList userDataList, string keyword, List<string> filter) // TODO 최적화...
     {
         UserDataList searchResult = new UserDataList
         {
             users = new List<UserData>()
         };
 
-        if(keyword != "")
+        if(keyword != "" || filter.Count > 0)
         {
             foreach(var userData in userDataList.users)
             {
-                if(userData.name.Contains(keyword))
+                if(userData.name.Contains(keyword)
+                && (filter.Count == 0
+                || filter.Contains(userData.interest_1)
+                    || filter.Contains(userData.interest_2)
+                    || filter.Contains(userData.interest_3)
+                    || filter.Contains(userData.introduction_1)
+                    || filter.Contains(userData.introduction_2)
+                    || filter.Contains(userData.introduction_3)))
                 {
                     searchResult.users.Add(userData);
                 }
