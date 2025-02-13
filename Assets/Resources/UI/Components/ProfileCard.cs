@@ -28,13 +28,9 @@ public class ProfileCard : VisualElement
         // 요소 참조 가져오기
         _notification = this.Q<VisualElement>("notification");
         _card = this.Q<VisualElement>("card");
-        //_card.RegisterCallback<ClickEvent>(evt => ShowHMD());
-        // 포커스가 되었을 때 실행
-        _card.RegisterCallback<FocusEvent>(evt => ShowHMD());
-        _card.RegisterCallback<FocusEvent>(evt => OnFocused());
+        _card.RegisterCallback<ClickEvent>(evt => ToggleCard());
 
-        // 포커스를 잃었을 때 실행
-        _card.RegisterCallback<BlurEvent>(evt => OnBlurred());
+
         _nameLabel = this.Q<Label>("name");
         _jobLabel = this.Q<Label>("job");
         _profilePhoto = this.Q<VisualElement>("photo");
@@ -72,9 +68,26 @@ public class ProfileCard : VisualElement
         container.Add(chip);
     }
 
+    private void ToggleCard()
+    {
+        if(_card.ClassListContains("card-active")) // 선택 -> 해제
+        {
+            OnUnselected();
+        }
+        else
+        {
+            OnSelected();
+        }
+    }
+
     private void ShowHMD()
     {
         Debug.Log(this.profileData.pin); // AR에 프로필 띄우기
+    }
+
+    private void HideHMD()
+    {
+        Debug.Log(this.profileData.pin); // AR에서 프로필 숨기기기
     }
 
     private void Meet()
@@ -82,21 +95,23 @@ public class ProfileCard : VisualElement
         Debug.Log(this.profileData.pin); // 만나러 가기;
     }
 
-    private void OnFocused() // TODO 누르면 다시 없어짐
+    private void OnSelected() // TODO 누르면 다시 없어짐
     {
         _notification.style.display = DisplayStyle.Flex;
         _notification.style.opacity = 1;
         _meetButton.style.display = DisplayStyle.Flex;
         _meetButton.style.opacity = 1;
         _card.AddToClassList("card-active");
+        ShowHMD();
     }
 
-    private void OnBlurred()
+    private void OnUnselected()
     {
         _notification.style.opacity = 0;
         _notification.style.display = DisplayStyle.None;
         _meetButton.style.opacity = 0;
         _meetButton.style.display = DisplayStyle.None;
         _card.RemoveFromClassList("card-active");
+        HideHMD();
     }
 }
