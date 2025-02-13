@@ -90,7 +90,7 @@ public class ProfileCard : VisualElement
         string pin = DatabaseManager.Instance.playerUserData.pin;
       
         // 대응하는 Hololens 사용자의 닉네임은 "PIN_Hololens"로 가정
-        string targetUserName = $"{pin}_Hololens";
+        string targetUserName = $"{pin}_hololens";
         int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetUserName);
         Debug.Log($"{targetUserName}에게 데이터 전송햇음!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.");
         if (targetActorNumber == null)
@@ -112,7 +112,7 @@ public class ProfileCard : VisualElement
         string pin = myNick.Split('_')[0];
 
         // 대응하는 Hololens 사용자의 닉네임은 "PIN_Hololens"로 가정
-        string targetUserName = $"{pin}_Hololens";
+        string targetUserName = $"{pin}_hololens";
         UserInfo targetUserInfo = UserMatchingManager.Instance.userInfos.Find(
             u => u.PhotonUserName.Contains(targetUserName, System.StringComparison.OrdinalIgnoreCase)
         );
@@ -139,7 +139,7 @@ public class ProfileCard : VisualElement
         }
 
         // PhotonUserUtility를 통해 해당 닉네임의 ActorNumber를 획득
-        /*int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetHololensNick);
+        /*int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targethololensNick);
 
         if (targetActorNumber != -1)
         {
@@ -160,8 +160,8 @@ public class ProfileCard : VisualElement
 
         string pin = DatabaseManager.Instance.playerUserData.pin;
 
-        // 대응하는 Hololens 사용자의 닉네임은 "PIN_Hololens"로 가정
-        string targetUserName = $"{pin}_Hololens";
+        // 대응하는 Hololens 사용자의 닉네임은 "PIN_hololens"로 가정
+        string targetUserName = $"{pin}_hololens";
         int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetUserName);
         UserMatchingManager.Instance.PopUpUINotify(targetActorNumber);
 
