@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/MobileUIStyle.uss?fileID=7433441132597879392&amp;guid=a1e1a68698a96804f95b29aa35db691e&amp;type=3#MobileUIStyle" />
     <ui:VisualElement name="Container" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); background-image: none; align-items: center; justify-content: center;">
-        <ui:VisualElement name="logo" style="flex-grow: 0; width: 140px; height: 140px; background-image: resource(&apos;Vectors/Illusts/logo&apos;); flex-shrink: 0; -unity-background-scale-mode: scale-to-fit;" />
+        <ui:IMGUIContainer style="width: 240px; height: 240px; background-image: url(&quot;project://database/Assets/Resources/Vectors/Illusts/logo.svg?fileID=7388822144124034973&amp;guid=4deb417ee04cb524c8df601180a0f995&amp;type=3#logo&quot;); -unity-background-scale-mode: scale-to-fit; margin-bottom: 0;" />
         <ui:Label text="기기를 착용하고&#10;컨퍼런스를 즐겨보세요!" display-tooltip-when-elided="true" name="Header1" class="header" style="margin-top: 30px;" />
         <ui:Label text="연결 전까지 앱을 종료하지 말아주세요" display-tooltip-when-elided="true" style="color: rgb(122, 191, 255); -unity-font: url(&quot;project://database/Assets/Fonts/Pretendard-Regular.otf?fileID=12800000&amp;guid=5dc7bb8e4b593254ab6b630e1cd5c49a&amp;type=3#Pretendard-Regular&quot;); font-size: 16px;" />
     </ui:VisualElement>

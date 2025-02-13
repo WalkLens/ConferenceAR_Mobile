@@ -7,6 +7,7 @@ using System.IO;
 public class HomeScreenManager : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
+    [SerializeField] private GameObject shareScreen;
 
     private UserData playerUserData;
     private UserDataList fullUserDataList;
@@ -24,6 +25,7 @@ public class HomeScreenManager : MonoBehaviour
     private TextField _searchBar;
 
     // Home
+    private VisualElement _homePhoto;
     private VisualElement _editProfileButton;
     private Label _homeName;
     private Label _homeIntroduction;
@@ -34,12 +36,17 @@ public class HomeScreenManager : MonoBehaviour
     private VisualElement _wishButton;
 
     // EditProfile
+    private List<string> SelectedIntroductionString = new List<string>();
+    private List<string> SelectedInterestString = new List<string>();
     private VisualElement _prevButtonEditProfile;
     private VisualElement _modalBackground;
     private VisualElement _modalIntroduction;
     private VisualElement _modalKeyword;
     private VisualElement _modalInterest;
     private VisualElement _modalURL;
+
+    private TextField _modalIntroductionTextField;
+    private TextField _modalURLTextField;
 
     private Button _modalIntroductionSubmitButton;
     private Button _modalKeywordSubmitButton;
@@ -51,6 +58,7 @@ public class HomeScreenManager : MonoBehaviour
     private Button _addURLButton;
     private VisualElement _editKeywordChipContainer;
     private VisualElement _editInterestChipContainer;
+    private VisualElement _editURLChipContainer;
 
     private Label _editProfileName;
     private Label _editProfileJob;
@@ -69,6 +77,9 @@ public class HomeScreenManager : MonoBehaviour
     private VisualElement _prevButtonSearch;
     private TextField _searchBarTextField;
     private ScrollView _searchResultsContainer;
+    private VisualElement _searchBackground;
+    private Button _searchSubmitKeywordOnly;
+    private VisualElement _searchChipsTab;
 
     private UserData dummyUserData = new UserData
     {
@@ -128,6 +139,8 @@ public class HomeScreenManager : MonoBehaviour
         _historyButton = home.Q<VisualElement>("history-button");
         _wishButton = home.Q<VisualElement>("wish-button");
 
+        _homePhoto = home.Q<VisualElement>("photo");
+        _homePhoto.RegisterCallback<ClickEvent>(evt => ShowShareScreen());
         _homeName = home.Q<Label>("Name");
         _homeIntroduction = home.Q<Label>("Introduction");
 
@@ -135,28 +148,27 @@ public class HomeScreenManager : MonoBehaviour
         _historyButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(history));
         _wishButton.RegisterCallback<ClickEvent>(evt => ShowNextScreen(wish));
 
-        // DB
-        _homeName.text = playerUserData.name;
-        _homeIntroduction.text = playerUserData.introduction_text;
-        AddChip(playerUserData.introduction_1, _homeKeywordsContainer);
+        SelectedIntroductionString.Add(playerUserData.introduction_1);
         if(playerUserData.introduction_2 != "")
         {
-            AddChip(playerUserData.introduction_2, _homeKeywordsContainer);
+            SelectedIntroductionString.Add(playerUserData.introduction_2);
         }
         if(playerUserData.introduction_3 != "")
         {
-            AddChip(playerUserData.introduction_3, _homeKeywordsContainer);
+            SelectedIntroductionString.Add(playerUserData.introduction_3);
         }
 
-        AddChip(playerUserData.interest_1, _homeInterestsContainer);
+        SelectedInterestString.Add(playerUserData.interest_1);
         if(playerUserData.interest_2 != "")
         {
-            AddChip(playerUserData.interest_2, _homeInterestsContainer);
+            SelectedInterestString.Add(playerUserData.interest_2);
         }
         if(playerUserData.interest_3 != "")
         {
-            AddChip(playerUserData.interest_3, _homeInterestsContainer);
+            SelectedInterestString.Add(playerUserData.interest_3);
         }
+
+        UpdateHomeScreen();
 
         // EditProfile
         // UI
@@ -180,6 +192,11 @@ public class HomeScreenManager : MonoBehaviour
         _editProfileJob = editProfile.Q<Label>("Introduction");
         _editProfileIntroduction = editProfile.Q<Label>("introduction-label");
 
+        _modalIntroductionTextField = editProfile.Q<TextField>("introduction-textfield");
+        _modalURLTextField = editProfile.Q<TextField>("url-textfield");
+        _modalIntroductionTextField.value = playerUserData.introduction_text;
+        _modalURLTextField.value = playerUserData.url;
+
         _modalIntroductionSubmitButton = _modalIntroduction.Q<Button>("submit-button");
         _modalIntroductionSubmitButton.RegisterCallback<ClickEvent>(evt => SaveAndCloseModal("introduction"));
         _modalKeywordSubmitButton = _modalKeyword.Q<Button>("submit-button");
@@ -202,31 +219,10 @@ public class HomeScreenManager : MonoBehaviour
 
         _addURLButton = editProfile.Q<Button>("add-url-button");
         _addURLButton.RegisterCallback<ClickEvent>(evt => OpenModal(3));
+        _editURLChipContainer = editProfile.Q<VisualElement>("url-chip-container");
 
         // DB
-        _editProfileName.text = playerUserData.name;
-        _editProfileJob.text = playerUserData.job;
-        _editProfileIntroduction.text = playerUserData.introduction_text;
-
-        AddRemovableChip(playerUserData.introduction_1, _editKeywordChipContainer);
-        if(playerUserData.introduction_2 != "")
-        {
-            AddRemovableChip(playerUserData.introduction_2, _editKeywordChipContainer);
-        }
-        if(playerUserData.introduction_3 != "")
-        {
-            AddRemovableChip(playerUserData.introduction_3, _editKeywordChipContainer);
-        }
-
-        AddRemovableChip(playerUserData.interest_1, _editInterestChipContainer);
-        if(playerUserData.interest_2 != "")
-        {
-            AddRemovableChip(playerUserData.interest_2, _editInterestChipContainer);
-        }
-        if(playerUserData.interest_3 != "")
-        {
-            AddRemovableChip(playerUserData.interest_3, _editInterestChipContainer);
-        }
+        UpdateEditProfileScreen();
 
         // History
         _prevButtonHistory = history.Q<VisualElement>("prev-button");
@@ -244,14 +240,21 @@ public class HomeScreenManager : MonoBehaviour
 
         // Search
         _prevButtonSearch = search.Q<VisualElement>("prev-button");
-        _prevButtonSearch.RegisterCallback<ClickEvent>(evt => ShowHomeScreen(search));
+        _prevButtonSearch.RegisterCallback<ClickEvent>(evt => OnSearchBack());
+        _searchBackground = search.Q<VisualElement>("background");
         _searchBarTextField = search.Q<TextField>("search-bar");
         _searchBarTextField.RegisterValueChangedCallback(evt => UpdateSearchCards(evt.newValue));
+        _searchBarTextField.RegisterCallback<FocusEvent>(evt => {_searchBackground.style.visibility = Visibility.Visible; _searchBackground.style.opacity = 1;});
+        _searchBarTextField.RegisterCallback<BlurEvent>(evt => {_searchBackground.style.visibility = Visibility.Hidden; _searchBackground.style.opacity = 0;});
         _searchResultsContainer = search.Q<ScrollView>("profile-cards-container");
+        _searchSubmitKeywordOnly = search.Q<Button>("submit-keyword-only");
+        _searchSubmitKeywordOnly.RegisterCallback<ClickEvent>(evt => OnSubmitKeywordsOnly());
 
         var _searchChip = new ChipsTab(-1,0);
         _searchChip.style.width = Length.Percent(90);
-        search.Q<VisualElement>("search-chips-tab").Add(_searchChip); 
+        _searchChipsTab = search.Q<VisualElement>("search-chips-tab");
+        _searchChipsTab.Add(_searchChip); 
+        _searchChipsTab.RegisterCallback<ClickEvent>(evt => OnFilterSelected());
     }
 
     private void UpdateScreenWidth()
@@ -279,21 +282,37 @@ public class HomeScreenManager : MonoBehaviour
         UpdateUserList();
     }
 
-    private void OpenModal(int type) // 0: Introduction, 1: Keyword, 2: Interest, 3: URL
+    private void OnSearchBack()
+    {
+        if(_searchChipsTab.style.visibility == Visibility.Hidden)
+        {
+            _searchBarTextField.value = "";
+            _searchResultsContainer.style.visibility = Visibility.Hidden;
+            _searchChipsTab.style.visibility = Visibility.Visible;
+        }
+        else
+        {
+            ShowHomeScreen(search);
+        }
+    }
+
+    private void OpenModal(int type) // 0: Introduction, 1: Keyword, 2: Interest, 3: URL, OpenModal시 값 업데이트
     {
         switch(type)
         {
             case 0:
-                _modalIntroduction.style.display = DisplayStyle.Flex;
+                _modalIntroduction.RemoveFromClassList("modal-inactive");
                 break;
             case 1:
-                _modalKeyword.style.display = DisplayStyle.Flex;
+                _modalKeyword.Q<ChipsTab>().SelectChipsByName(SelectedIntroductionString);
+                _modalKeyword.RemoveFromClassList("modal-inactive");
                 break;
             case 2:
-                _modalInterest.style.display = DisplayStyle.Flex;
+                _modalInterest.Q<ChipsTab>().SelectChipsByName(SelectedInterestString);
+                _modalInterest.RemoveFromClassList("modal-inactive");
                 break;
             case 3:
-                _modalURL.style.display = DisplayStyle.Flex;
+                _modalURL.RemoveFromClassList("modal-inactive");
                 break;
         }
         
@@ -302,10 +321,10 @@ public class HomeScreenManager : MonoBehaviour
 
     private void CloseModal()
     {
-        _modalIntroduction.style.display = DisplayStyle.None;
-        _modalKeyword.style.display = DisplayStyle.None;
-        _modalInterest.style.display = DisplayStyle.None;
-        _modalURL.style.display = DisplayStyle.None;
+        _modalIntroduction.AddToClassList("modal-inactive");
+        _modalKeyword.AddToClassList("modal-inactive");
+        _modalInterest.AddToClassList("modal-inactive");
+        _modalURL.AddToClassList("modal-inactive");
         _modalBackground.style.display = DisplayStyle.None;
     }
 
@@ -313,51 +332,34 @@ public class HomeScreenManager : MonoBehaviour
     {
         if(type == "introduction")
         {
-            ;
+            playerUserData.introduction_text = _modalIntroductionTextField.text;
         }
         else if(type == "keyword")
         {
             var selection = _modalKeyword.Q<ChipsTab>().SelectedKeywords;
             // 리스트에 먼저 저장한 후 삭제
-            List<VisualElement> children = new List<VisualElement>(_editKeywordChipContainer.Children());
-            
-            foreach (var child in children)
-            {
-                if (!child.ClassListContains("chip-add"))
-                {
-                    _editKeywordChipContainer.Remove(child);
-                }
-            }
-            foreach(var text in selection)
-            {
-                AddRemovableChip(text, _editKeywordChipContainer);
-            }
+            SelectedIntroductionString = selection;
+            playerUserData.introduction_1 = selection[0];
+            playerUserData.introduction_2 = selection[1];
+            playerUserData.introduction_3 = selection[2];
         }
         else if(type == "interest")
         {
             var selection = _modalInterest.Q<ChipsTab>().SelectedKeywords;
             // 리스트에 먼저 저장한 후 삭제
-            List<VisualElement> children = new List<VisualElement>(_editInterestChipContainer.Children());
-            
-            foreach (var child in children)
-            {
-                if (!child.ClassListContains("chip-add"))
-                {
-                    _editInterestChipContainer.Remove(child);
-                }
-            }
-            foreach(var text in selection)
-            {
-                AddRemovableChip(text, _editInterestChipContainer);
-            }
+            SelectedInterestString = selection;
+            playerUserData.interest_1 = selection[0];
+            playerUserData.interest_2 = selection[1];
+            playerUserData.interest_3 = selection[2];
         }
         else if(type == "url")
         {
-            ;
+            playerUserData.url = _modalURLTextField.text;
         }
 
-        
-        // TODO Save
+        DatabaseManager.Instance.editProfile(playerUserData.pin, playerUserData);
+        UpdateHomeScreen();
+        UpdateEditProfileScreen();
         CloseModal();
     }
 
@@ -369,7 +371,7 @@ public class HomeScreenManager : MonoBehaviour
     private void AddWishProfileCard(UserData userData)
     {
         // string name, string job, string photoURL, List<string> keywords, List<string> interests
-        var profileCard = new ProfileCard(userData);
+        var profileCard = new ProfileCard(userData, isInWish: true, alwaysShowWish: true);
         profileCard._wishButton.RegisterCallback<ClickEvent>(evt => RemoveWishProfileCard(profileCard));
         _profileCardsContainer.Add(profileCard);
     }
@@ -377,14 +379,13 @@ public class HomeScreenManager : MonoBehaviour
     private void RemoveWishProfileCard(ProfileCard card)
     {
         card.RemoveFromHierarchy();
-        DatabaseManager.Instance.removeWish(card.profileData.pin);
     }
 
     private void AddSmallProfileCard(UserData userData)
     {
         // string name, string job, string photoURL, List<string> keywords, List<string> interests
         var profileCard = new SmallProfileCard(userData);
-        profileCard.RegisterCallback<ClickEvent>(evt => RemoveSmallProfileCard(profileCard));
+        profileCard._closeButton.RegisterCallback<ClickEvent>(evt => RemoveSmallProfileCard(profileCard));
         _matchHistoryContainer.Add(profileCard);
     }
 
@@ -429,8 +430,20 @@ public class HomeScreenManager : MonoBehaviour
 
     private void UpdateSearchCards(string keyword)
     {
-        UserDataList userDataList = DatabaseManager.Instance.Search(fullUserDataList, keyword);
+        UserDataList userDataList = DatabaseManager.Instance.Search(fullUserDataList, keyword, search.Q<ChipsTab>("").SelectedKeywords);
         _searchResultsContainer.Clear();
+
+        if(userDataList.users.Count == 0)
+        {
+            _searchResultsContainer.style.visibility = Visibility.Hidden;
+            ToggleSearchChipsTab();
+        }
+        else
+        {
+            _searchResultsContainer.style.visibility = Visibility.Visible;
+            ToggleSearchChipsTab();
+        }
+
         foreach(var userData in userDataList.users)
         {
             AddSearchResultCard(userData);
@@ -443,10 +456,197 @@ public class HomeScreenManager : MonoBehaviour
         container.Add(chip);
     }
 
-    private void AddRemovableChip(string text, VisualElement container)
+    private RemovableChip AddRemovableChip(string text, VisualElement container, List<string> keywords=null)
     {
         var chip = new RemovableChip(text);
+        if(keywords != null)
+        {
+            chip.RegisterCallback<ClickEvent>(evt => {keywords.Remove(chip.text);UpdateInterestKeyword();UpdateIntroductionKeyword();});
+        }
         chip.RegisterCallback<ClickEvent>(evt => {chip.RemoveChip();});
         container.Add(chip);
+        return chip;
+    }
+
+    private void OnFilterSelected()
+    {
+        if(search.Q<ChipsTab>("").SelectedKeywords.Count > 0)
+        {
+            _searchSubmitKeywordOnly.style.visibility = Visibility.Visible;
+        }
+        else // 선택된 필터 없음
+        {
+            _searchSubmitKeywordOnly.style.visibility = Visibility.Hidden;
+        }
+    }
+
+    private void ToggleSearchChipsTab()
+    {
+        Debug.Log("Changed");
+        if(_searchResultsContainer.style.visibility == Visibility.Visible)
+        {
+            _searchChipsTab.style.visibility = Visibility.Hidden;
+        }
+        else
+        {
+            _searchChipsTab.style.visibility = Visibility.Visible;
+        }
+    }
+
+    private void OnSubmitKeywordsOnly()
+    {
+        UpdateSearchCards("");
+        search.Q<VisualElement>("search-chips-tab").style.visibility = Visibility.Hidden;
+        _searchSubmitKeywordOnly.style.visibility = Visibility.Hidden;
+    }
+
+    private void UpdateHomeScreen()
+    {
+        _homeName.text = playerUserData.name;
+        _homeIntroduction.text = playerUserData.introduction_text;
+
+        _homeKeywordsContainer.Clear();
+        foreach(var introduction in SelectedIntroductionString)
+        {
+            AddChip(introduction, _homeKeywordsContainer);
+        }
+        
+        _homeInterestsContainer.Clear();
+        foreach(var interest in SelectedInterestString)
+        {
+            AddChip(interest, _homeInterestsContainer);
+        }
+    }
+
+    private void UpdateEditProfileScreen()
+    {
+        _editProfileName.text = playerUserData.name;
+        _editProfileJob.text = playerUserData.job;
+        _editProfileIntroduction.text = playerUserData.introduction_text;
+
+        List<VisualElement> children = new List<VisualElement>(_editKeywordChipContainer.Children());
+            
+        foreach (var child in children)
+        {
+            if (!child.ClassListContains("chip-add"))
+            {
+                _editKeywordChipContainer.Remove(child);
+            }
+        }
+
+        children = new List<VisualElement>(_editInterestChipContainer.Children());
+            
+        foreach (var child in children)
+        {
+            if (!child.ClassListContains("chip-add"))
+            {
+                _editInterestChipContainer.Remove(child);
+            }
+        }
+
+        children = new List<VisualElement>(_editURLChipContainer.Children());
+            
+        foreach (var child in children)
+        {
+            if (!child.ClassListContains("chip-add"))
+            {
+                _editURLChipContainer.Remove(child);
+            }
+        }
+
+
+        AddRemovableChip(playerUserData.introduction_1, _editKeywordChipContainer, SelectedIntroductionString);
+        if(playerUserData.introduction_2 != "")
+        {
+            AddRemovableChip(playerUserData.introduction_2, _editKeywordChipContainer, SelectedIntroductionString);
+        }
+        if(playerUserData.introduction_3 != "")
+        {
+            AddRemovableChip(playerUserData.introduction_3, _editKeywordChipContainer, SelectedIntroductionString);
+        }
+
+        AddRemovableChip(playerUserData.interest_1, _editInterestChipContainer, SelectedInterestString);
+        if(playerUserData.interest_2 != "")
+        {
+            AddRemovableChip(playerUserData.interest_2, _editInterestChipContainer, SelectedInterestString);
+        }
+        if(playerUserData.interest_3 != "")
+        {
+            AddRemovableChip(playerUserData.interest_3, _editInterestChipContainer, SelectedInterestString);
+        }
+
+        AddRemovableChip(playerUserData.url, _editURLChipContainer);
+    }
+
+    private void UpdateIntroductionKeyword()
+    {
+        if(SelectedIntroductionString.Count > 0)
+        {
+            playerUserData.introduction_1 = SelectedIntroductionString[0];
+        }
+        else
+        {
+            playerUserData.introduction_1 = "";
+        }
+
+        if(SelectedIntroductionString.Count > 1)
+        {
+            playerUserData.introduction_2 = SelectedIntroductionString[1];
+            
+        }
+        else
+        {
+            playerUserData.introduction_2 = "";
+        }
+
+        if(SelectedIntroductionString.Count > 2)
+        {
+            playerUserData.introduction_3 = SelectedIntroductionString[2];
+        }
+        else
+        {
+            playerUserData.introduction_3 = "";
+        }
+
+        DatabaseManager.Instance.editProfile(playerUserData.pin, playerUserData);
+        UpdateHomeScreen();
+    }
+
+    private void UpdateInterestKeyword()
+    {
+        if(SelectedInterestString.Count > 0)
+        {
+            playerUserData.interest_1 = SelectedInterestString[0];
+        }
+        else
+        {
+            playerUserData.interest_1 = "";
+        }
+        if(SelectedInterestString.Count > 1)
+        {
+            playerUserData.interest_2 = SelectedInterestString[1];
+            
+        }
+        else
+        {
+            playerUserData.interest_2 = "";
+        }
+        if(SelectedInterestString.Count > 2)
+        {
+            playerUserData.interest_3 = SelectedInterestString[2];
+        }
+        else
+        {
+            playerUserData.interest_3 = "";
+        }
+
+        DatabaseManager.Instance.editProfile(playerUserData.pin, playerUserData);
+        UpdateHomeScreen();
+    }
+
+    private void ShowShareScreen()
+    {
+        shareScreen.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 }

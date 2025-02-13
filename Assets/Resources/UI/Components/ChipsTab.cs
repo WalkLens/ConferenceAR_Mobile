@@ -177,4 +177,36 @@ public class ChipsTab : VisualElement
         }
         chip.RegisterCallback<ClickEvent>(evt => ToggleChip(chip, category));
     }
+
+    public void SelectChipsByName(List<string> targetText)
+    {
+        List<SelectableChip> matchingChips = new List<SelectableChip>();
+
+        _selectedKeywords = new List<string>();
+        _researchChipCount = 0;
+        _designChipCount = 0;
+        _devChipCount = 0;
+
+        foreach (var chip in _researchContainer.Query<SelectableChip>().ToList())
+        {
+            if (targetText.Contains(chip.text)) // text 값이 "게임 기획"인지 확인
+            {
+                ToggleChip(chip, 0);
+            }
+        }
+        foreach (var chip in _designContainer.Query<SelectableChip>().ToList())
+        {
+            if (targetText.Contains(chip.text)) // text 값이 "게임 기획"인지 확인
+            {
+                ToggleChip(chip, 1);
+            }
+        }
+        foreach (var chip in _devContainer.Query<SelectableChip>().ToList())
+        {
+            if (targetText.Contains(chip.text)) // text 값이 "게임 기획"인지 확인
+            {
+                ToggleChip(chip, 2);
+            }
+        }
+    }
 }
