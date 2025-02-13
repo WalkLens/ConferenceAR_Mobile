@@ -384,7 +384,7 @@ public class HomeScreenManager : MonoBehaviour
     {
         // string name, string job, string photoURL, List<string> keywords, List<string> interests
         var profileCard = new SmallProfileCard(userData);
-        profileCard.RegisterCallback<ClickEvent>(evt => RemoveSmallProfileCard(profileCard));
+        profileCard._closeButton.RegisterCallback<ClickEvent>(evt => RemoveSmallProfileCard(profileCard));
         _matchHistoryContainer.Add(profileCard);
     }
 
