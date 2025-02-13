@@ -24,6 +24,7 @@ public class SmallProfileCard : VisualElement
         _nameLabel = this.Q<Label>("name");
         _profilePhoto = this.Q<VisualElement>("profile-photo");
         _status = this.Q<VisualElement>("status");
+        _closeButton = this.Q<VisualElement>("close-button");
 
 
         // 텍스트 설정
