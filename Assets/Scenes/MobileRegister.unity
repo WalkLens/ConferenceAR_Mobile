@@ -687,6 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiDocument: {fileID: 1019202815}
+  shareScreen: {fileID: 1801960990}
 --- !u!1 &1801960990
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,6 +719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiDocument: {fileID: 1801960992}
+  homeScreen: {fileID: 1019202814}
 --- !u!114 &1801960992
 MonoBehaviour:
   m_ObjectHideFlags: 0

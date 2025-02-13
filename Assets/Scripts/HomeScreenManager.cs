@@ -7,6 +7,7 @@ using System.IO;
 public class HomeScreenManager : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
+    [SerializeField] private GameObject shareScreen;
 
     private UserData playerUserData;
     private UserDataList fullUserDataList;
@@ -24,6 +25,7 @@ public class HomeScreenManager : MonoBehaviour
     private TextField _searchBar;
 
     // Home
+    private VisualElement _homePhoto;
     private VisualElement _editProfileButton;
     private Label _homeName;
     private Label _homeIntroduction;
@@ -131,6 +133,8 @@ public class HomeScreenManager : MonoBehaviour
         _historyButton = home.Q<VisualElement>("history-button");
         _wishButton = home.Q<VisualElement>("wish-button");
 
+        _homePhoto = home.Q<VisualElement>("photo");
+        _homePhoto.RegisterCallback<ClickEvent>(evt => ShowShareScreen());
         _homeName = home.Q<Label>("Name");
         _homeIntroduction = home.Q<Label>("Introduction");
 
@@ -379,7 +383,7 @@ public class HomeScreenManager : MonoBehaviour
     private void AddWishProfileCard(UserData userData)
     {
         // string name, string job, string photoURL, List<string> keywords, List<string> interests
-        var profileCard = new ProfileCard(userData);
+        var profileCard = new ProfileCard(userData, isInWish: true, alwaysShowWish: true);
         profileCard._wishButton.RegisterCallback<ClickEvent>(evt => RemoveWishProfileCard(profileCard));
         _profileCardsContainer.Add(profileCard);
     }
@@ -387,7 +391,6 @@ public class HomeScreenManager : MonoBehaviour
     private void RemoveWishProfileCard(ProfileCard card)
     {
         card.RemoveFromHierarchy();
-        DatabaseManager.Instance.removeWish(card.profileData.pin);
     }
 
     private void AddSmallProfileCard(UserData userData)
@@ -502,5 +505,11 @@ public class HomeScreenManager : MonoBehaviour
         UpdateSearchCards("");
         search.Q<VisualElement>("search-chips-tab").style.visibility = Visibility.Hidden;
         _searchSubmitKeywordOnly.style.visibility = Visibility.Hidden;
+    }
+
+    private void ShowShareScreen()
+    {
+        shareScreen.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 }

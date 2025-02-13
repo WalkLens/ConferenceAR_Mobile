@@ -13,7 +13,8 @@
                 <engine:Label text="권가경" name="name" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/Pretendard-SemiBold.otf?fileID=12800000&amp;guid=c5f2f18448a7a8340af7b5afdab1df03&amp;type=3#Pretendard-SemiBold&quot;); font-size: 18px; margin-bottom: 0; margin-top: 0;" />
                 <engine:Label text="기관명 도식" name="job" style="font-size: 12px; margin-bottom: 0;" />
             </engine:VisualElement>
-            <engine:VisualElement name="wish" style="flex-grow: 0; flex-shrink: 0; background-image: resource(&apos;Vectors/Icons/heart&apos;); width: 20px; height: 20px; -unity-background-scale-mode: scale-to-fit; position: absolute; top: 0; right: 0;" />
+            <engine:VisualElement name="wish" style="flex-grow: 0; flex-shrink: 0; background-image: resource(&apos;Vectors/Icons/heart&apos;); width: 20px; height: 20px; -unity-background-scale-mode: scale-to-fit; position: absolute; top: 0; right: 0; visibility: hidden;" />
+            <engine:VisualElement name="wish-blank" style="flex-grow: 0; flex-shrink: 0; background-image: resource(&apos;Vectors/Icons/heart-light&apos;); width: 20px; height: 20px; -unity-background-scale-mode: scale-to-fit; position: absolute; top: 0; right: 0; visibility: hidden;" />
         </engine:VisualElement>
         <engine:VisualElement name="keywords-container" style="flex-grow: 1; flex-direction: row;" />
         <engine:VisualElement name="interests-container" style="flex-grow: 1; flex-direction: row;" />

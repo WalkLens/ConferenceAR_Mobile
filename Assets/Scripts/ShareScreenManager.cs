@@ -7,6 +7,7 @@ using System.IO;
 public class ShareScreenManager : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
+    [SerializeField] private GameObject homeScreen;
 
     private UserData playerUserData;
 
@@ -144,5 +145,7 @@ public class ShareScreenManager : MonoBehaviour
     private void Share()
     {
         Debug.Log(_popupLink.text);
+        homeScreen.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 }

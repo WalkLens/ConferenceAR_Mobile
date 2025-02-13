@@ -12,15 +12,20 @@ public class ProfileCard : VisualElement
     private VisualElement _keywordsContainer;
     private VisualElement _interestsContainer;
     public VisualElement _wishButton;
+    public VisualElement _wishButton_blank;
     private Button _meetButton;
     private int status; // 0: offline, 1: online, 2: away
     private VisualElement _card;
     public UserData profileData;
     private bool isSelected = false;
+    private bool isInWish;
+    private bool alwaysShowWish;
 
-    public ProfileCard(UserData userData)
+    public ProfileCard(UserData userData, bool isInWish=false, bool alwaysShowWish=false)
     {
         this.profileData = userData;
+        this.isInWish = isInWish;
+        this.alwaysShowWish = alwaysShowWish;
         // UXML 및 USS 불러오기
         var visualTree = Resources.Load<VisualTreeAsset>("UI/VisualTree/ProfileCard");
         visualTree.CloneTree(this);
@@ -40,6 +45,21 @@ public class ProfileCard : VisualElement
         _meetButton = this.Q<Button>("meet-button");
         _meetButton.RegisterCallback<ClickEvent>(evt => {Meet(); evt.StopPropagation();});
         _wishButton = this.Q<VisualElement>("wish");
+        _wishButton.RegisterCallback<ClickEvent>(evt => {RemoveWish(); evt.StopPropagation();});
+        _wishButton_blank = this.Q<VisualElement>("wish-blank");
+        _wishButton_blank.RegisterCallback<ClickEvent>(evt => {AddWish(); evt.StopPropagation();});
+
+        if(alwaysShowWish)
+        {
+            if(isInWish)
+            {
+                _wishButton.style.visibility = Visibility.Visible;
+            }
+            else
+            {
+                _wishButton_blank.style.visibility = Visibility.Visible;
+            }
+        }
         
         _keywordsContainer = this.Q<VisualElement>("keywords-container");
         _interestsContainer = this.Q<VisualElement>("interests-container");
@@ -99,7 +119,7 @@ public class ProfileCard : VisualElement
         Debug.Log(this.profileData.pin); // 만나러 가기;
     }
 
-    private void OnSelected() // TODO 누르면 다시 없어짐
+    private void OnSelected()
     {
         _notification.style.display = DisplayStyle.Flex;
         _notification.style.opacity = 1;
@@ -107,6 +127,10 @@ public class ProfileCard : VisualElement
         _meetButton.style.opacity = 1;
         _card.AddToClassList("card-active");
         ShowHMD();
+        if(!alwaysShowWish)
+        {
+            ShowWishButton();
+        }
     }
 
     private void OnUnselected()
@@ -118,5 +142,43 @@ public class ProfileCard : VisualElement
         _card.RemoveFromClassList("card-active");
         HideHMD();
         isSelected = false;
+        if(!alwaysShowWish)
+        {
+            HideWishButton();
+        }
+    }
+
+    private void AddWish()
+    {
+        DatabaseManager.Instance.addWish(this.profileData.pin);
+        this.isInWish = true;
+        ShowWishButton();
+    }
+
+    private void RemoveWish()
+    {
+        DatabaseManager.Instance.removeWish(this.profileData.pin);
+        this.isInWish = false;
+        ShowWishButton();
+    }
+
+    private void ShowWishButton()
+    {
+        if(isInWish)
+        {
+            _wishButton.style.visibility = Visibility.Visible;
+            _wishButton_blank.style.visibility = Visibility.Hidden;
+        }
+        else
+        {
+            _wishButton.style.visibility = Visibility.Hidden;
+            _wishButton_blank.style.visibility = Visibility.Visible;
+        }
+    }
+
+    private void HideWishButton()
+    {
+        _wishButton.style.visibility = Visibility.Hidden;
+        _wishButton_blank.style.visibility = Visibility.Hidden;
     }
 }
