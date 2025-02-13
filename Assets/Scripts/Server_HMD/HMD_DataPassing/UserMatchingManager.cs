@@ -28,6 +28,7 @@ public class UserMatchingManager : HostOnlyBehaviour
     public const byte SendURLDataEvent = 7;// URL 전송 이벤트 코드
     public const byte ViewProfileEvent = 8;
     public const byte SendMyUIPopUP = 9;
+    public const byte CloseProfileEvent = 10;
 
     //============ SM ADD ============//
     public bool _isMatchingSucceed = false;
@@ -57,7 +58,8 @@ public class UserMatchingManager : HostOnlyBehaviour
             { SendCustomStringEvent, HandleSendCustomStringEvent },
             { SendURLDataEvent, HandleSendURLDataEvent },
             { ViewProfileEvent, HandleSendViewProfileEvent },
-            { SendMyUIPopUP, HandleSendMyUIPopUPEvent }
+            { SendMyUIPopUP, HandleSendMyUIPopUPEvent },
+            { CloseProfileEvent, HandleCloseProfileEvent}
         };
     }
 
@@ -201,6 +203,32 @@ public class UserMatchingManager : HostOnlyBehaviour
         }
     }
 
+    public void ClosedProfileUI(int targetActorNumber)
+    {
+        object[] data = new object[] { };
+
+        // 전송 옵션: 지정한 Actor에게만 보내기
+        RaiseEventOptions options = new RaiseEventOptions
+        {
+            TargetActors = new int[] { targetActorNumber }
+        };
+
+        try
+        {
+            PhotonNetwork.RaiseEvent(CloseProfileEvent, data, options, SendOptions.SendReliable);
+            FileLogger.Log($"[ClosedProfileUI] UI {targetActorNumber}에게 전송", this);
+        }
+        catch (Exception ex)
+        {
+            FileLogger.Log($"[ClosedProfileUI] 메시지 전송 실패: {ex.Message}", this);
+        }
+    }
+
+
+    private void HandleCloseProfileEvent(EventData photonEvent)
+    {
+        //notificationManager.CloseProfileUI();
+    }
 
 
     private void HandleSendMyUIPopUPEvent(EventData photonEvent)

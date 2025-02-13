@@ -186,14 +186,20 @@ public class ProfileCard : VisualElement
         }*/
     }
 
-    private void HideHMD()
-    {
-        Debug.Log(this.profileData.pin); // AR에서 프로필 숨기기기
-    }
-
     private void Meet()
     {
-        Debug.Log(this.profileData.pin); // AR에 프로필 띄우기
+        Debug.Log(this.profileData.pin); // AR에서 프로필 숨기기기
+        string pin = DatabaseManager.Instance.playerUserData.pin;
+
+        // 대응하는 Hololens 사용자의 닉네임은 "PIN_hololens"로 가정
+        string targetUserName = $"{pin}_hololens";
+        int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetUserName);
+        UserMatchingManager.Instance.PopUpUINotify(targetActorNumber);
+    }
+
+    private void HideHMD()
+    {
+        Debug.Log(this.profileData.pin+"RMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"); // AR에 프로필 띄우기
         OnSendMatchingButtonClicked(this.profileData.pin);
 
         string pin = DatabaseManager.Instance.playerUserData.pin;
@@ -201,7 +207,7 @@ public class ProfileCard : VisualElement
         // 대응하는 Hololens 사용자의 닉네임은 "PIN_hololens"로 가정
         string targetUserName = $"{pin}_hololens";
         int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetUserName);
-        UserMatchingManager.Instance.PopUpUINotify(targetActorNumber);
+        UserMatchingManager.Instance.ClosedProfileUI(targetActorNumber);
 
     }
 
