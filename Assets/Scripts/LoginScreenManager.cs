@@ -16,6 +16,7 @@ public class LoginScreenManager: MonoBehaviour
     private VisualElement root;
     private VisualElement container; // 컨텐츠를 감싸는 컨테이너
     private TextField[] pinFields = new TextField[5];
+    private Label notExistExplanation;
     private VisualElement createAccount;
     private string pinCode = "";
     private float screenWidth; // 각 뷰의 너비 (화면 크기)
@@ -39,6 +40,8 @@ public class LoginScreenManager: MonoBehaviour
 
         createAccount = root.Q<VisualElement>("CreateAccount");
         createAccount.RegisterCallback<ClickEvent>(evt => Register());
+
+        notExistExplanation = root.Q<Label>("NotExistExplanation");
 
         pinFields[0] = root.Q<TextField>("PIN1");
         pinFields[1] = root.Q<TextField>("PIN2");
@@ -96,6 +99,7 @@ public class LoginScreenManager: MonoBehaviour
                 foreach (var field in pinFields)
                 {
                     field.value = "";
+                    notExistExplanation.style.visibility = Visibility.Visible;
                 }
                 // TODO 경고 메시지
             }

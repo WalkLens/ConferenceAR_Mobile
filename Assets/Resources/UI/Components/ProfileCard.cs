@@ -15,11 +15,11 @@ public class ProfileCard : VisualElement
     private VisualElement _profilePhoto;
     private VisualElement _keywordsContainer;
     private VisualElement _interestsContainer;
-    private Button _wishButton;
+    public Button _wishButton;
     private Button _meetButton;
     private int status; // 0: offline, 1: online, 2: away
     private VisualElement _card;
-    private UserData profileData;
+    public UserData profileData;
 
     public ProfileCard(UserData userData)
     {
@@ -44,6 +44,7 @@ public class ProfileCard : VisualElement
         _profilePhoto = this.Q<VisualElement>("photo");
         _meetButton = this.Q<Button>("meet-button");
         _meetButton.RegisterCallback<ClickEvent>(evt => {Meet(); evt.StopPropagation();});
+        _wishButton = this.Q<Button>("wish");
         
         _keywordsContainer = this.Q<VisualElement>("keywords-container");
         _interestsContainer = this.Q<VisualElement>("interests-container");
@@ -167,7 +168,7 @@ public class ProfileCard : VisualElement
 
     }
 
-    private void OnFocused()
+    private void OnFocused() // TODO 누르면 다시 없어짐
     {
         _notification.style.display = DisplayStyle.Flex;
         _notification.style.opacity = 1;

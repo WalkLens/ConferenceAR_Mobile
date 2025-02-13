@@ -62,8 +62,10 @@ public class RegisterScreenManager : MonoBehaviour
     // 4. IntroduceScreen
     private TextField userIntroduction;
     private TextField userURL;
+    private Label introductionHeader;
 
     // 5. RegisterCompleteScreen
+    private Label registerCompleteHeader;
 
     // 6. SetPINScreen
     private TextField[] pinFields = new TextField[5];
@@ -146,7 +148,12 @@ public class RegisterScreenManager : MonoBehaviour
 
         // 4. IntroduceScreen
         userIntroduction = root.Q<TextField>("UserIntroduction");
+        userIntroduction.RegisterValueChangedCallback(evt => UpdateIntroductionHeader(evt.newValue));
         userURL = root.Q<TextField>("UserURL");
+        introductionHeader = root.Q<Label>("IntroductionHeader");
+
+        // 5. RegisterCompleteScreen
+        registerCompleteHeader = root.Q<Label>("RegisterCompleteHeader");
 
         // 6. SetPINScreen
         pinFields[0] = root.Q<TextField>("PIN1");
@@ -248,6 +255,11 @@ public class RegisterScreenManager : MonoBehaviour
 
     private void Submit()
     {
+        if(currentPage == 2)
+        {
+            registerCompleteHeader.text = $"{userName.text}님의 프로필이\n완성되었어요!";
+        }
+        
         if(currentPage == 6) // PIN 번호 등록
         {
             if(DatabaseManager.Instance.isPINDuplicate(pinCode))
@@ -563,6 +575,11 @@ public class RegisterScreenManager : MonoBehaviour
         {
             return "ko-KR";
         }
+    }
+
+    private void UpdateIntroductionHeader(string newValue)
+    {
+        introductionHeader.text = $"자기소개 <color=grey>({newValue.Length}/200)";
     }
 
     private IEnumerator ConnectHMD() // TODO Event로 변경

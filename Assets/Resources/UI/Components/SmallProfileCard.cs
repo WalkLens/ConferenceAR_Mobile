@@ -5,26 +5,29 @@ using UnityEngine.UIElements;
 
 public class SmallProfileCard : VisualElement
 {
-    private Label _titleLabel;
+    private Label _nameLabel;
     private VisualElement _profilePhoto;
     private VisualElement _status;
     private int status; // 0: offline, 1: online, 2: away
+    public VisualElement _closeButton;
+    public UserData profileData;
 
-    public SmallProfileCard(string name, string photoURL, int status)
+    public SmallProfileCard(UserData userData)
     {
+        this.profileData = userData;
         // UXML 및 USS 불러오기
         var visualTree = Resources.Load<VisualTreeAsset>("UI/VisualTree/SmallProfileCard");
         visualTree.CloneTree(this);
         // styleSheets.Add(Resources.Load<StyleSheet>("Chip"));
 
         // 요소 참조 가져오기
-        _titleLabel = this.Q<Label>("title");
+        _nameLabel = this.Q<Label>("name");
         _profilePhoto = this.Q<VisualElement>("profile-photo");
         _status = this.Q<VisualElement>("status");
 
 
         // 텍스트 설정
-        _titleLabel.text = name;
+        _nameLabel.text = userData.name;
         // _profilePhoto.~~background~~ = photoURL;
     }
 
