@@ -16,6 +16,7 @@ public class ProfileCard : VisualElement
     private int status; // 0: offline, 1: online, 2: away
     private VisualElement _card;
     public UserData profileData;
+    private bool isSelected = false;
 
     public ProfileCard(UserData userData)
     {
@@ -29,6 +30,8 @@ public class ProfileCard : VisualElement
         _notification = this.Q<VisualElement>("notification");
         _card = this.Q<VisualElement>("card");
         _card.RegisterCallback<ClickEvent>(evt => ToggleCard());
+        // _card.RegisterCallback<FocusEvent>(evt => OnSelected());
+        _card.RegisterCallback<BlurEvent>(evt => OnUnselected());
 
 
         _nameLabel = this.Q<Label>("name");
@@ -70,13 +73,14 @@ public class ProfileCard : VisualElement
 
     private void ToggleCard()
     {
-        if(_card.ClassListContains("card-active")) // 선택 -> 해제
+        if(isSelected)
         {
-            OnUnselected();
+            _card.Blur();
         }
         else
         {
             OnSelected();
+            isSelected = true;
         }
     }
 
@@ -113,5 +117,6 @@ public class ProfileCard : VisualElement
         _meetButton.style.display = DisplayStyle.None;
         _card.RemoveFromClassList("card-active");
         HideHMD();
+        isSelected = false;
     }
 }
