@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.IO;
+using MRTK.Tutorials.MultiUserCapabilities;
+using UnityEngine.Windows;
 
 public class RegisterScreenManager : MonoBehaviour
 {
@@ -275,6 +277,7 @@ public class RegisterScreenManager : MonoBehaviour
             else
             {
                 DatabaseManager.Instance.registerProfile(ConvertToUserData());
+                PhotonLobbyConferenceAR.Lobby.JoinOrCreateRoom(pinCode);
             }
         }
 

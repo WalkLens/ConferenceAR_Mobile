@@ -146,13 +146,14 @@ public class ProfileCard : VisualElement
 
         // 대응하는 Hololens 사용자의 닉네임은 "PIN_Hololens"로 가정
         string targetUserName = $"{pin}_hololens";
+        Debug.Log(targetUserName + "Matcing ID!!!!!!!!!!!!!!!!!!!! You send!!!!!!!!!!!!!!!!!");
         UserInfo targetUserInfo = UserMatchingManager.Instance.userInfos.Find(
             u => u.PhotonUserName.Contains(targetUserName, System.StringComparison.OrdinalIgnoreCase)
         );
 
         if (targetUserInfo == null)
         {
-            //Debug.LogError($"대상 사용자 '{targetUserName}'를 찾을 수 없습니다.");
+            Debug.LogError($"대상 사용자 '{targetUserName}'를 찾을 수 없습니다.");
             return;
         }
 
@@ -189,6 +190,7 @@ public class ProfileCard : VisualElement
     private void Meet()
     {
         Debug.Log(this.profileData.pin); // AR에서 프로필 숨기기기
+        OnSendMatchingButtonClicked(this.profileData.pin);
         string pin = DatabaseManager.Instance.playerUserData.pin;
 
         // 대응하는 Hololens 사용자의 닉네임은 "PIN_hololens"로 가정
@@ -200,8 +202,6 @@ public class ProfileCard : VisualElement
     private void HideHMD()
     {
         Debug.Log(this.profileData.pin+"RMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"); // AR에 프로필 띄우기
-        OnSendMatchingButtonClicked(this.profileData.pin);
-
         string pin = DatabaseManager.Instance.playerUserData.pin;
 
         // 대응하는 Hololens 사용자의 닉네임은 "PIN_hololens"로 가정

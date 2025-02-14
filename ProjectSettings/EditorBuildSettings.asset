@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MobileRegister.unity
     guid: 489bd4c189b2c224ab174a22badf4396
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Photon_test.unity
     guid: 3683292b7be175b4c913499098db69bf
+  - enabled: 1
+    path: Assets/Scenes/MobileRegister_SendHMD.unity
+    guid: 5b025290d8459e14d873f556df98ccb2
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

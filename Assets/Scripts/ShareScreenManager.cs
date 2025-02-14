@@ -152,6 +152,13 @@ public class ShareScreenManager : MonoBehaviour
     private void Share()
     {
         Debug.Log(_popupLink.text);
+        string pin = DatabaseManager.Instance.playerUserData.pin;
+
+        // 대응하는 Hololens 사용자의 닉네임은 "PIN_hololens"로 가정
+        string targetUserName = $"{pin}_hololens";
+        int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetUserName);
+        UserMatchingManager.Instance.SendURLDataToTarget(targetActorNumber, _popupLink.text);
+
         homeScreen.SetActive(true);
         this.gameObject.SetActive(false);
     }

@@ -215,6 +215,7 @@ public class DebugUserInfos : MonoBehaviour
                 matchInfo.MatchRequest = "Decline";
                 //Debug.Log("버튼에 Decline 기능 더해짐");
 
+
                 // 실제 메서드 실행
                 SendMatchRequestToAUser(receivedMatchInfo.UserWhoSend, UserMatchingManager.Instance.myUserInfo);
                 //Debug.Log($"Decline 신호를 {receivedMatchInfo.userWhoSend}에게  보냄");
@@ -400,6 +401,11 @@ public class DebugUserInfos : MonoBehaviour
 
     public void DebugAllUsersInfo()
     {
+        foreach (var userInfo in UserMatchingManager.Instance.userInfos)
+        {
+
+            Debug.Log($"유저 {userInfo.PhotonUserName} 감지됨");
+        }
         /*if (HostBehaviourManager.Instance.IsCentralHost)
         {
             userInfosText.text = ""; // 텍스트 초기화
