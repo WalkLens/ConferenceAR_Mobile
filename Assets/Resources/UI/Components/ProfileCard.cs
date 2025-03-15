@@ -194,9 +194,9 @@ public class ProfileCard : VisualElement
         string myPin = DatabaseManager.Instance.playerUserData.pin;
 
         // 대응하는 Hololens 사용자의 닉네임은 "PIN_hololens"로 가정
-        string targetUserName = $"{pin}_hololens";
+        string targetUserName = $"{myPin}_hololens";
         int targetActorNumber = PhotonUserUtility.GetPlayerActorNumber(targetUserName);
-        // UserMatchingManager.Instance.PopUpUINotify(targetActorNumber);
+         UserMatchingManager.Instance.PopUpUINotify(targetActorNumber);
         OnSendMatchingButtonClicked(pin);
     }
 
